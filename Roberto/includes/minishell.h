@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/03 19:03:20 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:24:10 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,42 @@
 // ============================================================================
 // Structures
 // ============================================================================
+typedef enum
+{
+	TOKEN_EMPTY,
+	TOKEN_REDIR_STDIN,
+	TOKEN_REDIR_STDOUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_COMMAND,
+	TOKEN_ARG,
+	TOKEN_PIPE,
+}					tok_typ_enum;
+
+typedef struct s_token
+{
+	tok_typ_enum	token_type;
+	char			*token_value;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+	struct s_envp	
+
+}					t_envp;
+
 typedef struct s_minishell
 {
-	int	xxx;
+	char			**env;
+
+	int				stdin;
+	int				stdout;
+	char			*line;
+
 
 }	t_minishell;
 

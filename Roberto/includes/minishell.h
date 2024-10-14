@@ -53,7 +53,7 @@ void	ft_manage_err(const char *err);
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void	ft_minishell(t_minishell *mshll, char **env);
+void	ft_minishell(t_minishell *mshll, char **envp);
 
 // ============================================================================
 // Initialization functions
@@ -63,6 +63,6 @@ void	ft_print_init(void);
 // ============================================================================
 // Global variable
 // ============================================================================
-extern	t_minishell gl_mshll;
+// extern	t_minishell gl_mshll;
 
 # endif

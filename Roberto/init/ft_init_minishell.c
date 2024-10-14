@@ -22,7 +22,7 @@
 
 t_minishell gl_mshll;
 
-void	ft_minishell(t_minishell *mshll, char **env)
+void	ft_minishell(t_minishell *mshll, char **envp)
 {
 
 }

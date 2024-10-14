@@ -19,21 +19,21 @@
  * 
  */
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	if (argc != 1 || argv[1])
-// 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
-// 	if (argc != 1 || env == NULL || *env == NULL)
-// 		ft_manage_err(YELLOW ENV_ERR RESET);
-// 	(void)argc;
-// 	(void)(argv);
-// 	ft_print_init();
-// 	ft_init_minishell(&gl_mshll, env);
-
-
-// }
-
-int main()
+int	main(int argc, char **argv, char **envp)
 {
+	if (argc != 1 || argv[1])
+		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
+	if (argc != 1 || envp == NULL || *envp == NULL)
+		ft_manage_err(YELLOW ENV_ERR RESET);
+	(void)argc;
+	(void)(argv);
 	ft_print_init();
+	ft_init_minishell(&gl_mshll, envp);
+
+
 }
+
+// int main()
+// {
+// 	ft_print_init();
+// }

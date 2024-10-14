@@ -127,16 +127,26 @@ char    *ft_substr(char const *s, unsigned int start, size_t len)
 }
 
 int main(int argc, char **argv, char **env) {
-    char *input;
-    char **arg;
-    char *cmd;
-    char **path;
-
+    
+	char *input;
+	char *p;
+	char *prompt;
+	char *prueba;
+	//printf ("%s", ft_find_dir(env, "PWD"));
+	prompt = "pabromer-rdel-olm minishell:~";
+	p = ft_strjoin(prompt, ft_find_dir(env, "PWD"));
+	prompt = ft_strjoin(p, "$ ");
+	free (p);
     while (1) 
     { 
-        input = readline("Escribe su comando: ");
-        ft_cmdexe(env, input);
+        input = readline(prompt);
+		if (input[0] == 'e' && input[1] == 'x' && input[2] == 'i' && input[3] == 't' && input[4] == '\0')
+			break;
+		else
+        	ft_cmdexe(env, input);
+		free(input);
     }
-
+	free(prompt);
+	free(input);
     return 0;
 }

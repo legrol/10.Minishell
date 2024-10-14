@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/14 20:52:14 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:16:59 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,22 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
 	if (argc != 1 || envp == NULL || *envp == NULL)
 		ft_manage_err(YELLOW ENV_ERR RESET);
-	(void)argc;
-	(void)(argv);
+	t_minishell *minishell;
+	//t_envp *current; // para visualizar (Eliminar en definitivo)
+	ft_init_signals(&glb_signals);
+	
+	
 	ft_print_init();
-	ft_init_minishell(&glb_signals, envp);
+	
+	
+	
+	ft_init_minishell();
 
 
 }

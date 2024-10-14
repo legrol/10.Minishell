@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/14 20:52:06 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:19:35 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,13 @@ void	ft_manage_err(const char *err);
 // Initialization functions
 // ============================================================================
 void	ft_minishell(t_minishell *mshll, char **envp);
+void	ft_init_struc_sig(t_signal *signals);
+void	ft_init_signal(void);
 
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void	ft_print_init(void);
+void	ft_print_init();
 
 
 

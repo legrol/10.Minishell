@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/14 20:24:10 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:52:06 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ typedef enum
 	TOKEN_PIPE,
 }					tok_typ_enum;
 
+typedef struct s_signal
+{
+	pid_t			pid;
+	int				sigint;
+	int				sigquit;
+	int				exit;
+}					t_signal;
+
 typedef struct s_token
 {
 	tok_typ_enum	token_type;
@@ -63,20 +71,24 @@ typedef struct s_envp
 {
 	char			*key;
 	char			*value;
-	struct s_envp	
-
+	struct s_envp	*next;
 }					t_envp;
 
 typedef struct s_minishell
 {
 	char			**env;
-
+	t_envp			*list_envp;
 	int				stdin;
 	int				stdout;
 	char			*line;
+	t_token			*tokens;
+	int				exit;
+}					t_minishell;
 
-
-}	t_minishell;
+// ============================================================================
+// Global variable
+// ============================================================================
+extern	t_signal glb_signals;
 
 // ============================================================================
 // Management errors
@@ -93,9 +105,6 @@ void	ft_minishell(t_minishell *mshll, char **envp);
 // ============================================================================
 void	ft_print_init(void);
 
-// ============================================================================
-// Global variable
-// ============================================================================
-// extern	t_minishell gl_mshll;
+
 
 # endif

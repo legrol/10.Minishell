@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/03 18:57:37 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:52:14 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)(argv);
 	ft_print_init();
-	ft_init_minishell(&gl_mshll, envp);
+	ft_init_minishell(&glb_signals, envp);
 
 
 }

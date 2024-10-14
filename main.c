@@ -3,11 +3,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-char *ft_find_dir(char ** env, const char *str);
-unsigned int	p_mallocsize(char const *s, char c);
-void	*p_freessplit(char **ssplit, int k);
-char **ft_path(char **env);
-
 size_t	ft_strlen(const char *s)
 {
 	int	i;
@@ -60,28 +55,79 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	}
 	return (NULL);
 }
-
-char *ft_cmd_action(char **path, char *arg)
+char    *ft_strjoin(char const *s1, char const *s2)
 {
-	int i;
-	char *cmd;
+        char    *join;
+        int             i;
+        int             j;
 
-	i = 0;
-	while(path[i])
-	{
-		cmd = ft_strjoin(path[i], arg);
-	    if (access(cmd, X_OK) == 0)
-	        return (cmd);
-        free (cmd);
-        cmd = NULL;
-        i++;
-	}
-	return NULL;
+        if (!s1 || !s2)
+                return (NULL);
+        join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+        if (!join)
+                return (NULL);
+        i = 0;
+        while (s1[i] != '\0')
+        {
+                join[i] = s1[i];
+                i++;
+        }
+        j = 0;
+        while (s2[j] != '\0')
+        {
+                join[i + j] = s2[j];
+                j++;
+        }
+        join[i + j] = '\0';
+        return (join);
+}
+
+char    *ft_strdup(const char *s1)
+{
+        size_t  count;
+        char    *dest;
+        int             i;
+
+        i = 0;
+        count = ft_strlen(s1) + 1;
+        dest = (char *)malloc(count);
+        if (!dest)
+                return (NULL);
+        while (s1[i] != 0)
+        {
+                dest[i] = s1[i];
+                i++;
+        }
+        dest[i] = '\0';
+        return (dest);
+}
+
+char    *ft_substr(char const *s, unsigned int start, size_t len)
+{
+        char    *subs;
+        size_t  i;
+
+        if (!s)
+                return (NULL);
+        if (start >= ft_strlen(s))
+                return (ft_strdup(""));
+        if (ft_strlen(s) - start < len)
+                len = ft_strlen(s) - start;
+        subs = (char *) malloc(len + 1);
+        if (!subs)
+                return (NULL);
+        i = 0;
+        while (i < len)
+        {
+                subs[i] = s[start + i];
+                i++;
+        }
+        subs[i] = '\0';
+        return (subs);
 }
 
 int main(int argc, char **argv, char **env) {
-    char *input;          // Puntero para la entrada del usuario
-    char *ultima_entrada = NULL;  // Guardará la última entrada
+    char *input;
     char **arg;
     char *cmd;
     char **path;
@@ -89,12 +135,7 @@ int main(int argc, char **argv, char **env) {
     while (1) 
     { 
         input = readline("Escribe su comando: ");
-        path = ft_path(env);
-        arg = ft_split(input, ' ');
-        cmd = ft_cmd_action(path, arg[0]);
-        execve(cmd, arg, NULL);
-		perror("execve cmd2:");
-		exit(EXIT_FAILURE);
+        ft_cmdexe(env, input);
     }
 
     return 0;

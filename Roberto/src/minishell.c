@@ -13,7 +13,7 @@
 #include "../includes/minishell.h"
 
 /**
- * The main function of minishell xxx.
+ * The main function of minishell.
  * 
  * @param int argc 		Number of arguments the program receives from the 
  * 						command line. This is expected to be 1 (just the 

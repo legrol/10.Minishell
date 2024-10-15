@@ -90,17 +90,18 @@ GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
 
 ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
-INT					= ${INIT_DIR}/ft_init_minishell.c
+INT					= ${INIT_DIR}/ft_init_minishell.c \
+						${INIT_DIR}/ft_init_signals.c
 
-UTL					= ${UTILS_DIR}/ft_print_init.c
+UTL					= ${UTILS_DIR}/ft_print_init.c						
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 
-PAR					= ${PARSER_DIR}/ft_xxx.c
+# PAR					= ${PARSER_DIR}/ft_xxx.c
 
-EXE					= ${EXEC_DIR}/ft_xxx.c
+# EXE					= ${EXEC_DIR}/ft_xxx.c
 
-BUI					= ${BUILTINS_DIR}/ft_xxx.c
+# BUI					= ${BUILTINS_DIR}/ft_xxx.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \
@@ -109,9 +110,9 @@ OBJ_ERR				= $(patsubst ${ERRORS_DIR}/%.c, ${OBJ_DIR}/%.o, ${ERR})
 OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
-OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
-OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
-OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
+# OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
+# OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
+# OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
 
 # ═══ Rules ══════════════════════════════════════════════════════════════════ #
 #     -----                                                                    #
@@ -151,17 +152,17 @@ ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-${OBJ_DIR}/%.o: ${PARSER_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+# ${OBJ_DIR}/%.o: ${PARSER_DIR}/%.c
+# 	@${MKD} $(dir $@)
+# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-${OBJ_DIR}/%.o: ${EXEC_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+# ${OBJ_DIR}/%.o: ${EXEC_DIR}/%.c
+# 	@${MKD} $(dir $@)
+# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
-	@${MKD} $(dir $@)
-	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+# ${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
+# 	@${MKD} $(dir $@)
+# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 ftlibft:
 	@cd ${LIBRARIES}/${LIBFT_DIR} ${MK_} all

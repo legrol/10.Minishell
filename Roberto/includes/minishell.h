@@ -39,7 +39,7 @@
 // ============================================================================
 // Structures
 // ============================================================================
-typedef enum
+typedef enum e_tok_typ_enum
 {
 	TOKEN_EMPTY,
 	TOKEN_REDIR_STDIN,
@@ -49,7 +49,7 @@ typedef enum
 	TOKEN_COMMAND,
 	TOKEN_ARG,
 	TOKEN_PIPE,
-}					tok_typ_enum;
+}					t_tok_typ_enum;
 
 typedef struct s_signal
 {
@@ -61,7 +61,7 @@ typedef struct s_signal
 
 typedef struct s_token
 {
-	tok_typ_enum	token_type;
+	t_tok_typ_enum	token_type;
 	char			*token_value;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -107,4 +107,4 @@ void	ft_init_signals(void);
 // ============================================================================
 void	ft_print_init(void);
 
-# endif
+#endif

@@ -15,10 +15,19 @@
 /**
  * The main function of minishell xxx.
  * 
- * @param int argc 		xxx
- * @param char **argv	xxx
- * @param char **envp	xxx
- * 
+ * @param int argc 		Number of arguments the program receives from the 
+ * 						command line. This is expected to be 1 (just the 
+ * 						program name), otherwise an error message is 
+ * 						displayed.
+ * @param char **argv	String array containing the arguments passed to the 
+ * 						program. This program does not take any additional 
+ * 						arguments beyond the program name, and passing more 
+ * 						than that results in an error.
+ * @param char **envp	String array containing the system environment 
+ * 						variables. These are needed for initializing the 
+ * 						`t_minishell` structure and managing the shell 
+ * 						environment.
+ *  
  */
 
 int	main(int argc, char **argv, char **envp)

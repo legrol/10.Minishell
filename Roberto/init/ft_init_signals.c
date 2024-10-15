@@ -13,7 +13,14 @@
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_init_signal" xxx
+ * The function "ft_init_signals" initializes the handler for each signal.
+ * 		signal(SIGINT, &sig_int) ≡ signal(2, pointer to handler)
+ * 		signal(SIGQUIT, &sig_quit) ≡ signal(3, pointer to handler)
+ * 		glb_signals.exit = 130 ≡ the standard code indicating that a program 
+ * 								 was interrupted by the SIGINT signal (Ctrl+C).
+ * 		glb_signals.exit = 131 ≡ the standard code indicating that a program 
+ * 								 was interrupted by the SIG	QUIT signal 
+ * 								 (Ctrl+\).
  * 
  * The function "sig_quit" xxx
  * 
@@ -23,7 +30,8 @@
  * 
  * @param xxx
  * 
- * The function "ft_init_struc_sig" xxx
+ * The function "ft_init_struc_sig" initializes all members contained in the 
+ * t_signal structure.
  * 
  * @param t_signal *signals xxx
  * 
@@ -49,8 +57,11 @@
  * The number 128 acts as an indicator that the process was terminated by a 
  * signal, not by normal termination.
  * 
- * CONTROL + C -> SIGINT (Signal 2)
- * CONTROL + \ -> SIGQUIT (Signal 3)
+ * Examples: 130 ≡ exit for SIGINT (128 + 2) ≡ 1000 0010
+ * 			 131 ≡ exit for SIGQUIT (128 + 3) ≡ 1000 0011
+ * 
+ * CONTROL + C -> SIGINT (Signal number 2)
+ * CONTROL + \ -> SIGQUIT (Signal number 3)
  * 
  */
 
@@ -62,16 +73,30 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->exit = 0;
 }
 
-static void sig_int()
+static void	sig_int(void)
 {
-
-
+	if (glb_signals.pid == 0)
+	{
+		ft_putstr_fd("\n", STDERR);
+		ft_putstr_fd(PROMPT, STDERR);
+		glb_signals.exit = 1;
+	}
+	else
+	{
+		ft_putstr_fd("\n", STDERR);
+		glb_signals.exit = EX_SIGINT;
+	}
+	glb_signals.sigint = 1;
 }
 
-static void sig_quit()
+static void	sig_quit(void)
 {
-
-	
+	if (glb_signals.pid != 0)
+	{
+		ft_putstr_fd("\n", STDERR);
+		glb_signals.exit = EX_SIGQUIT;
+	}
+	glb_signals.sigquit = 1;
 }
 
 void	ft_init_signals(void)

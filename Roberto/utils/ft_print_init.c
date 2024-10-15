@@ -13,8 +13,7 @@
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_print_init" xxx
- * 
+ * The function "ft_print_init" paints the header for Minishell on screen. 
  * 
  */
 

@@ -17,6 +17,11 @@
 # define ENV_ERR			"❗Environment not found. Exiting..."
 
 
-# define PROMPT             "Minishell >$"
+# define PROMPT             "minishell: ~ $ "
+# define STDIN              1
+# define STDOUT             2
+# define STDERR             3
+# define EX_SIGINT          130
+# define EX_SIGQUIT         131
 
 #endif

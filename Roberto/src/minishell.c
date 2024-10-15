@@ -21,18 +21,17 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_minishell	*minishell;
+
 	(void)argc;
 	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
 	if (argc != 1 || envp == NULL || *envp == NULL)
 		ft_manage_err(YELLOW ENV_ERR RESET);
-	t_minishell *minishell;
 	//t_envp *current; // para visualizar (Eliminar en definitivo)
 	ft_init_struc_sig(&glb_signals);
 	ft_init_signals();
-	
-	
 	ft_print_init();
 	
 	

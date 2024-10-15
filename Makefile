@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Iinclude -Ilibft/libs -lreadline
-SRC = src/ft_cd.c src/ft_cmdexe.c src/ft_env.c src/ft_find_dir.c src/ft_path.c src/main.c
+SRC = src/ft_cd.c src/ft_cmdexe.c src/ft_env.c src/ft_find_dir.c src/ft_path.c src/ft_echo.c src/ft_cp_ent.c src/main.c
 OBJ = $(SRC:src/%.c=obj/%.o)
 NAME = minishell
 LIBFT_DIR = libft/

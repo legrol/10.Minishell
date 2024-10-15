@@ -101,6 +101,7 @@ void		ft_manage_err(const char *err);
 t_minishell	*ft_init_minishell(char **envp);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(void);
+t_envp		*ft_init_list_envp(char **envp);
 
 // ============================================================================
 // Initialization functions

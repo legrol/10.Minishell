@@ -100,13 +100,11 @@ void	ft_manage_err(const char *err);
 // ============================================================================
 void	ft_minishell(t_minishell *mshll, char **envp);
 void	ft_init_struc_sig(t_signal *signals);
-void	ft_init_signal(void);
+void	ft_init_signals(void);
 
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void	ft_print_init();
-
-
+void	ft_print_init(void);
 
 # endif

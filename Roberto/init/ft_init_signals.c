@@ -43,6 +43,9 @@
  * (with exit()), and the numbers 128 to 255 are used to indicate that a 
  * process was terminated by a signal.
  * 
+ * 0000 0000 a 0111 1111 : Exit, Return
+ * 1000 0000 a 1111 1111 : Signals
+ * 
  * The number 128 acts as an indicator that the process was terminated by a 
  * signal, not by normal termination.
  * 
@@ -71,7 +74,7 @@ static void sig_quit()
 	
 }
 
-void	ft_init_signal(void)
+void	ft_init_signals(void)
 {
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);

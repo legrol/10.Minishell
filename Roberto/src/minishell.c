@@ -29,7 +29,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_manage_err(YELLOW ENV_ERR RESET);
 	t_minishell *minishell;
 	//t_envp *current; // para visualizar (Eliminar en definitivo)
-	ft_init_signals(&glb_signals);
+	ft_init_struc_sig(&glb_signals);
+	ft_init_signals();
 	
 	
 	ft_print_init();

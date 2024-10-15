@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/03 18:43:45 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/03 21:27:51 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024-10-15 06:23:12 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024-10-15 06:23:12 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@
 
 void	ft_print_init(void)
 {
-	ft_printf(RED   "  ___  ___ __                   __            __ __   \
+	ft_printf(RED "  ___  ___ __                   __            __ __   \
 	  \n");
-	ft_printf(RED   " |   \\/   (__)        __       |**|          |**|**| \
+	ft_printf(RED " |   \\/   (__)        __       |**|          |**|**| \
 	  \n");
-	ft_printf(RED   " |  \\  /  |__ __  __ (__) _____|**|__    ____|**|**| \
+	ft_printf(RED " |  \\  /  |__ __  __ (__) _____|**|__    ____|**|**| \
 	  \n");
-	ft_printf(YELLOW" |  |\\/|  |  |  '_  \\|  |/   __|** _**\\ /*_**|**|**|\
+	ft_printf(YELLOW " |  |\\/|  |  |  '_  \\|  |/   __|** _**\\ /*_**|**|**|\
 	  \n");
-	ft_printf(YELLOW" |  |  |  |  |  | |  |  |\\__  \\|**| |**|***__|**|**|\
+	ft_printf(YELLOW " |  |  |  |  |  | |  |  |\\__  \\|**| |**|***__|**|**|\
 	    \n");
-	ft_printf(RED   " |  |  |  |  |  | |  |  | __|  |**| |**|**\\__|**|**| \
+	ft_printf(RED " |  |  |  |  |  | |  |  | __|  |**| |**|**\\__|**|**| \
 	   \n");
-	ft_printf(RED   " |__|  |__|__|__| |__|__|\\____/|**| |**|\\****|**|**| \
+	ft_printf(RED " |__|  |__|__|__| |__|__|\\____/|**| |**|\\****|**|**| \
 	   \n\n");
 	ft_printf(RED"Welcome to "BDYELLOW"Minishell, "RED"project by " GREEN \
 	"pabromer " RED "and " GREEN "rdel-olm\n");

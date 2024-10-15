@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:53:36 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/14 16:06:37 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:35:30 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_find_dir(char ** env, const char *str)
+char *ft_find_dir(char **env, const char *str)
 {
     int     i;
     char    *result;

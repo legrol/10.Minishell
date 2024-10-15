@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:40:32 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/14 20:48:47 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:36:51 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ char **ft_path(char **env);
 char *ft_cmd_action(char **path, char *arg);
 void ft_cmdexe(char **env, char *str);
 void ft_env(char **env);
+char *ft_cd(char *input, char **env);
 
 #endif

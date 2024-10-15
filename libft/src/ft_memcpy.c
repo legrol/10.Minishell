@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 10:21:41 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/15 10:21:42 by pabromer         ###   ########.fr       */
+/*   Created: 2024/04/09 10:44:21 by pabromer          #+#    #+#             */
+/*   Updated: 2024/09/24 12:22:18 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
-void ft_env(char **env)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-    int i;
+	size_t			i;
+	unsigned char	*d;
+	unsigned char	*s;
 
-    i = 0;
-    while(env[i])
-    {
-        printf("%s\n", env[i]);
-        i++;
-    }
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	i = 0;
+	if (dest == NULL && src == NULL)
+		return (dest);
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }

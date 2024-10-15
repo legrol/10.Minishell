@@ -6,12 +6,11 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/15 10:22:01 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:49:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "minishell.h"
 
 char *ft_cmd_action(char **path, char *arg)
 {

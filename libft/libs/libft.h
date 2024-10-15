@@ -6,19 +6,16 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:40:32 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/15 10:36:51 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/11 22:25:17 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-//#include <sys/wait.h> 
-#include <readline/readline.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_list
 {
@@ -70,13 +67,5 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-char *ft_find_dir(char ** env, const char *str);
-unsigned int	p_mallocsize(char const *s, char c);
-void	*p_freessplit(char **ssplit, int k);
-char **ft_path(char **env);
-char *ft_cmd_action(char **path, char *arg);
-void ft_cmdexe(char **env, char *str);
-void ft_env(char **env);
-char *ft_cd(char *input, char **env);
 
 #endif

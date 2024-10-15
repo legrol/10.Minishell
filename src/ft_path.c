@@ -6,11 +6,11 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/14 19:04:39 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:50:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
 unsigned int	p_mallocsize(char const *s, char c)
 {

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_dir.c                                      :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 15:53:36 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/15 10:35:30 by pabromer         ###   ########.fr       */
+/*   Created: 2024/04/18 10:52:20 by pabromer          #+#    #+#             */
+/*   Updated: 2024/09/24 12:23:04 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_find_dir(char **env, const char *str)
+void	ft_putstr_fd(char *s, int fd)
 {
-    int     i;
-    char    *result;
+	int	i;
 
-    i = 0;
-    while(env[i])
-    {
-        result = ft_strnstr(env[i], str, ft_strlen(str));
-        if(result)
-            return (ft_strchr(result, '/'));
-        i++;
-    }
-    return (NULL);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
 }

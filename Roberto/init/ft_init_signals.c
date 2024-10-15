@@ -22,21 +22,22 @@
  * 								 was interrupted by the SIG	QUIT signal 
  * 								 (Ctrl+\).
  * 
- * The function "sig_quit" xxx
+ * The function "sig_quit" is SIGQUIT signal handler.
  * 
- * @param xxx
- * 
- * The function "sig_int" xxx
- * 
- * @param xxx
+ * The function "sig_int" is SIGINT signal handler.
  * 
  * The function "ft_init_struc_sig" initializes all members contained in the 
  * t_signal structure.
  * 
- * @param t_signal *signals xxx
+ * @param t_signal *signals 	Pointer to the `t_signal` structure containing 
+ * 								the signals to be initialized. This structure 
+ * 								has several fields related to signal handling 
+ * 								such as SIGINT and SIGQUIT.
  * 
  * 
- * *****NOTES ABOUT SIGNALS***** 
+ * 						*******************
+ * 						NOTES ABOUT SIGNALS
+ *	 					*******************
  * 
  * Normal exit codes: When a process is terminated normally (for example, using
  * exit(0) or exit(1)), the exit code is simply the value passed to exit().

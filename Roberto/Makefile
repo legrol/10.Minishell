@@ -90,7 +90,8 @@ GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
 
 ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
-INT					= ${INIT_DIR}/ft_init_minishell.c \
+INT					= ${INIT_DIR}/ft_init_env.c \
+						${INIT_DIR}/ft_init_minishell.c \
 						${INIT_DIR}/ft_init_signals.c
 
 UTL					= ${UTILS_DIR}/ft_print_init.c						

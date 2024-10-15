@@ -76,7 +76,7 @@ typedef struct s_envp
 
 typedef struct s_minishell
 {
-	char			**env;
+	char			**envp;
 	t_envp			*list_envp;
 	int				stdin;
 	int				stdout;
@@ -93,18 +93,18 @@ extern	t_signal glb_signals;
 // ============================================================================
 // Management errors
 // ============================================================================
-void	ft_manage_err(const char *err);
+void		ft_manage_err(const char *err);
 
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void	ft_minishell(t_minishell *mshll, char **envp);
-void	ft_init_struc_sig(t_signal *signals);
-void	ft_init_signals(void);
+t_minishell	*ft_init_minishell(char **envp);
+void		ft_init_struc_sig(t_signal *signals);
+void		ft_init_signals(void);
 
 // ============================================================================
 // Initialization functions
 // ============================================================================
-void	ft_print_init(void);
+void		ft_print_init(void);
 
 #endif

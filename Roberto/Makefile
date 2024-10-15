@@ -71,7 +71,7 @@ CFLAGS 				= -Wall -Werror -Wextra
 IFLAGS				= -I${INCLUDES_DIR}
 LFLAGS				= -L${LIBRARIES}/${LIBFT_DIR} -lft \
 						-L${LIBRARIES}/${PRINTFT_DIR} -lftprintf \
-						-L${LIBRARIES}/${EXAMFT_DIR} -lexamft					
+						-L${LIBRARIES}/${EXAMFT_DIR} -lexamft -lreadline				
 
 # ══ Flags Bonus══════════════════════════════════════════════════════════════ #
 #    -----------                                                               #

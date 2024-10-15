@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 21:11:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/14 21:28:06 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:29:22 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->exit = 0;
 }
 
-static void	sig_int(void)
+static void	sig_int(int status)
 {
+	(void) status;
+
 	if (glb_signals.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
@@ -90,8 +92,10 @@ static void	sig_int(void)
 	glb_signals.sigint = 1;
 }
 
-static void	sig_quit(void)
+static void	sig_quit(int status)
 {
+	(void) status;
+
 	if (glb_signals.pid != 0)
 	{
 		ft_putstr_fd("\n", STDERR);

@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/14 21:16:59 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:31:28 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
  * 						environment.
  *  
  */
+
+t_signal glb_signals;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -63,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	// 	if (cmd_ast)
 	// 		ft_is_builtin(cmd_ast);
 	// }
+	free(minishell);
 	clear_history();
 	return (0);
 }

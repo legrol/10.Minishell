@@ -19,6 +19,7 @@
 
 void	ft_print_init(void)
 {
+	ft_printf("\n");
 	ft_printf(RED "  ___  ___ __                   __            __ __   \
 	  \n");
 	ft_printf(RED " |   \\/   (__)        __       |**|          |**|**| \
@@ -35,4 +36,5 @@ void	ft_print_init(void)
 	   \n\n");
 	ft_printf(RED"Welcome to "BDYELLOW"Minishell, "RED"project by " GREEN \
 	"pabromer " RED "and " GREEN "rdel-olm\n");
+	ft_printf("\n");
 }

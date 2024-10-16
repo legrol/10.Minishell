@@ -43,27 +43,28 @@ void	*p_freessplit(char **ssplit, int k)
 	return (NULL);
 }
 
-char **ft_path(char **env)
+char	**ft_path(char **env)
 {
-	int i;
-	char **split_path;
-    char **cp_split_path;
-    char *str;
+	int		i;
+	char	**split_path;
+	char	**cp_split_path;
+	char	*str;
 
-    str = ft_find_dir(env, "PATH");
-    cp_split_path = ft_split(str, ':');
-	split_path = (char **)malloc((1+p_mallocsize(str, ':'))*sizeof(char*));
-    if (!split_path)
+	str = ft_find_dir(env, "PATH");
+	cp_split_path = ft_split(str, ':');
+	split_path = (char **)malloc((1 + p_mallocsize(str, ':')) * \
+				sizeof(char *));
+	if (!split_path)
 		exit(EXIT_FAILURE);
 	i = 0;
-	while(cp_split_path[i])
-    {
-        split_path[i] = ft_strjoin(cp_split_path[i], "/");
-        free(cp_split_path[i]);
-        i++;
-    }
-    split_path[i] = NULL;
-    free(cp_split_path);
-    return (split_path);
+	while (cp_split_path[i])
+	{
+		split_path[i] = ft_strjoin(cp_split_path[i], "/");
+		free(cp_split_path[i]);
+		i++;
+	}
+	split_path[i] = NULL;
+	free(cp_split_path);
+	return (split_path);
 }
 

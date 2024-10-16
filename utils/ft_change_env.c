@@ -12,14 +12,15 @@
 
 #include "minishell.h"
 
-void    ft_change_env(t_minishell *minishell, const char *str1, const char *str2)
+void	ft_change_env(t_minishell *minishell, const char *str1, \
+		const char *str2)
 {
-	int         i;
-	t_envp *temp;
+	int		i;
+	t_envp	*temp;
 
 	temp = minishell->list_envp;
 	i = 0;
-	while(minishell->list_envp)
+	while (minishell->list_envp)
 	{
 		if (ft_strcmp(minishell->list_envp->key, (char *)str1) == 0)
 		{

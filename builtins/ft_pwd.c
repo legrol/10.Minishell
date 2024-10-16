@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void ft_pwd(t_minishell *minishell)
+void	ft_pwd(t_minishell *minishell)
 {
 	ft_printf("%s\n", ft_find_dir(minishell, "OLDPWD"));
 }

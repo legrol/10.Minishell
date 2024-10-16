@@ -19,10 +19,10 @@
  * FALTA IMPLEMENTAR ~/blablabla
 */
 
-static void ft_swap_pwd(t_minishell *minishell)
+static void	ft_swap_pwd(t_minishell *minishell)
 {
-	char cwd[1024];
-	char *temp;
+	char	cwd[1024];
+	char	*temp;
 
 	ft_change_env(minishell, "OLDPWD", ft_find_dir(minishell, "PWD"));
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -38,10 +38,10 @@ static void ft_swap_pwd(t_minishell *minishell)
 	}
 }
 
-void ft_cd(t_minishell *minishell)
+void	ft_cd(t_minishell *minishell)
 {
-	char **split;
-	int i;
+	char	**split;
+	int		i;
 
 	i = 0;
 	split = ft_split_m(minishell->line, ' ');
@@ -58,7 +58,7 @@ void ft_cd(t_minishell *minishell)
 		ft_printf("%s\n", ft_find_dir(minishell, "OLDPWD"));
 		ft_swap_pwd(minishell);
 	}
-	else if(chdir(split[1]) != 0)
+	else if (chdir(split[1]) != 0)
 		ft_printf("bash: cd: %s: No such file or directory\n", split[1]);
 	else
 		ft_swap_pwd(minishell);

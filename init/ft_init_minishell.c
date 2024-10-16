@@ -29,7 +29,7 @@
 t_minishell	*ft_init_minishell(char **envp)
 {
 	t_minishell	*minishell;
-	
+
 	minishell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!minishell)
 		return (NULL);

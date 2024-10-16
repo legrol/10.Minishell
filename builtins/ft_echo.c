@@ -12,13 +12,13 @@
 
 #include "../includes/minishell.h"
 
-void ft_echo(char *input)
+void	ft_echo(char *input)
 {
-	char *shorting;
-	char **splited;
+	char	*shorting;
+	char	**splited;
 
 	shorting = ft_strnstr(input, "echo ", ft_strlen(input));
-	splited = ft_split(shorting,' ');
+	splited = ft_split(shorting, ' ');
 	if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0')
 		ft_printf("%s", splited[2]);
 	else

@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-char *ft_cmd_action(char **path, char *arg)
+char	*ft_cmd_action(char **path, char *arg)
 {
-	int i;
-	char *cmd;
+	int		i;
+	char	*cmd;
 
 	i = 0;
-	while(path[i])
+	while (path[i])
 	{
 		cmd = ft_strjoin(path[i], arg);
 		if (access(cmd, X_OK) == 0)
@@ -27,22 +27,22 @@ char *ft_cmd_action(char **path, char *arg)
 		cmd = NULL;
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
-void ft_cmdexe(char **env, char *str)
+void	ft_cmdexe(char **env, char *str)
 {
-	char **arg;
-	char *cmd;
-	char **path;
-	pid_t pid;
-	int status;
+	char	**arg;
+	char	*cmd;
+	char	**path;
+	pid_t	pid;
+	int		status;
 
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 	{
 		perror("fork fallo");
-		EXIT_FAILURE;
+		exit (EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{

@@ -12,16 +12,16 @@
 
 #include "../includes/minishell.h"
 
-void ft_env(t_minishell *minishell)
+void	ft_env(t_minishell *minishell)
 {
-    t_envp *temp;
+	t_envp	*temp;
 
-    temp = minishell->list_envp;
-    while(minishell->list_envp)
-    {
-        ft_printf("%s=%s\n", minishell->list_envp->key, minishell->list_envp->value);
-        minishell->list_envp = minishell->list_envp->next;
-    }
-    minishell->list_envp = temp;
+	temp = minishell->list_envp;
+	while (minishell->list_envp)
+	{
+		ft_printf("%s=%s\n", minishell->list_envp->key, \
+		minishell->list_envp->value);
+		minishell->list_envp = minishell->list_envp->next;
+	}
+	minishell->list_envp = temp;
 }
-

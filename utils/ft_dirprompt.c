@@ -27,8 +27,8 @@
 
 void	ft_dirprompt(t_minishell	*minishell)
 {
-	char cwd[1024];
-	char *temp;
+	char	cwd[1024];
+	char	*temp;
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{

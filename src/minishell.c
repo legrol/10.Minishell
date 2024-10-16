@@ -30,7 +30,7 @@
  *  
  */
 
-t_signal glb_signals;
+t_signal g_signals;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || envp == NULL || *envp == NULL)
 		ft_manage_err(YELLOW ENV_ERR RESET);
 	//t_envp *current; // para visualizar (Eliminar en definitivo)
-	ft_init_struc_sig(&glb_signals);
+	ft_init_struc_sig(&g_signals);
 	ft_init_signals();
 	ft_print_init();
 	minishell = ft_init_minishell(envp);

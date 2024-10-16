@@ -12,24 +12,24 @@
 
 #include "minishell.h"
 
-char *ft_find_dir(t_minishell *minishell, const char *str)
+char	*ft_find_dir(t_minishell *minishell, const char *str)
 {
-    int         i;
-    char        *result;
-    t_envp *temp;
+	int		i;
+	char	*result;
+	t_envp	*temp;
 
-    temp = minishell->list_envp;
-    i = 0;
-    while(minishell->list_envp)
-    {
-        if (ft_strcmp(minishell->list_envp->key, (char *)str) == 0)
-        {
-            result = minishell->list_envp->value;
-            minishell->list_envp = temp;
-            return (result);
-        }
-        minishell->list_envp = minishell->list_envp->next;
-    }
-    minishell->list_envp = temp;
-    return (NULL);
+	temp = minishell->list_envp;
+	i = 0;
+	while (minishell->list_envp)
+	{
+		if (ft_strcmp(minishell->list_envp->key, (char *)str) == 0)
+		{
+			result = minishell->list_envp->value;
+			minishell->list_envp = temp;
+			return (result);
+		}
+		minishell->list_envp = minishell->list_envp->next;
+	}
+	minishell->list_envp = temp;
+	return (NULL);
 }

@@ -78,30 +78,30 @@ static void	sig_int(int status)
 {
 	(void) status;
 
-	if (glb_signals.pid == 0)
+	if (g_signals.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
 		ft_putstr_fd(PROMPT, STDERR);
-		glb_signals.exit = 1;
+		g_signals.exit = 1;
 	}
 	else
 	{
 		ft_putstr_fd("\n", STDERR);
-		glb_signals.exit = EX_SIGINT;
+		g_signals.exit = EX_SIGINT;
 	}
-	glb_signals.sigint = 1;
+	g_signals.sigint = 1;
 }
 
 static void	sig_quit(int status)
 {
 	(void) status;
 
-	if (glb_signals.pid != 0)
+	if (g_signals.pid != 0)
 	{
 		ft_putstr_fd("\n", STDERR);
-		glb_signals.exit = EX_SIGQUIT;
+		g_signals.exit = EX_SIGQUIT;
 	}
-	glb_signals.sigquit = 1;
+	g_signals.sigquit = 1;
 }
 
 void	ft_init_signals(void)

@@ -59,12 +59,12 @@ static t_envp	*new_node_envp(char *key, char *value)
 }
 static void	split_envp(const char *envp, char **key, char **value)
 {
-	int 	key_len;
-	char 	*find_equal;
+	int		key_len;
+	char	*find_equal;
 
 	find_equal = ft_strchr(envp, '=');
 	if (find_equal)
-	{	
+	{
 		key_len = find_equal - envp;
 		*key = ft_substr(envp, 0, key_len);
 		*value = ft_strdup(find_equal + 1);
@@ -83,13 +83,14 @@ t_envp	*ft_init_list_envp(char **envp)
 	char	*value;
 	t_envp	*head;
 	t_envp	*current;
+	t_envp	*new_node;
 
 	i = 0;
 	head = NULL;
-	while(envp[i])
+	while (envp[i])
 	{
 		split_envp(envp[i], &key, &value);
-		t_envp *new_node = new_node_envp(key, value);
+		new_node = new_node_envp(key, value);
 		if (!new_node)
 			return (NULL);
 		if (!head)

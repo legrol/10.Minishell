@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-08-21 06:42:59 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-08-21 06:42:59 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/08/21 06:42:59 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/10/16 15:06:02 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -72,6 +73,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+char	**ft_split_m(char const *s, char c);
 
 // ============================================================================
 // Functions to lists

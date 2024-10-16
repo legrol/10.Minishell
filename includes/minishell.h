@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/16 12:42:03 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:42:24 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ t_envp		*ft_init_list_envp(char **envp);
 // ============================================================================
 void		ft_cd(t_minishell *minishell);
 void		ft_env(t_minishell *minishell);
+void		ft_pwd(t_minishell *minishell);
 
 
 // ============================================================================

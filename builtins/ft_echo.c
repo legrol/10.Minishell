@@ -25,4 +25,3 @@ void	ft_echo(char *input)
 		ft_printf("%s\n", splited[1]);
 	p_freessplit(splited, p_mallocsize(shorting, ' '));
 }
-

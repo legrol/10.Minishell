@@ -57,6 +57,7 @@ static t_envp	*new_node_envp(char *key, char *value)
 	new_node->next = NULL;
 	return (new_node);
 }
+
 static void	split_envp(const char *envp, char **key, char **value)
 {
 	int		key_len;

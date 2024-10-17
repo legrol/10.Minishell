@@ -107,7 +107,10 @@ FRE					= ${FREE_DIR}/ft_free_minishell.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_env.c \
-						${BUILTINS_DIR}/ft_pwd.c
+						${BUILTINS_DIR}/ft_pwd.c \
+						${BUILTINS_DIR}/ft_echo.c \
+						${BUILTINS_DIR}/ft_export.c
+						
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \

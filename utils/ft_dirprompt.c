@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 10:37:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/16 10:48:29 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:33:11 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_dirprompt(t_minishell	*minishell)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		temp = ft_strjoin(PROMPT, cwd);
+		if(minishell->dirprompt != NULL)
+			free(minishell->dirprompt);
 		minishell->dirprompt = ft_strjoin(temp, "$ ");
 		free (temp);
 	}

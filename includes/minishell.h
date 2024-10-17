@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/16 15:42:24 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:22:27 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 // Initialization functions
 // ============================================================================
-t_minishell	*ft_init_minishell(char **envp);
+t_minishell	ft_init_minishell(char **envp);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(void);
 t_envp		*ft_init_list_envp(char **envp);
@@ -111,6 +111,8 @@ t_envp		*ft_init_list_envp(char **envp);
 void		ft_cd(t_minishell *minishell);
 void		ft_env(t_minishell *minishell);
 void		ft_pwd(t_minishell *minishell);
+void		ft_echo(t_minishell *minishell);
+void 		ft_export(t_minishell *minishell);
 
 
 // ============================================================================

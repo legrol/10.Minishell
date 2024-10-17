@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/16 15:45:46 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:28:00 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_signal g_signals;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell	*minishell;
+	t_minishell	minishell;
 
 	(void)argc;
 	(void)argv;
@@ -47,26 +47,32 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_signals();
 	ft_print_init();
 	minishell = ft_init_minishell(envp);
-	if (!minishell)
-		return (EXIT_FAILURE);
+	/*if (!minishell)
+		return (EXIT_FAILURE);*/
 	
 	
-	// current = minishell->list_envp;
+	// current = minishell.list_envp;
 	// while (current) // para visualizar (Eliminar en definitivo)
 	// {
-	// 	printf("Variable: %s=%s\n", current->key, current->value);
-	// 	current = current->next;
+	// 	printf("Variable: %s=%s\n", current.key, current.value);
+	// 	current = current.next;
 	// }
 	
 	while (1)
 	{
-		minishell->line = readline(minishell->dirprompt);
-		if (ft_strnstr(minishell->line, "cd", ft_strlen(minishell->line)))
-			ft_cd(minishell);
-		if (ft_strnstr(minishell->line, "env", ft_strlen(minishell->line)))
-			ft_env(minishell);
-		if (ft_strnstr(minishell->line, "pwd", ft_strlen(minishell->line)))
-			ft_pwd(minishell);
+		minishell.line = readline(minishell.dirprompt);
+		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
+			ft_cd(&minishell);
+		if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
+			ft_env(&minishell);
+		if (ft_strnstr(minishell.line, "pwd", ft_strlen("pwd")))
+			ft_pwd(&minishell);
+		if (ft_strnstr(minishell.line, "echo", ft_strlen("echo")))
+			ft_echo(&minishell);
+		if (ft_strnstr(minishell.line, "export", ft_strlen("export")))
+			ft_export(&minishell);
+		if (ft_strnstr(minishell.line, "exit", ft_strlen("exit")))
+			break ;
 	}
 	
 	// while (!glb_signals.exit)
@@ -75,7 +81,11 @@ int	main(int argc, char **argv, char **envp)
 	// 	if (cmd_ast)
 	// 		ft_is_builtin(cmd_ast);
 	// }
-	free(minishell);
+	//free(minishell);
 	rl_clear_history();
-	return (minishell->exit);
+	free(minishell.dirprompt);
+	free(minishell.list_envp->key);
+	free(minishell.list_envp->value);
+	free(minishell.list_envp);
+	return (minishell.exit);
 }

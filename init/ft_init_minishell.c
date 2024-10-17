@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:06:37 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/16 10:53:52 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:33:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,27 @@
  * 
  */
 
-t_minishell	*ft_init_minishell(char **envp)
+t_minishell	ft_init_minishell(char **envp)
 {
-	t_minishell	*minishell;
+	t_minishell	minishell;
 
-	minishell = (t_minishell *)malloc(sizeof(t_minishell));
+	/*minishell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (!minishell)
-		return (NULL);
-	minishell->list_envp = ft_init_list_envp(envp);
-	if (!minishell->list_envp)
+		return (NULL);*/
+	//minishell = NULL;
+	minishell.list_envp = ft_init_list_envp(envp);
+	/*if (!minishell.list_envp)
 	{
 		free(minishell);
 		return (NULL);
-	}
-	minishell->envp = envp;
-	minishell->stdin = dup(STDIN_FILENO);
-	minishell->stdout = dup(STDOUT_FILENO);
-	minishell->line = NULL;
-	minishell->tokens = NULL;
-	minishell->exit = 0;
-	ft_dirprompt(minishell);
+	}*/
+	minishell.dirprompt = NULL;
+	minishell.envp = envp;
+	minishell.stdin = dup(STDIN_FILENO);
+	minishell.stdout = dup(STDOUT_FILENO);
+	minishell.line = NULL;
+	minishell.tokens = NULL;
+	minishell.exit = 0;
+	ft_dirprompt(&minishell);
 	return (minishell);
 }

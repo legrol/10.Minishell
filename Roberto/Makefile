@@ -94,7 +94,10 @@ INT					= ${INIT_DIR}/ft_init_env.c \
 						${INIT_DIR}/ft_init_minishell.c \
 						${INIT_DIR}/ft_init_signals.c
 
-UTL					= ${UTILS_DIR}/ft_print_init.c						
+UTL					= ${UTILS_DIR}/ft_print_init.c	\
+						${UTILS_DIR}/ft_dirprompt.c \
+						${UTILS_DIR}/ft_find_dir.c \
+						${UTILS_DIR}/ft_change_env.c			
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 
@@ -102,7 +105,9 @@ FRE					= ${FREE_DIR}/ft_free_minishell.c
 
 # EXE					= ${EXEC_DIR}/ft_xxx.c
 
-# BUI					= ${BUILTINS_DIR}/ft_xxx.c
+BUI					= ${BUILTINS_DIR}/ft_cd.c \
+						${BUILTINS_DIR}/ft_env.c \
+						${BUILTINS_DIR}/ft_pwd.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \
@@ -113,7 +118,7 @@ OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
 # OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
 # OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
-# OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
+OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
 
 # ═══ Rules ══════════════════════════════════════════════════════════════════ #
 #     -----                                                                    #
@@ -161,9 +166,9 @@ ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-# ${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 ftlibft:
 	@cd ${LIBRARIES}/${LIBFT_DIR} ${MK_} all

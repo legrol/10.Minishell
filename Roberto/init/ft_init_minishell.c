@@ -43,5 +43,6 @@ t_minishell	*ft_init_minishell(char **envp)
 	minishell->line = NULL;
 	minishell->tokens = NULL;
 	minishell->exit = 0;
+	ft_dirprompt(minishell);
 	return (minishell);
 }

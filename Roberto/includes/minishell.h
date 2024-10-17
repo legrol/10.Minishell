@@ -84,12 +84,13 @@ typedef struct s_minishell
 	char			*line;
 	t_token			*tokens;
 	int				exit;
+	char			*dirprompt;
 }					t_minishell;
 
 // ============================================================================
 // Global variable
 // ============================================================================
-extern	t_signal glb_signals;
+extern	t_signal g_signals;
 
 // ============================================================================
 // Management errors
@@ -105,8 +106,20 @@ void		ft_init_signals(void);
 t_envp		*ft_init_list_envp(char **envp);
 
 // ============================================================================
+// Builtins functions
+// ============================================================================
+void		ft_cd(t_minishell *minishell);
+void		ft_env(t_minishell *minishell);
+void		ft_pwd(t_minishell *minishell);
+
+// ============================================================================
 // Initialization functions
 // ============================================================================
 void		ft_print_init(void);
+void		ft_dirprompt(t_minishell	*minishell);
+char		*ft_workingdir(void);
+char		*ft_find_dir(t_minishell *minishell, const char *str);
+void		ft_change_env(t_minishell *minishell, const char *str1, \
+			const char *str2);
 
 #endif

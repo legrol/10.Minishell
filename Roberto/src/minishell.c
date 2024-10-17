@@ -30,7 +30,7 @@
  *  
  */
 
-t_signal glb_signals;
+t_signal g_signals;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,23 +42,33 @@ int	main(int argc, char **argv, char **envp)
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
 	if (argc != 1 || envp == NULL || *envp == NULL)
 		ft_manage_err(YELLOW ENV_ERR RESET);
-	// t_envp *current; // para visualizar (Eliminar en definitivo)
-	ft_init_struc_sig(&glb_signals);
+	//t_envp *current; // para visualizar (Eliminar en definitivo)
+	ft_init_struc_sig(&g_signals);
 	ft_init_signals();
 	ft_print_init();
 	minishell = ft_init_minishell(envp);
 	if (!minishell)
 		return (EXIT_FAILURE);
-	//
-	//
+	
+	
 	// current = minishell->list_envp;
 	// while (current) // para visualizar (Eliminar en definitivo)
 	// {
 	// 	printf("Variable: %s=%s\n", current->key, current->value);
 	// 	current = current->next;
 	// }
-	//
-	//
+	
+	while (1)
+	{
+		minishell->line = readline(minishell->dirprompt);
+		if (ft_strnstr(minishell->line, "cd", ft_strlen(minishell->line)))
+			ft_cd(minishell);
+		if (ft_strnstr(minishell->line, "env", ft_strlen(minishell->line)))
+			ft_env(minishell);
+		if (ft_strnstr(minishell->line, "pwd", ft_strlen(minishell->line)))
+			ft_pwd(minishell);
+	}
+	
 	// while (!glb_signals.exit)
 	// {
 	// 	t_ast *cmd_ast = ft_parse(minishell);
@@ -66,6 +76,6 @@ int	main(int argc, char **argv, char **envp)
 	// 		ft_is_builtin(cmd_ast);
 	// }
 	free(minishell);
-	clear_history();
-	return (0);
+	rl_clear_history();
+	return (minishell->exit);
 }

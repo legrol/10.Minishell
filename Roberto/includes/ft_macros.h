@@ -15,6 +15,7 @@
 
 # define NUM_ARGV_ERR		"❗Arguments are not accepted"
 # define ENV_ERR			"❗Environment not found. Exiting..."
+# define QUOTES_ERR			"❗Syntax error. Open quotes"
 
 
 # define PROMPT             "minishell: ~ $ "

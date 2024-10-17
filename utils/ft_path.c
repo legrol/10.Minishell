@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/15 13:50:29 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:50:47 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	*p_freessplit(char **ssplit, int k)
 	return (NULL);
 }
 
-char	**ft_path(char **env)
+char	**ft_path(t_minishell *minishell)
 {
 	int		i;
 	char	**split_path;
 	char	**cp_split_path;
 	char	*str;
 
-	str = ft_find_dir(env, "PATH");
+	str = ft_find_dir(minishell, "PATH");
 	cp_split_path = ft_split(str, ':');
 	split_path = (char **)malloc((1 + p_mallocsize(str, ':')) * \
 				sizeof(char *));

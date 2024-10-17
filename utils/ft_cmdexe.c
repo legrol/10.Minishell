@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/16 09:56:16 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:56:18 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_cmd_action(char **path, char *arg)
 	return (NULL);
 }
 
-void	ft_cmdexe(char **env, char *str)
+void	ft_cmdexe(t_minishell *minishell)
 {
 	char	**arg;
 	char	*cmd;
@@ -46,8 +46,8 @@ void	ft_cmdexe(char **env, char *str)
 	}
 	else if (pid == 0)
 	{
-		path = ft_path(env);
-		arg = ft_split(str, ' ');
+		path = ft_path(minishell);
+		arg = ft_split(minishell->line, ' ');
 		cmd = ft_cmd_action(path, arg[0]);
 		execve(cmd, arg, NULL);
 		perror("execve cmd2:");

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/17 16:28:00 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:54:57 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_export(&minishell);
 		if (ft_strnstr(minishell.line, "exit", ft_strlen("exit")))
 			break ;
+		else
+			ft_cmdexe(minishell);
 	}
 	
 	// while (!glb_signals.exit)

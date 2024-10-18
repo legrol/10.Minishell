@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/17 17:56:18 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:35:02 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-char	*ft_cmd_action(char **path, char *arg)
+static char	*ft_cmd_action(char **path, char *arg)
 {
 	int		i;
 	char	*cmd;

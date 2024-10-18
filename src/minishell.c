@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/17 17:54:57 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:38:13 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ int	main(int argc, char **argv, char **envp)
 		minishell.line = readline(minishell.dirprompt);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
-		if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
+		else if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
 			ft_env(&minishell);
-		if (ft_strnstr(minishell.line, "pwd", ft_strlen("pwd")))
+		else if (ft_strnstr(minishell.line, "pwd", ft_strlen("pwd")))
 			ft_pwd(&minishell);
-		if (ft_strnstr(minishell.line, "echo", ft_strlen("echo")))
+		else if (ft_strnstr(minishell.line, "echo", ft_strlen("echo")))
 			ft_echo(&minishell);
-		if (ft_strnstr(minishell.line, "export", ft_strlen("export")))
+		else if (ft_strnstr(minishell.line, "export", ft_strlen("export")))
 			ft_export(&minishell);
-		if (ft_strnstr(minishell.line, "exit", ft_strlen("exit")))
+		else if (ft_strnstr(minishell.line, "exit", ft_strlen("exit")))
 			break ;
 		else
-			ft_cmdexe(minishell);
+			ft_cmdexe(&minishell);
 	}
 	
 	// while (!glb_signals.exit)

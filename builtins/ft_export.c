@@ -6,11 +6,27 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/17 17:44:43 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:37:07 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*static t_envp	*new_node_envp(char *key, char *value)
+{
+	t_envp	*new_node;
+
+	new_node = (t_envp *)malloc(sizeof(t_envp));
+	if (!new_node)
+		return (NULL);
+	new_node->key = ft_strdup(key);
+	if (!value)
+		new_node->value = NULL;
+	else
+		new_node->value = ft_strdup(value);
+	new_node->next = NULL;
+	return (new_node);
+}*/
 
 static int ft_count_lines(t_minishell *minishell)
 {
@@ -33,13 +49,21 @@ static char **ft_copy_env(t_minishell *minishell)
 	t_envp *temp;
 	char	**cpy;
 	int i;
+	/*t_envp *new_nodo;
 
+	new_nodo = new_node_envp("A", NULL);
+	temp = minishell->list_envp;
+	while(minishell->list_envp->next->next->next->next)
+		minishell->list_envp = minishell->list_envp->next;
+	new_nodo->next = minishell->list_envp->next;
+	minishell->list_envp->next = new_nodo;
+	minishell->list_envp = temp;*/
 	cpy = (char **)ft_calloc((ft_count_lines(minishell)+1),sizeof(char*));
 	if (!cpy)
 		return (NULL);
 	temp = minishell->list_envp;
 	i = 0;
-	while(minishell->list_envp->next)
+	while(minishell->list_envp->next->next)
 	{
 		cpy[i] = ft_strdup(minishell->list_envp->key);
 		i++;
@@ -87,8 +111,11 @@ static int ft_export_only(t_minishell *minishell)
 		{
 			while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
 				minishell->list_envp = minishell->list_envp->next;
-			ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
-			minishell->list_envp->value);
+			if (minishell->list_envp->value)
+				ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
+				minishell->list_envp->value);
+			else
+				ft_printf("declare -x %s\n", minishell->list_envp->key);
 			free(cpy[i]);
 			minishell->list_envp = temp;
 			i++;
@@ -106,9 +133,10 @@ static int ft_export_only(t_minishell *minishell)
 
 void ft_export(t_minishell *minishell)
 {
-	t_envp *temp;
+	//t_envp *temp;
 	
 	if (ft_export_only(minishell) == 1)
 		return ;
+	
 }
 

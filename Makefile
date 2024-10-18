@@ -97,7 +97,9 @@ INT					= ${INIT_DIR}/ft_init_env.c \
 UTL					= ${UTILS_DIR}/ft_print_init.c	\
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
-						${UTILS_DIR}/ft_change_env.c
+						${UTILS_DIR}/ft_change_env.c \
+						${UTILS_DIR}/ft_cmdexe.c\
+						${UTILS_DIR}/ft_path.c
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 

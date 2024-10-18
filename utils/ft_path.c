@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/17 17:50:47 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:36:41 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-unsigned int	p_mallocsize(char const *s, char c)
+static unsigned int	p_mallocsize(char const *s, char c)
 {
 	int	ms;
 	int	i;
@@ -30,17 +30,6 @@ unsigned int	p_mallocsize(char const *s, char c)
 	if (s[i - 1] != c)
 		ms++;
 	return (ms);
-}
-
-void	*p_freessplit(char **ssplit, int k)
-{
-	while (k >= 0)
-	{
-		free(ssplit[k]);
-		k--;
-	}
-	free(ssplit);
-	return (NULL);
 }
 
 char	**ft_path(t_minishell *minishell)

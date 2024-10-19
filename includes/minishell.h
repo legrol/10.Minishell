@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/15 23:27:00 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/19 14:51:37 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 // Initialization functions
 // ============================================================================
-t_minishell	*ft_init_minishell(char **envp);
+t_minishell	ft_init_minishell(char **envp);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(void);
 t_envp		*ft_init_list_envp(char **envp);
@@ -111,6 +111,8 @@ t_envp		*ft_init_list_envp(char **envp);
 void		ft_cd(t_minishell *minishell);
 void		ft_env(t_minishell *minishell);
 void		ft_pwd(t_minishell *minishell);
+void		ft_echo(t_minishell *minishell);
+void 		ft_export(t_minishell *minishell);
 
 // ============================================================================
 // Tokenizer functions
@@ -129,5 +131,7 @@ char		*ft_workingdir(void);
 char		*ft_find_dir(t_minishell *minishell, const char *str);
 void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
+void		ft_cmdexe(t_minishell *minishell);
+char		**ft_path(t_minishell *minishell);
 
 #endif

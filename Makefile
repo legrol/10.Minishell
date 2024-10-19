@@ -98,7 +98,9 @@ INT					= ${INIT_DIR}/ft_init_env.c \
 UTL					= ${UTILS_DIR}/ft_print_init.c	\
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
-						${UTILS_DIR}/ft_change_env.c			
+						${UTILS_DIR}/ft_change_env.c \
+						${UTILS_DIR}/ft_cmdexe.c\
+						${UTILS_DIR}/ft_path.c			
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 
@@ -108,7 +110,9 @@ FRE					= ${FREE_DIR}/ft_free_minishell.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_env.c \
-						${BUILTINS_DIR}/ft_pwd.c
+						${BUILTINS_DIR}/ft_pwd.c \
+						${BUILTINS_DIR}/ft_echo.c \
+						${BUILTINS_DIR}/ft_export.c
 
 TOK					= ${TOKENIZER_DIR}/ft_tokenizer.c \
 						${TOKENIZER_DIR}/ft_check_quotes.c

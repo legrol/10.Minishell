@@ -114,7 +114,8 @@ BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_echo.c \
 						${BUILTINS_DIR}/ft_export.c
 
-TOK					= ${TOKENIZER_DIR}/ft_tokenizer.c \
+TOK					= ${TOKENIZER_DIR}/ft_tools_token.c \
+						${TOKENIZER_DIR}/ft_tokenizer.c \
 						${TOKENIZER_DIR}/ft_check_quotes.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})

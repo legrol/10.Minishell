@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/17 17:37:07 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:31:58 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * 
  * FALTA IMPLEMENTAR ~/blablabla
  * FALTA liberar el split
+ * FALTA añadir los codigos de error
 */
 
 static void	ft_swap_pwd(t_minishell *minishell)

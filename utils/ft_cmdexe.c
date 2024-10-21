@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/18 11:35:02 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:20:58 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,24 @@ static char	*ft_cmd_action(char **path, char *arg)
 {
 	int		i;
 	char	*cmd;
+	char	*temp;
 
+	temp = ft_strtrim(arg, ".");
 	i = 0;
 	while (path[i])
 	{
-		cmd = ft_strjoin(path[i], arg);
+		cmd = ft_strjoin(path[i], temp);
+		printf("%s\n", cmd);
 		if (access(cmd, X_OK) == 0)
+		{
+			free(temp);
 			return (cmd);
+		}
 		free (cmd);
 		cmd = NULL;
 		i++;
 	}
+	free(temp);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/17 17:37:27 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:42:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,25 @@ static int	ft_echo_only(t_minishell *minishell)
 	return (0);
 }
 
-static void ft_print_echo(char *str, char c)
+static void ft_print_echo(char *str, char c, t_minishell *minishell)
 {
 	char *trim;
 
 	if (ft_strchr(str, '\''))
 	{
 		trim = ft_strtrim(str, "\'");
-		ft_printf("%s%c", trim, c);
+		if (ft_strcmp(trim, "$?") == 0)
+			ft_printf("%i%c", minishell->exit, c);
+		else 
+			ft_printf("%s%c", trim, c);
 	}
 	else 
 	{
 		trim = ft_strtrim(str, "\"");
-		ft_printf("%s%c", trim, c);
+		if (ft_strcmp(trim, "$?") == 0)
+			ft_printf("%i%c", minishell->exit, c);
+		else 
+			ft_printf("%s%c", trim, c);
 	}
 	free(trim);
 }
@@ -61,8 +67,8 @@ void	ft_echo(t_minishell *minishell)
 	if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && !splited[2])
 		ft_printf("");
 	else if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && splited[2])
-		ft_print_echo(splited[2], '\0');
+		ft_print_echo(splited[2], '\0', minishell);
 	else
-		ft_print_echo(splited[1], '\n');
+		ft_print_echo(splited[1], '\n', minishell);
 	//freessplit_m(splited, mallocsize_m(shorting, ' '));
 }

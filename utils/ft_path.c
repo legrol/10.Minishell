@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/18 11:36:41 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:26:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**ft_path(t_minishell *minishell)
 
 	str = ft_find_dir(minishell, "PATH");
 	cp_split_path = ft_split(str, ':');
-	split_path = (char **)malloc((1 + p_mallocsize(str, ':')) * \
+	split_path = (char **)malloc((2 + p_mallocsize(str, ':')) * \
 				sizeof(char *));
 	if (!split_path)
 		exit(EXIT_FAILURE);
@@ -52,7 +52,8 @@ char	**ft_path(t_minishell *minishell)
 		free(cp_split_path[i]);
 		i++;
 	}
-	split_path[i] = NULL;
+	split_path[i] = ft_find_dir(minishell, "PWD");
+	split_path[i+1] = NULL;
 	free(cp_split_path);
 	return (split_path);
 }

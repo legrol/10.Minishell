@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-17 09:33:41 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-10-17 09:33:41 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/10/17 09:33:41 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/10/21 10:14:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * 
  */
 
-static t_token	ft_read_tokens(char *line, int *i)
+/*static t_token	ft_read_tokens(char *line, int *i)
 {
 	t_token	*token;
 	int		i;
@@ -71,4 +71,4 @@ void	ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
-}
+}*/

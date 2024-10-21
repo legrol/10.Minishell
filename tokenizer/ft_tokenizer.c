@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 09:33:41 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 10:14:45 by pabromer         ###   ########.fr       */
-/*   Created: 2024/10/17 09:33:41 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 10:14:45 by pabromer         ###   ########.fr       */
+/*   Created: Invalid Date        by              +#+  #+#    #+#             */
+/*   Updated: 2024/10/21 20:27:26 by rdel-olm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static t_token	*ft_get_tokens(char *line)
 
 }
 
-t_ast	ft_tokenizer(t_minishell *minishell)
+t_ast	*ft_tokenizer(t_minishell *minishell)
 {
 	t_ast	*ast;
 

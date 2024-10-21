@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 11:02:53 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:27:23 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <signal.h>			// for SIGINT, SIGQUIT...
 # include <readline/readline.h> // for readline...
 # include <readline/history.h>	// for clear_history...
+# include <sys/wait.h> 			//
 
 // ============================================================================
 // Access to my libraries
@@ -36,7 +37,6 @@
 # include "get_next_line.h"
 # include "libft.h"
 # include "ft_macros.h"
-# include <sys/wait.h> 
 
 // ============================================================================
 // Structures
@@ -126,7 +126,7 @@ void		ft_export(t_minishell *minishell);
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
-t_ast		ft_tokenizer(t_minishell *minishell);
+t_ast		*ft_tokenizer(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 void		ft_skip_spaces(char *line, int *index);

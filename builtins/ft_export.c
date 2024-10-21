@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/18 11:37:07 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:51:04 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*static t_envp	*new_node_envp(char *key, char *value)
+static t_envp	*new_node_envp(char *key, char *value)
 {
 	t_envp	*new_node;
 
@@ -26,7 +26,7 @@
 		new_node->value = ft_strdup(value);
 	new_node->next = NULL;
 	return (new_node);
-}*/
+}
 
 static int ft_count_lines(t_minishell *minishell)
 {
@@ -49,15 +49,6 @@ static char **ft_copy_env(t_minishell *minishell)
 	t_envp *temp;
 	char	**cpy;
 	int i;
-	/*t_envp *new_nodo;
-
-	new_nodo = new_node_envp("A", NULL);
-	temp = minishell->list_envp;
-	while(minishell->list_envp->next->next->next->next)
-		minishell->list_envp = minishell->list_envp->next;
-	new_nodo->next = minishell->list_envp->next;
-	minishell->list_envp->next = new_nodo;
-	minishell->list_envp = temp;*/
 	cpy = (char **)ft_calloc((ft_count_lines(minishell)+1),sizeof(char*));
 	if (!cpy)
 		return (NULL);
@@ -133,10 +124,26 @@ static int ft_export_only(t_minishell *minishell)
 
 void ft_export(t_minishell *minishell)
 {
-	//t_envp *temp;
-	
+	t_envp *temp;
+	t_envp *new_nodo;
+	char 	**split;
+	char	**split2;
+
 	if (ft_export_only(minishell) == 1)
 		return ;
-	
+	split = ft_split_m(minishell->line, ' ');
+	if(!split)
+		return ;
+	split2 = ft_split_m(split[1], '=');
+	if (split2)
+		new_nodo = new_node_envp(split2[0], split2[1]);
+	else
+		new_nodo = new_node_envp(split[1], NULL);
+	temp = minishell->list_envp;
+	while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0)
+		minishell->list_envp = minishell->list_envp->next;
+	new_nodo->next = minishell->list_envp->next;
+	minishell->list_envp->next = new_nodo;
+	minishell->list_envp = temp;
 }
 

@@ -6,11 +6,11 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:53:36 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/16 12:09:26 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:18:34 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_find_dir(t_minishell *minishell, const char *str)
 {

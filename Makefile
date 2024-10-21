@@ -95,12 +95,13 @@ INT					= ${INIT_DIR}/ft_init_env.c \
 						${INIT_DIR}/ft_init_minishell.c \
 						${INIT_DIR}/ft_init_signals.c
 
-UTL					= ${UTILS_DIR}/ft_print_init.c	\
+UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
 						${UTILS_DIR}/ft_change_env.c \
-						${UTILS_DIR}/ft_cmdexe.c\
-						${UTILS_DIR}/ft_path.c			
+						${UTILS_DIR}/ft_cmdexe.c \
+						${UTILS_DIR}/ft_path.c \
+						${UTILS_DIR}/ft_sync_envp.c
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 

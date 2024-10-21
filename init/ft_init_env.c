@@ -23,12 +23,13 @@
  * 							`t_minishell` structure and managing the shell 
  * 							environment.
  * 
- * The function "create_node_and_add" creates a new node with the environment
+ * The function "create_node_and_add" Creates a new node with the environment 
  * variable from envp.
  * 
- * @param t_envp *head	Pointer to the last node in the current linked list.
- * @param char *envp	The full environment variable string (e.g., 
- * 						"PATH=/usr/bin").
+ * @param t_envp *head		Pointer to the last node in the current linked 
+ * 							list.
+ * @param char *envp		The full environment variable string (e.g., 
+ * 							"PATH=/usr/bin"). 
  * 
  * The function "split_envp" splits a single environment variable string into 
  * a key-value pair. The string is split at the first occurrence of the '=' 

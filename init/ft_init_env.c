@@ -23,6 +23,14 @@
  * 							`t_minishell` structure and managing the shell 
  * 							environment.
  * 
+ * The function "create_node_and_add" Creates a new node with the environment 
+ * variable from envp.
+ * 
+ * @param t_envp *head		Pointer to the last node in the current linked 
+ * 							list.
+ * @param char *envp		The full environment variable string (e.g., 
+ * 							"PATH=/usr/bin"). 
+ * 
  * The function "split_envp" splits a single environment variable string into 
  * a key-value pair. The string is split at the first occurrence of the '=' 
  * character. If there is no '=', the entire string is considered the key, 
@@ -77,32 +85,41 @@ static void	split_envp(const char *envp, char **key, char **value)
 	}
 }
 
+t_envp	*create_node_and_add(t_envp *head, char *envp)
+{
+	char	*key;
+	char	*value;
+	t_envp	*new_node;
+
+	split_envp(envp, &key, &value);
+	new_node = new_node_envp(key, value);
+	free(key);
+	if (value)
+		free(value);
+	if (!new_node)
+		return (NULL);
+	if (!head)
+		return (new_node);
+	return (head->next = new_node);
+}
+
 t_envp	*ft_init_list_envp(char **envp)
 {
 	int		i;
-	char	*key;
-	char	*value;
 	t_envp	*head;
 	t_envp	*current;
-	t_envp	*new_node;
 
 	i = 0;
 	head = NULL;
+	current = NULL;
 	while (envp[i])
 	{
-		split_envp(envp[i], &key, &value);
-		new_node = new_node_envp(key, value);
-		if (!new_node)
+		current = create_node_and_add(current, envp[i]);
+		if (!current)
 			return (NULL);
 		if (!head)
-			head = new_node;
-		else
-			current->next = new_node;
-		current = new_node;
+			head = current;
 		i++;
-		free(key);
-		if (value)
-			free(value);
 	}
 	return (head);
 }

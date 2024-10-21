@@ -51,6 +51,7 @@ LIBRARIES			= ./libs
 OBJ_DIR				= ./obj
 PARSER_DIR			= ./parser
 BUILTINS_DIR		= ./builtins
+TOKENIZER_DIR		= ./tokenizer
 LIBFT_DIR			= libft
 PRINTFT_DIR			= printf
 EXAMFT_DIR			= examft
@@ -99,7 +100,7 @@ UTL					= ${UTILS_DIR}/ft_print_init.c	\
 						${UTILS_DIR}/ft_find_dir.c \
 						${UTILS_DIR}/ft_change_env.c \
 						${UTILS_DIR}/ft_cmdexe.c\
-						${UTILS_DIR}/ft_path.c
+						${UTILS_DIR}/ft_path.c			
 
 FRE					= ${FREE_DIR}/ft_free_minishell.c
 
@@ -112,7 +113,10 @@ BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_pwd.c \
 						${BUILTINS_DIR}/ft_echo.c \
 						${BUILTINS_DIR}/ft_export.c
-						
+
+TOK					= ${TOKENIZER_DIR}/ft_tools_token.c \
+						${TOKENIZER_DIR}/ft_tokenizer.c \
+						${TOKENIZER_DIR}/ft_check_quotes.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \
@@ -124,6 +128,7 @@ OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
 # OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
 # OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
 OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
+OBJ_TOK				= $(patsubst ${TOKENIZER_DIR}/%.c, ${OBJ_DIR}/%.o, ${TOK})
 
 # ═══ Rules ══════════════════════════════════════════════════════════════════ #
 #     -----                                                                    #
@@ -132,11 +137,13 @@ all: ${NAME}
 
 ${NAME}: ftlibft ftprintf ftexamft  ${OBJ_SRC} ${OBJ_GNL} \
 									${OBJ_ERR} ${OBJ_INT} ${OBJ_UTL} \
-									${OBJ_FRE} ${OBJ_PAR} ${OBJ_EXE} ${OBJ_BUI}
+									${OBJ_FRE} ${OBJ_PAR} ${OBJ_EXE} \
+									${OBJ_BUI} ${OBJ_TOK}
 	@echo "$(YELLOW)Compiling root ...$(DEF_COLOR)"
 	@${CC} ${CFLAGS} ${IFLAGS} -o ${NAME} ${OBJ_SRC} ${OBJ_GNL} ${OBJ_ERR} \
 									${OBJ_INT} ${OBJ_UTL} ${OBJ_FRE} \
-									${OBJ_PAR} ${OBJ_EXE} ${OBJ_BUI} ${LFLAGS}
+									${OBJ_PAR} ${OBJ_EXE} ${OBJ_BUI} \
+									${OBJ_TOK} ${LFLAGS}
 	@echo "$(GREEN) $(NAME) all created ✓$(DEF_COLOR)"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
@@ -172,6 +179,10 @@ ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 ${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+
+${OBJ_DIR}/%.o: ${TOKENIZER_DIR}/%.c
 	@${MKD} $(dir $@)
 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 

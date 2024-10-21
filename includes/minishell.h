@@ -115,6 +115,13 @@ void		ft_pwd(t_minishell *minishell);
 void		ft_echo(t_minishell *minishell);
 void 		ft_export(t_minishell *minishell);
 
+// ============================================================================
+// Tokenizer functions
+// ============================================================================
+void		ft_tokenizer(t_minishell *minishell);
+int			ft_checker_quotes_unclosed(t_minishell *minishell);
+int			ft_checker_quotes(char *line, int lenght);
+void		ft_skip_spaces(char *line, int *index);
 
 // ============================================================================
 // Utils functions

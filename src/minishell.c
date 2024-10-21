@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/19 14:48:11 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:43:05 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,20 @@ t_signal g_signals;
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
+	int i;
 
 	(void)argc;
 	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
-	if (argc != 1 || envp == NULL || *envp == NULL)
-		ft_manage_err(YELLOW ENV_ERR RESET);
 	//t_envp *current; // para visualizar (Eliminar en definitivo)
 	ft_init_struc_sig(&g_signals);
 	ft_init_signals();
 	ft_print_init();
-	minishell = ft_init_minishell(envp);
+	if (envp && argc == 1)
+		minishell = ft_init_minishell(envp);
+	else
+		minishell = ft_init_minishell(minishell.envp);
 	/*if (!minishell)
 		return (EXIT_FAILURE);*/
 	
@@ -57,9 +59,10 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("Variable: %s=%s\n", current.key, current.value);
 	// 	current = current.next;
 	// }
-
+	
 	while (1)
 	{
+		ft_sync_envp(&minishell);
 		minishell.line = readline(minishell.dirprompt);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
@@ -75,8 +78,9 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else
 			ft_cmdexe(&minishell);
+		free(minishell.line);
 	}
-
+	
 	// while (!glb_signals.exit)
 	// {
 	// 	t_ast *cmd_ast = ft_parse(minishell);
@@ -85,9 +89,17 @@ int	main(int argc, char **argv, char **envp)
 	// }
 	//free(minishell);
 	rl_clear_history();
+	i = 0;
+	while(minishell.envp[i])
+	{
+		free(minishell.envp[i]);
+		i++;
+	}
+	free(minishell.line);
+	free(minishell.envp);
 	free(minishell.dirprompt);
 	free(minishell.list_envp->key);
 	free(minishell.list_envp->value);
 	free(minishell.list_envp);
-	return (minishell.exit);
+	return (0);
 }

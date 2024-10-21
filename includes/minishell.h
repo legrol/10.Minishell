@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/19 14:51:37 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:02:53 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "get_next_line.h"
 # include "libft.h"
 # include "ft_macros.h"
+# include <sys/wait.h> 
 
 // ============================================================================
 // Structures
@@ -51,6 +52,14 @@ typedef enum e_tok_typ_enum
 	TOKEN_ARG,
 	TOKEN_PIPE,
 }					t_tok_typ_enum;
+
+typedef struct s_ast
+{
+	t_tok_typ_enum	type;
+	char			*value;
+	struct s_ast	*right;
+	struct s_ast	*left;
+}					t_ast;
 
 typedef struct s_signal
 {
@@ -112,18 +121,19 @@ void		ft_cd(t_minishell *minishell);
 void		ft_env(t_minishell *minishell);
 void		ft_pwd(t_minishell *minishell);
 void		ft_echo(t_minishell *minishell);
-void 		ft_export(t_minishell *minishell);
+void		ft_export(t_minishell *minishell);
 
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
-void		ft_tokenizer(t_minishell *minishell);
+t_ast		ft_tokenizer(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 void		ft_skip_spaces(char *line, int *index);
+int			ft_check_operators(char *line, int index);
 
 // ============================================================================
-// Initialization functions
+// Utils functions
 // ============================================================================
 void		ft_print_init(void);
 void		ft_dirprompt(t_minishell	*minishell);
@@ -133,5 +143,6 @@ void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
 void		ft_cmdexe(t_minishell *minishell);
 char		**ft_path(t_minishell *minishell);
+void		ft_sync_envp(t_minishell *minishell);
 
 #endif

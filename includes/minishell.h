@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 20:27:23 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:10:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,40 +109,42 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 // Initialization functions
 // ============================================================================
+t_envp		*ft_init_list_envp(char **envp);
 t_minishell	ft_init_minishell(char **envp);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(void);
-t_envp		*ft_init_list_envp(char **envp);
 
 // ============================================================================
 // Builtins functions
 // ============================================================================
 void		ft_cd(t_minishell *minishell);
-void		ft_env(t_minishell *minishell);
-void		ft_pwd(t_minishell *minishell);
 void		ft_echo(t_minishell *minishell);
+void		ft_env(t_minishell *minishell);
 void		ft_export(t_minishell *minishell);
+void		ft_pwd(t_minishell *minishell);
 
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
-t_ast		*ft_tokenizer(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
-void		ft_skip_spaces(char *line, int *index);
 int			ft_check_operators(char *line, int index);
+void 		ft_print_tokens(t_token *tokens);
+void		ft_skip_spaces(char *line, int *index);
+t_ast		*ft_tokenizer(t_minishell *minishell);
+void		ft_update_type_tokens(t_token *token);
 
 // ============================================================================
 // Utils functions
 // ============================================================================
-void		ft_print_init(void);
-void		ft_dirprompt(t_minishell	*minishell);
-char		*ft_workingdir(void);
-char		*ft_find_dir(t_minishell *minishell, const char *str);
 void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
 void		ft_cmdexe(t_minishell *minishell);
+void		ft_dirprompt(t_minishell	*minishell);
+char		*ft_find_dir(t_minishell *minishell, const char *str);
 char		**ft_path(t_minishell *minishell);
+void		ft_print_init(void);
 void		ft_sync_envp(t_minishell *minishell);
+char		*ft_workingdir(void);
 
 #endif

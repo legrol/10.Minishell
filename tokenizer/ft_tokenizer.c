@@ -6,33 +6,46 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2024/10/21 20:30:00 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:50:17 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_tokenizer" xxx
+ * The function "ft_tokenizer" tokenizes the input line from the `minishell`
+ * structure and creates an abstract syntax tree (AST) from the tokens. It 
+ * handles signal initialization, input reading, and basic error checking 
+ * (e.g., unclosed quotes).
  * 
  * @param t_minishell *minishell	A pointer to the minishell structure that
- * 									contains the line to be checked.
+ * 									contains the input line and stores the 
+ * 									tokens and the generated AST.
  * 
- * The function "ft_get_tokens" xxx
+ * The function "ft_get_tokens" breaks the input line into a list of tokens, 
+ * each of which is processed and stored in a linked list. It skips spaces and 
+ * updates token types.
  * 
- * @param char *line				xxx 
+ * @param char *line				A string containing the input line to be 
+ * 									tokenized. 
  * 
- * The function "ft_read_tokens" xxx
+ * The function "ft_read_tokens" reads a single token from the input line 
+ * and allocates memory for it. It also handles the parsing of quotes and 
+ * stores the token in a structure.
  * 
- * @param char *line				xxx
- * @param int *index				xxx
+ * @param char *line				A string representing the input line being 
+ * 									parsed.
+ * @param int *index				A pointer to the current position in the 
+ * 									line.
  * 
- * The function "ft_token_size" xxx
+ * The function "ft_token_size" calculates the size of a token in the input 
+ * line, considering quoted strings and special characters.
  * 
- * @param char *line				xxx
- * @param int *index				xxx
- * 
- * 
+ * @param char *line				A string containing the input line to 
+ * 									calculate the token size.
+ * @param int *index				A pointer to the current position in the 
+ * 									line. This index is updated as the token 
+ * 									is processed. 
  * 
  */
 
@@ -120,7 +133,7 @@ static t_token	*ft_get_tokens(char *line)
 		token->prev = prev;
 		prev = token;
 		ft_update_type_tokens(token); 	//
-		ft_pass_spaces(line, &i);		//
+		ft_skip_spaces(line, &i);
 	}
 	if (token)
 		token->next = NULL;

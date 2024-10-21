@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 14:51:04 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:26:26 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ static int ft_export_only(t_minishell *minishell)
 	return (0);
 }
 
+int ft_find_key(t_minishell *minishell)
+
 void ft_export(t_minishell *minishell)
 {
 	t_envp *temp;
@@ -136,9 +138,15 @@ void ft_export(t_minishell *minishell)
 		return ;
 	split2 = ft_split_m(split[1], '=');
 	if (split2)
+	{
+		
 		new_nodo = new_node_envp(split2[0], split2[1]);
+	}
 	else
+	{
+
 		new_nodo = new_node_envp(split[1], NULL);
+	}
 	temp = minishell->list_envp;
 	while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0)
 		minishell->list_envp = minishell->list_envp->next;

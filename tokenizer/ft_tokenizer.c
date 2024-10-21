@@ -24,7 +24,7 @@
  * 
  */
 
-static t_token	ft_read_tokens(char *line, int *i)
+static t_token	*ft_read_tokens(char *line, int *i)
 {
 	t_token	*token;
 	int		i;
@@ -46,16 +46,24 @@ static t_token	ft_read_tokens(char *line, int *i)
 
 static t_token	*ft_get_tokens(char *line)
 {
-	int	i;
+	int		i;
+	t_token	*token;
 
 	i = 0;
 	ft_skip_spaces(line, &i);
+	while (line[i])
+	{
+		token = ft_read_tokens(line, &i);
+
+	}
 
 
 }
 
 void	ft_tokenizer(t_minishell *minishell)
 {
+
+	ft_init_signals();
 	minishell->line = readline(PROMPT);
 	if (!minishell->line)
 	{
@@ -71,4 +79,6 @@ void	ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
+
+
 }

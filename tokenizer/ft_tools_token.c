@@ -13,10 +13,15 @@
 #include "../includes/minishell.h"
 
 /**
+ * The function "ft_check_operators" Checks if the character at the given index
+ * in the line is an operator (<, >, |) and if it is outside of quotes.
+ * 
+ * @param char *line	The string to be checked, representing a command line.
+ * @param int index		The position in the string to check for an operator. 
+ * 
  * The function "ft_skip_spaces" advances the index in the given string "line"
  * to skip any whitespace characters. It handles spaces (ASCII 32) as well
- * as other whitespace characters like tabs, newlines, carriage returns, etc.
- * 
+ * as other whitespace characters like tabs, newlines, carriage returns, etc. 
  * 
  * @param char *line	The input string where spaces are being skipped.
  * @param int *index	A pointer to the integer index that indicates the
@@ -27,6 +32,13 @@
  * 						in place.
  * 
  */
+
+int	ft_check_operators(char *line, int index)
+{
+	if (ft_strchr("<>|", line[index]) && ft_checker_quotes(line, index) == 0)
+		return (1);
+	return (0);
+}
 
 void	ft_skip_spaces(char *line, int *index)
 {

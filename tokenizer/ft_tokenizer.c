@@ -3,13 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 09:33:41 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 10:14:45 by pabromer         ###   ########.fr       */
-/*   Created: 2024/10/17 09:33:41 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 10:14:45 by pabromer         ###   ########.fr       */
+/*   Created: Invalid Date        by              +#+  #+#    #+#             */
+/*   Updated: 2024/10/21 20:27:49 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +22,84 @@
  * 
  * @param char *line				xxx 
  * 
+ * The function "ft_read_tokens" xxx
+ * 
+ * @param char *line				xxx
+ * @param int *index				xxx
+ * 
+ * The function "ft_token_size" xxx
+ * 
+ * @param char *line				xxx
+ * @param int *index				xxx
+ * 
+ * 
+ * 
  */
 
-static t_token	*ft_read_tokens(char *line, int *i)
+static int	ft_token_size(char *line, int *index)
 {
-	t_token	*token;
+	int		i;
+	char	c;
+	int		size;
+
+	i = 0;
+	c = 32;
+	size = 0;
+	while (line[*index + i] && (line[*index + i] != 32 || c != 32))
+	{
+		if (c == 32 && (line[*index + i] == '\'' || line[*index + i] == '\"' ))
+		{
+			c = line[*index + i];
+			i++;
+		}
+		else if (c != 32 && line[*index + i] == c)
+		{
+			size += 2;
+			c = 32;
+			i++;
+		}
+		else
+			i++;
+	}
+	return (i - size + 1);
+}
+
+static void	ft_fill_token(t_token *token, char *line, int *index)
+{
 	int		i;
 	char	c;
 
 	i = 0;
 	c = 32;
-
-
-
-	while()
+	while (line[*index] && (line[*index] != 32 || c != 32))
 	{
-
-
+		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
+			c = line[(*index)++];
+		else if (line[*index] == c)
+		{
+			c = 32;
+			(*index)++;
+		}
+		else
+			token->token_value[i++] = line[(*index)++];
 	}
+	token->token_value[i] = '\0';
+}
 
+static t_token	*ft_read_tokens(char *line, int *index)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->token_value = malloc(sizeof(char) * token_size(line, index));
+	if (!token->token_value)
+	{
+		free(token);
+		return (NULL);
+	}
+	ft_fill_token(token, line, index);
 	return (token);
 }
 
@@ -51,20 +107,32 @@ static t_token	*ft_get_tokens(char *line)
 {
 	int		i;
 	t_token	*token;
+	t_token	*prev;
 
 	i = 0;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
 		token = ft_read_tokens(line, &i);
-
+		token->prev = token;
+		if (prev)
+			prev->next = token;
+		token->prev = prev;
+		prev = token;
+		ft_update_type_tokens(token); 	//
+		ft_pass_spaces(line, &i);		//
 	}
-
+	if (token)
+		token->next = NULL;
+	while (token && token->prev)
+		token = token->prev;
+	return (token);
 
 }
 
-void	ft_tokenizer(t_minishell *minishell)
+t_ast	*ft_tokenizer(t_minishell *minishell)
 {
+	t_ast	*ast;
 
 	ft_init_signals();
 	minishell->line = readline(PROMPT);
@@ -82,6 +150,10 @@ void	ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
-
-
+	ft_print_tokens(minishell->tokens);  				 //
+	ast = ft_making_ast(minishell->tokens);
+	if (ast)
+		ft_print_ast(ast);
+	free(minishell->line);
+	return (ast);
 }

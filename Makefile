@@ -110,14 +110,16 @@ FRE					= ${FREE_DIR}/ft_free_minishell.c
 # EXE					= ${EXEC_DIR}/ft_xxx.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
-						${BUILTINS_DIR}/ft_env.c \
-						${BUILTINS_DIR}/ft_pwd.c \
 						${BUILTINS_DIR}/ft_echo.c \
-						${BUILTINS_DIR}/ft_export.c
+						${BUILTINS_DIR}/ft_env.c \
+						${BUILTINS_DIR}/ft_exit.c \
+						${BUILTINS_DIR}/ft_export.c \
+						${BUILTINS_DIR}/ft_pwd.c \
+						${BUILTINS_DIR}/ft_unset.c
 
-TOK					= ${TOKENIZER_DIR}/ft_tools_token.c \
+TOK					= ${TOKENIZER_DIR}/ft_check_quotes.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
-						${TOKENIZER_DIR}/ft_check_quotes.c
+						${TOKENIZER_DIR}/ft_tools_token.c						
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \

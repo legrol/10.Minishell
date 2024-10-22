@@ -13,23 +13,28 @@
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_minishell.c" initializes the members of the t_minishell
- * structure.
+ * The function "ft_minishell" initializes all the fields of the `t_minishell` 
+ * structure, including setting up file descriptors, environment variables, and
+ * other necessary fields for the shell to operate.
  *  
- * @param char **envp	An array of strings representing the system environment
- * 						variables, usually passed as the second argument to 
- * 						the main function. This value is used to initialize 
- * 						the list of environment variables in the t_minishell 
- * 						structure. 
+ * @param char **envp				An array of strings representing the 
+ * 									system's environment variables. This is 
+ * 									used to initialize the linked list of
+ * 									environment variables within the 
+ * 									`minishell` structure.
  * 
- * static char **ft_init_envp(t_minishell minishell)
- * 						
- * 						In order to initialize minishell.env with NULL. This
- * 						function creates a double malloc NULL with the same number
- *						of secundary malloc as list_envp number of elements. 
+ * The function "ft_init_envp" initializes the `minishell.env` field with a 
+ * NULL-terminated array of strings, where each element is initialized to NULL. 
+ * It counts the number of elements in the linked list `minishell.list_envp`, 
+ * then allocates memory for an array of strings of that size.
+ * 
+ * @param t_minishell minishell		A structure containing a linked list of 
+ * 									environment variables (`list_envp`). This 
+ * 									is used to determine how many elements are 
+ * 									needed for the `envp` array
  * 
  */
-static char **ft_init_envp(t_minishell minishell)
+static char	**ft_init_envp(t_minishell minishell)
 {
 	t_envp	*temp;
 	char	**init_env;	
@@ -44,11 +49,11 @@ static char **ft_init_envp(t_minishell minishell)
 	}
 	minishell.list_envp = temp;
 	init_env = (char **)malloc((i + 1) * sizeof(char *));
-	if(!init_env)
+	if (!init_env)
 		return (NULL);
 	i = 0;
 	temp = minishell.list_envp;
-	while(minishell.list_envp)
+	while (minishell.list_envp)
 	{
 		init_env[i] = NULL;
 		minishell.list_envp = minishell.list_envp->next;

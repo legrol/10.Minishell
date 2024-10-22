@@ -31,18 +31,22 @@
  * 
  * The function "ft_read_tokens" reads a single token from the input line 
  * and allocates memory for it. It also handles the parsing of quotes and 
- * stores the token in a structure.
+ * stores the token in a structure. It is closely related to "ft_fill_token" 
+ * (it had to be split into two functions to comply with Standard 42).
  * 
  * @param char *line				A string representing the input line being 
  * 									parsed.
  * @param int *index				A pointer to the current position in the 
  * 									line.
  * 
- * The function "ft_fill_token" xxx
+ * The function "ft_fill_token" fills the token value from the input line.
  * 
- * @param t_token *token			xxx
- * @param char *line				xxx
- * @param int *index				xxx
+ * @param t_token *token			A pointer to a t_token structure that will
+ * 									store the extracted token value.
+ * @param char *line				The string from which the tokens are being
+ * 									read.
+ * @param int *index				A pointer to an index that moves along the
+ * 									line to process characters.
  * 
  * The function "ft_token_size" calculates the size of a token in the input 
  * line, considering quoted strings and special characters.

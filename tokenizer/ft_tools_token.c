@@ -73,7 +73,7 @@ void	ft_print_tokens(t_token *tokens)
 	t_token	*current;
 
 	current = tokens;
-	while (current != NULL) 
+	while (current != NULL)
 	{
 		ft_printf(GREEN "###...Running Tokenization...###\n" RESET);
 		ft_printf(BLUE "Token: " RESET YELLOW "[%s]\n" RESET BLUE "Type: " \

@@ -68,9 +68,9 @@ void	ft_skip_spaces(char *line, int *index)
 		(*index)++;
 }
 
-void ft_print_tokens(t_token *tokens)
+void	ft_print_tokens(t_token *tokens)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = tokens;
 	while (current != NULL) 
@@ -83,16 +83,16 @@ void ft_print_tokens(t_token *tokens)
 	}
 }
 
-static void    ft_empty_tok_out(t_token *tokens)
+static void	ft_empty_tok_out(t_token *tokens)
 {
-    if (ft_strcmp(tokens->token_value, "") == 0 || \
+	if (ft_strcmp(tokens->token_value, "") == 0 || \
 	ft_strcmp(tokens->token_value, " ") == 0)
-        tokens->token_type = TOKEN_EMPTY;
-    ft_printf("error: parser: there is an empty token\n");
-    return;
+		tokens->token_type = TOKEN_EMPTY;
+	ft_printf("error: parser: there is an empty token\n");
+	return ;
 }
 
-void ft_update_type_tokens(t_token *token)
+void	ft_update_type_tokens(t_token *token)
 {
 	if (ft_strcmp(token->token_value, "") == 0)
 		ft_empty_tok_out(token);
@@ -106,10 +106,10 @@ void ft_update_type_tokens(t_token *token)
 		token->token_type = TOKEN_REDIR_HEREDOC;
 	else if (ft_strcmp(token->token_value, "|") == 0)
 		token->token_type = TOKEN_PIPE;
-	else if (token->prev != NULL && (
-		token->prev->token_type == TOKEN_REDIR_STDIN || 
-		token->prev->token_type == TOKEN_REDIR_STDOUT || 
-		token->prev->token_type == TOKEN_REDIR_APPEND || 
+	else if (token->prev != NULL && (\
+		token->prev->token_type == TOKEN_REDIR_STDIN || \
+		token->prev->token_type == TOKEN_REDIR_STDOUT || \
+		token->prev->token_type == TOKEN_REDIR_APPEND || \
 		token->prev->token_type == TOKEN_REDIR_HEREDOC))
 		token->token_type = TOKEN_ARG;
 	else if (token->prev == NULL || token->prev->token_type == TOKEN_PIPE)

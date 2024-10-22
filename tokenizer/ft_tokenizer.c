@@ -38,6 +38,12 @@
  * @param int *index				A pointer to the current position in the 
  * 									line.
  * 
+ * The function "ft_fill_token" xxx
+ * 
+ * @param t_token *token			xxx
+ * @param char *line				xxx
+ * @param int *index				xxx
+ * 
  * The function "ft_token_size" calculates the size of a token in the input 
  * line, considering quoted strings and special characters.
  * 
@@ -106,7 +112,7 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->token_value = malloc(sizeof(char) * token_size(line, index));
+	token->token_value = malloc(sizeof(char) * ft_token_size(line, index));
 	if (!token->token_value)
 	{
 		free(token);
@@ -132,7 +138,7 @@ static t_token	*ft_get_tokens(char *line)
 			prev->next = token;
 		token->prev = prev;
 		prev = token;
-		ft_update_type_tokens(token); 	//
+		ft_update_type_tokens(token);
 		ft_skip_spaces(line, &i);
 	}
 	if (token)
@@ -143,9 +149,9 @@ static t_token	*ft_get_tokens(char *line)
 
 }
 
-t_ast	*ft_tokenizer(t_minishell *minishell)
+void	*ft_tokenizer(t_minishell *minishell)
 {
-	t_ast	*ast;
+	// t_ast	*ast;
 
 	ft_init_signals();
 	minishell->line = readline(PROMPT);
@@ -164,9 +170,11 @@ t_ast	*ft_tokenizer(t_minishell *minishell)
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
 	ft_print_tokens(minishell->tokens);  				 //
-	ast = ft_making_ast(minishell->tokens);
-	if (ast)
-		ft_print_ast(ast);
-	free(minishell->line);
-	return (ast);
+	//***Pdte trabajar ast***/
+	// ast = ft_making_ast(minishell->tokens);
+	// if (ast)
+	// 	ft_print_ast(ast);
+	// free(minishell->line);
+	// return (ast);
+	return (NULL);
 }

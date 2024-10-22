@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
 	int			i;
-	t_ast		*cmd_ast;
+	// t_ast		*cmd_ast;
 
 	(void)argc;
 	(void)argv;
@@ -63,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_sync_envp(&minishell);
 		minishell.line = readline(minishell.dirprompt);
+		ft_tokenizer(&minishell);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
 		else if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
@@ -79,20 +80,20 @@ int	main(int argc, char **argv, char **envp)
 			ft_cmdexe(&minishell);
 		free(minishell.line);
 	}
-	while (!g_signals.exit)
-	{
-		cmd_ast = ft_tokenizer(&minishell);
-		// if (cmd_ast->value) {
-		// 		char *result = ft_find_cmd_path(cmd_ast, minishell);
-		// 		if (result) {
-		// 			ft_printf("Comando ejecutable encontrado: %s\n", result);
-		// 			free(result); // Liberar la memoria después de usar
-		// 		} else {
-		// 			ft_printf("Comando no encontrado: %s\n", cmd_ast->value);
-		// 		}
-		// 	}
-		// ft_is_builtin(cmd_ast, minishell); 
-	}
+	// while (!g_signals.exit)
+	// {
+	// 	cmd_ast = ft_tokenizer(&minishell);
+	// 	// if (cmd_ast->value) {
+	// 	// 		char *result = ft_find_cmd_path(cmd_ast, minishell);
+	// 	// 		if (result) {
+	// 	// 			ft_printf("Comando ejecutable encontrado: %s\n", result);
+	// 	// 			free(result); // Liberar la memoria después de usar
+	// 	// 		} else {
+	// 	// 			ft_printf("Comando no encontrado: %s\n", cmd_ast->value);
+	// 	// 		}
+	// 	// 	}
+	// 	// ft_is_builtin(cmd_ast, minishell); 
+	// }
 	//free(&minishell);
 	rl_clear_history();
 	i = 0;

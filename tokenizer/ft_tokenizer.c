@@ -157,8 +157,8 @@ void	*ft_tokenizer(t_minishell *minishell)
 {
 	// t_ast	*ast;
 
-	ft_init_signals();
-	minishell->line = readline(PROMPT);
+	// ft_init_signals();
+	// minishell->line = readline(PROMPT);
 	if (!minishell->line)
 	{
 		minishell->exit = 1;

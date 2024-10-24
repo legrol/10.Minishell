@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/23 11:56:54 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:28:49 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,31 @@ static int ft_export_only(t_minishell *minishell)
 	free(trim);
 	return (0);
 }
+static int ft_find_key(t_minishell *minishell, char *s1, char *s2)
+{
+	t_envp	*temp;
+
+	temp = minishell->list_envp;
+	while (minishell->list_envp)
+	{
+		if (ft_strcmp(minishell->list_envp->key, (char *)s1) == 0)
+		{
+			free(minishell->list_envp->key);
+			if (minishell->list_envp->value)
+				free(minishell->list_envp->value);
+			minishell->list_envp->key = ft_strdup(s1);
+			if (s2 == NULL)
+				minishell->list_envp->value = NULL;
+			else
+				minishell->list_envp->value = ft_strdup(s2);
+			minishell->list_envp = temp;
+			return (0);
+		}
+		minishell->list_envp = minishell->list_envp->next;
+	}
+	minishell->list_envp = temp;
+	return (-1);
+}
 
 void ft_export(t_minishell *minishell)
 {
@@ -136,11 +161,19 @@ void ft_export(t_minishell *minishell)
 		return ;
 	split2 = ft_split_m(split[1], '=');
 	if (split2)
+	{
+		if (ft_find_key(minishell, split2[0], split2[1]) == 0)
+			return ;
 		new_nodo = new_node_envp(split2[0], split2[1]);
+	}
 	else
+	{
+		if (ft_find_key(minishell, split[1], NULL) == 0)
+			return ;
 		new_nodo = new_node_envp(split[1], NULL);
+	}
 	temp = minishell->list_envp;
-	while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0)
+	while(ft_strcmp(minishell->list_envp->key, "VSCODE_GIT_ASKPASS_NODE") != 0)
 		minishell->list_envp = minishell->list_envp->next;
 	new_nodo->next = minishell->list_envp->next;
 	minishell->list_envp->next = new_nodo;

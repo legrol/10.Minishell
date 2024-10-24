@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/23 11:59:01 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:02:43 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_sync_envp(&minishell);
 		minishell.line = readline(minishell.dirprompt);
-		ft_tokenizer(&minishell);
+		//ft_tokenizer(&minishell);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
 		else if (ft_strnstr(minishell.line, "env", ft_strlen("env")))

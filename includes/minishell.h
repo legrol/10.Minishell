@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:45:35 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:18:01 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,6 @@ char		**ft_path(t_minishell *minishell);
 void		ft_print_init(void);
 void		ft_sync_envp(t_minishell *minishell);
 char		*ft_workingdir(void);
+void		ft_ast(t_minishell *minishell);
 
 #endif

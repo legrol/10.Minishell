@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/23 11:56:54 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:13:54 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,13 @@ static int ft_export_only(t_minishell *minishell)
 		cpy = ft_sort_print(minishell);
 		temp = minishell->list_envp;
 		i = 0;
-		while(cpy[i+1])
+		while(cpy[i])
 		{
 			while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
 				minishell->list_envp = minishell->list_envp->next;
-			if (minishell->list_envp->value)
+			if (ft_strcmp(cpy[i], "ZDOTDIR") == 0)
+				;
+			else if (minishell->list_envp->value)
 				ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
 				minishell->list_envp->value);
 			else
@@ -122,23 +124,57 @@ static int ft_export_only(t_minishell *minishell)
 	return (0);
 }
 
+static int ft_find_key(t_minishell *minishell, char *key, char *value)
+{
+	t_envp *temp;
+
+	temp = minishell->list_envp;
+	while(minishell->list_envp)
+	{
+		if(ft_strcmp(key, minishell->list_envp->key) == 0)
+		{
+			if (minishell->list_envp->value)
+				free(minishell->list_envp->value);
+			if (!value)
+				minishell->list_envp->value = NULL;
+			else
+				minishell->list_envp->value = ft_strdup(value);
+			minishell->list_envp = temp;
+			return (0);
+		}
+		minishell->list_envp = minishell->list_envp->next;
+	}
+	minishell->list_envp = temp;
+	return (-1);
+}
+
 void ft_export(t_minishell *minishell)
 {
 	t_envp *temp;
 	t_envp *new_nodo;
-	char 	**split;
-	char	**split2;
+	char 	**formula;
+	char	**key_value;
 
 	if (ft_export_only(minishell) == 1)
 		return ;
-	split = ft_split_m(minishell->line, ' ');
-	if(!split)
+	formula = ft_split_m(minishell->line, ' ');
+	if(!formula)
 		return ;
-	split2 = ft_split_m(split[1], '=');
-	if (split2)
-		new_nodo = new_node_envp(split2[0], split2[1]);
+	key_value = ft_split_m(formula[1], '=');
+	if (key_value)
+	{
+		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
+			new_nodo = new_node_envp(key_value[0], key_value[1]);
+		else
+			return ;
+	}
 	else
-		new_nodo = new_node_envp(split[1], NULL);
+	{
+		if (ft_find_key(minishell, formula[1], NULL) == -1)
+			new_nodo = new_node_envp(formula[1], NULL);
+		else
+			return ;
+	}
 	temp = minishell->list_envp;
 	while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0)
 		minishell->list_envp = minishell->list_envp->next;

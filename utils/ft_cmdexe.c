@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/21 11:20:58 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:16:59 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_cmdexe(t_minishell *minishell)
 		path = ft_path(minishell);
 		arg = ft_split(minishell->line, ' ');
 		cmd = ft_cmd_action(path, arg[0]);
-		execve(cmd, arg, NULL);
+		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
 		exit(EXIT_FAILURE);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 21:11:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/15 23:29:22 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:56:10 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->sigint = 0;
 	signals->sigquit = 0;
 	signals->exit = 0;
+	signals->start = 1;
 }
 
 static void	sig_int(int status)

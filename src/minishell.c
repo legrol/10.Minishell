@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/24 19:02:43 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:11:50 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,46 @@
 
 t_signal g_signals;
 
+static void	ft_init_envp(t_minishell *minishell, char **envp)
+{
+	int		i;
+
+	i = 0;
+	if (!envp)
+		return ;
+	while (envp[i])
+		i++;
+	minishell->envp = (char **)malloc((i + 1) * sizeof(char *));
+	if (!minishell->envp)
+		return ;
+	i = 0;
+	while (envp[i])
+	{
+		minishell->envp[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	minishell->envp[i] = NULL;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
 	int			i;
-	// t_ast		*cmd_ast;
 
 	(void)argc;
 	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
-	//t_envp *current; // para visualizar (Eliminar en definitivo)
-	ft_init_struc_sig(&g_signals);
-	ft_init_signals();
 	ft_print_init();
-	if (envp && argc == 1)
-		minishell = ft_init_minishell(envp);
-	else
-		minishell = ft_init_minishell(minishell.envp);
-	/*if (!minishell)
-		return (EXIT_FAILURE);*/
-	// current = minishell.list_envp;
-	// while (current) // para visualizar (Eliminar en definitivo)
-	// {
-	// 	printf("Variable: %s=%s\n", current.key, current.value);
-	// 	current = current.next;
-	// }
-	
+	ft_init_envp(&minishell, envp);
 	while (1)
 	{
-		ft_sync_envp(&minishell);
+		if (g_signals.start != 1)
+		{
+			ft_init_struc_sig(&g_signals);
+			ft_init_signals();
+			ft_init_minishell(&minishell);
+		}
 		minishell.line = readline(minishell.dirprompt);
 		//ft_tokenizer(&minishell);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))

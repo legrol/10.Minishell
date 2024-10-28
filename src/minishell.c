@@ -112,6 +112,8 @@ int	main(int argc, char **argv, char **envp)
 		free(minishell.envp[i]);
 		i++;
 	}
+	free_tokens(minishell.tokens);
+	// free_envp_list(minishell.list_envp);
 	free(minishell.line);
 	free(minishell.envp);
 	free(minishell.dirprompt);

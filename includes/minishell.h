@@ -49,6 +49,7 @@ typedef enum e_tok_typ_enum
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_HEREDOC,
 	TOKEN_COMMAND,
+	TOKEN_OPTION,
 	TOKEN_ARG,
 	TOKEN_PIPE,
 }					t_tok_typ_enum;
@@ -106,6 +107,12 @@ extern	t_signal g_signals;
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
+
+// ============================================================================
+// Release funtions
+// ============================================================================
+void		free_tokens(t_token *token);
+void		free_envp_list(t_envp *head);
 
 // ============================================================================
 // Initialization functions

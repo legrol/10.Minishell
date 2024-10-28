@@ -145,10 +145,8 @@ static t_token	*ft_get_tokens(char *line)
 		if (!token)
 			return (NULL);
 		if (prev)
-		{
 			prev->next = token;
-			token->prev = prev;
-		}
+		token->prev = prev;
 		prev = token;
 		ft_update_type_tokens(token);
 		ft_skip_spaces(line, &i);

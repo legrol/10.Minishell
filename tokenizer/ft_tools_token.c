@@ -106,6 +106,8 @@ void	ft_update_type_tokens(t_token *token)
 		token->token_type = TOKEN_REDIR_HEREDOC;
 	else if (ft_strcmp(token->token_value, "|") == 0)
 		token->token_type = TOKEN_PIPE;
+	else if (ft_strchr(token->token_value, '-'))
+		token->token_type = TOKEN_OPTION;
 	else if (token->prev != NULL && (\
 		token->prev->token_type == TOKEN_REDIR_STDIN || \
 		token->prev->token_type == TOKEN_REDIR_STDOUT || \
@@ -114,8 +116,6 @@ void	ft_update_type_tokens(t_token *token)
 		token->token_type = TOKEN_ARG;
 	else if (token->prev == NULL || token->prev->token_type == TOKEN_PIPE)
 		token->token_type = TOKEN_COMMAND;
-	else if (token->prev->token_type == TOKEN_COMMAND)
-		token->token_type = TOKEN_ARG;
 	else
 		token->token_type = TOKEN_ARG;
 }

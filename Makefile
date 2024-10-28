@@ -104,7 +104,9 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_sync_envp.c \
 						${UTILS_DIR}/ft_ast.c
 
-FRE					= ${FREE_DIR}/ft_free_minishell.c
+FRE					= ${FREE_DIR}/ft_free_envp_list.c \
+						${FREE_DIR}/ft_free_minishell.c \
+						${FREE_DIR}/ft_free_tokens.c
 
 # PAR					= ${PARSER_DIR}/ft_xxx.c
 

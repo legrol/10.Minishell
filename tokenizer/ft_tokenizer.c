@@ -145,10 +145,8 @@ static t_token	*ft_get_tokens(char *line)
 		if (!token)
 			return (NULL);
 		if (prev)
-		{
 			prev->next = token;
-			token->prev = prev;
-		}
+		token->prev = prev;
 		prev = token;
 		ft_update_type_tokens(token);
 		ft_skip_spaces(line, &i);
@@ -180,7 +178,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
-	ft_print_tokens(minishell->tokens);  				 //
+	ft_print_tokens(minishell->tokens);
 	//***Pdte trabajar ast***/
 	// ast = ft_making_ast(minishell->tokens);
 	// if (ast)

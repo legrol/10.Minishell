@@ -112,17 +112,21 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 static t_token	*ft_read_tokens(char *line, int *index)
 {
 	t_token	*token;
+	int		token_size;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->token_value = malloc(sizeof(char) * ft_token_size(line, index));
+	token_size = ft_token_size(line, index);
+	token->token_value = malloc(sizeof(char) * token_size);
 	if (!token->token_value)
 	{
 		free(token);
 		return (NULL);
 	}
 	ft_fill_token(token, line, index);
+	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 
@@ -133,14 +137,18 @@ static t_token	*ft_get_tokens(char *line)
 	t_token	*prev;
 
 	i = 0;
+	prev = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
 		token = ft_read_tokens(line, &i);
-		token->prev = token;
+		if (!token)
+			return (NULL);
 		if (prev)
+		{
 			prev->next = token;
-		token->prev = prev;
+			token->prev = prev;
+		}
 		prev = token;
 		ft_update_type_tokens(token);
 		ft_skip_spaces(line, &i);
@@ -150,7 +158,6 @@ static t_token	*ft_get_tokens(char *line)
 	while (token && token->prev)
 		token = token->prev;
 	return (token);
-
 }
 
 void	*ft_tokenizer(t_minishell *minishell)

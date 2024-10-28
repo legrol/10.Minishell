@@ -108,6 +108,12 @@ extern	t_signal g_signals;
 void		ft_manage_err(const char *err);
 
 // ============================================================================
+// Release funtions
+// ============================================================================
+void		free_tokens(t_token *token);
+void		free_envp_list(t_envp *head);
+
+// ============================================================================
 // Initialization functions
 // ============================================================================
 t_envp		*ft_init_list_envp(char **envp);

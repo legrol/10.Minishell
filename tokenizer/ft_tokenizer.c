@@ -178,7 +178,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
-	ft_print_tokens(minishell->tokens);  				 //
+	ft_print_tokens(minishell->tokens);
 	//***Pdte trabajar ast***/
 	// ast = ft_making_ast(minishell->tokens);
 	// if (ast)

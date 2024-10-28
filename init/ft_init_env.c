@@ -63,6 +63,13 @@ static t_envp	*new_node_envp(char *key, char *value)
 	new_node->key = ft_strdup(key);
 	new_node->value = ft_strdup(value);
 	new_node->next = NULL;
+	if (!new_node->key || !new_node->value)
+	{
+		free(new_node->key);
+		free(new_node->value);
+		free(new_node);
+		return (NULL);
+	}
 	return (new_node);
 }
 

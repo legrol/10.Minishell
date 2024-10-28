@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 11:42:29 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:58:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void ft_print_echo(char *str, char c, t_minishell *minishell)
 		else 
 			ft_printf("%s%c", trim, c);
 	}
+	minishell->exit = 0;
 	free(trim);
 }
 

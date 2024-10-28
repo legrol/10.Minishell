@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:11:50 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:21:23 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
  * 						variables. These are needed for initializing the 
  * 						`t_minishell` structure and managing the shell 
  * 						environment.
+ * 
+ * @param int g_signals.start Integer what indicates the minishell was initialized.
+ * 
+ * ft_init_envp			Function what initializes the envp inside the 
+ * 						minishell structure.		
  *  
  */
 
@@ -38,7 +43,7 @@ static void	ft_init_envp(t_minishell *minishell, char **envp)
 
 	i = 0;
 	if (!envp)
-		return ;
+			return ;
 	while (envp[i])
 		i++;
 	minishell->envp = (char **)malloc((i + 1) * sizeof(char *));
@@ -73,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		//ft_tokenizer(&minishell);
+		ft_tokenizer(&minishell);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
 		else if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
@@ -90,21 +95,6 @@ int	main(int argc, char **argv, char **envp)
 			ft_cmdexe(&minishell);
 		free(minishell.line);
 	}
-	// while (!g_signals.exit)
-	// {
-	// 	cmd_ast = ft_tokenizer(&minishell);
-	// 	// if (cmd_ast->value) {
-	// 	// 		char *result = ft_find_cmd_path(cmd_ast, minishell);
-	// 	// 		if (result) {
-	// 	// 			ft_printf("Comando ejecutable encontrado: %s\n", result);
-	// 	// 			free(result); // Liberar la memoria después de usar
-	// 	// 		} else {
-	// 	// 			ft_printf("Comando no encontrado: %s\n", cmd_ast->value);
-	// 	// 		}
-	// 	// 	}
-	// 	// ft_is_builtin(cmd_ast, minishell); 
-	// }
-	//free(&minishell);
 	rl_clear_history();
 	i = 0;
 	while (minishell.envp[i])

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/28 10:16:59 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:15:58 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char	*ft_cmd_action(char **path, char *arg)
 	while (path[i])
 	{
 		cmd = ft_strjoin(path[i], temp);
-		printf("%s\n", cmd);
 		if (access(cmd, X_OK) == 0)
 		{
 			free(temp);
@@ -61,5 +60,9 @@ void	ft_cmdexe(t_minishell *minishell)
 		exit(EXIT_FAILURE);
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
+		minishell->exit = WEXITSTATUS(status);
+	}
+	
 }

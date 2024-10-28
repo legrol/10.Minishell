@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 11:31:58 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:55:44 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,15 @@ void	ft_cd(t_minishell *minishell)
 {
 	char	**split;
 
+	minishell->exit = 0;
 	if (ft_cd_only(minishell) == 1)
 		return ;
 	split = ft_split_m(minishell->line, ' ');
 	if (split[2])
+	{
+		minishell->exit = 1;
 		ft_printf("bash: cd: too many arguments\n");
+	}
 	else if ((split[1][0] == '~' && split[1][1] == '\0'))
 	{
 		chdir(ft_find_dir(minishell, "HOME"));
@@ -76,7 +80,10 @@ void	ft_cd(t_minishell *minishell)
 		ft_swap_pwd(minishell);
 	}
 	else if (chdir(split[1]) != 0)
+	{
+		minishell->exit = 1;
 		ft_printf("bash: cd: %s: No such file or directory\n", split[1]);
+	}
 	else
 		ft_swap_pwd(minishell);
 }

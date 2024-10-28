@@ -23,15 +23,17 @@
  * 
  */
 
-void	free_tokens(t_token *token)
+void	ft_free_tokens(t_token *token)
 {
-	t_token	*temp;
+	t_token	*current;
+	t_token	*next;
 
-	while (token)
+	current = token;
+	while (current != NULL)
 	{
-		temp = token;
-		token = token->next;
-		free(temp->token_value);
-		free(temp);
+		next = current->next;
+		free(current->token_value);
+		free(current);
+		current = next;
 	}
 }

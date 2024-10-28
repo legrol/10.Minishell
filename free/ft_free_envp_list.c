@@ -18,20 +18,20 @@
  * list of environment variables. It iterates through each node in the list,
  * freeing the memory for each key-value pair and then the node itself.
  * 
- * @param t_envp *head		A pointer to the head of the linked list of 
+ * @param t_envp *envp_list	A pointer to the head of the linked list of 
  * 							environment variables (`t_envp`). This list will
  * 							be fully deallocated by the function. 
  * 
  */
 
-void	free_envp_list(t_envp *head)
+void	free_envp_list(t_envp *envp_list)
 {
 	t_envp	*temp;
 
-	while (head)
+	while (envp_list)
 	{
-		temp = head;
-		head = head->next;
+		temp = envp_list;
+		envp_list = envp_list->next;
 		free(temp->key);
 		free(temp->value);
 		free(temp);

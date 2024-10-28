@@ -42,7 +42,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
-	//t_envp *current; // para visualizar (Eliminar en definitivo)
 	ft_init_struc_sig(&g_signals);
 	ft_init_signals();
 	ft_print_init();
@@ -50,15 +49,6 @@ int	main(int argc, char **argv, char **envp)
 		minishell = ft_init_minishell(envp);
 	else
 		minishell = ft_init_minishell(minishell.envp);
-	/*if (!minishell)
-		return (EXIT_FAILURE);*/
-	// current = minishell.list_envp;
-	// while (current) // para visualizar (Eliminar en definitivo)
-	// {
-	// 	printf("Variable: %s=%s\n", current.key, current.value);
-	// 	current = current.next;
-	// }
-	
 	while (1)
 	{
 		ft_sync_envp(&minishell);
@@ -79,7 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		else
 			ft_cmdexe(&minishell);
 		free(minishell.line);
+		ft_free_tokens(minishell.tokens);
+		minishell.tokens = NULL;
 	}
+	rl_clear_history();
 	// while (!g_signals.exit)
 	// {
 	// 	cmd_ast = ft_tokenizer(&minishell);
@@ -94,21 +87,15 @@ int	main(int argc, char **argv, char **envp)
 	// 	// 	}
 	// 	// ft_is_builtin(cmd_ast, minishell); 
 	// }
-	//free(&minishell);
-	rl_clear_history();
+	//free(&minishell);	
 	i = 0;
 	while (minishell.envp[i])
 	{
 		free(minishell.envp[i]);
 		i++;
 	}
-	free_tokens(minishell.tokens);
-	// free_envp_list(minishell.list_envp);
-	free(minishell.line);
 	free(minishell.envp);
 	free(minishell.dirprompt);
-	free(minishell.list_envp->key);
-	free(minishell.list_envp->value);
-	free(minishell.list_envp);
+	free_envp_list(minishell.list_envp);
 	return (0);
 }

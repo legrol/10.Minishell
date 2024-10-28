@@ -137,13 +137,17 @@ static t_token	*ft_get_tokens(char *line)
 	t_token	*prev;
 
 	i = 0;
+	token = NULL;
 	prev = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
 		token = ft_read_tokens(line, &i);
 		if (!token)
+		{
+			ft_free_tokens(prev);
 			return (NULL);
+		}
 		if (prev)
 			prev->next = token;
 		token->prev = prev;
@@ -151,8 +155,6 @@ static t_token	*ft_get_tokens(char *line)
 		ft_update_type_tokens(token);
 		ft_skip_spaces(line, &i);
 	}
-	if (token)
-		token->next = NULL;
 	while (token && token->prev)
 		token = token->prev;
 	return (token);

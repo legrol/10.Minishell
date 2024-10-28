@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/23 11:57:58 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:46:11 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_signal
 	int				sigint;
 	int				sigquit;
 	int				exit;
+	int				start;
 }					t_signal;
 
 typedef struct s_token
@@ -110,7 +111,7 @@ void		ft_manage_err(const char *err);
 // Initialization functions
 // ============================================================================
 t_envp		*ft_init_list_envp(char **envp);
-t_minishell	ft_init_minishell(char **envp);
+void		ft_init_minishell(t_minishell *minishell);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(void);
 

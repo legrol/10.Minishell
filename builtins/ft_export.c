@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 09:48:25 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:13:54 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ static int ft_export_only(t_minishell *minishell)
 		{
 			while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
 				minishell->list_envp = minishell->list_envp->next;
-			if (minishell->list_envp->value)
+			if (ft_strcmp(cpy[i], "ZDOTDIR") == 0)
+				;
+			else if (minishell->list_envp->value)
 				ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
 				minishell->list_envp->value);
 			else

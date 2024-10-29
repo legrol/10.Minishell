@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 21:10:26 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:08:36 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,9 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 // Release funtions
 // ============================================================================
+void		ft_free_envp_list(t_envp *head);
+void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_tokens(t_token *token);
-void		free_envp_list(t_envp *head);
 
 // ============================================================================
 // Initialization functions

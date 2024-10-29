@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/21 12:43:05 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:19:35 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_signal g_signals;
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
-	int			i;
 	// t_ast		*cmd_ast;
 
 	(void)argc;
@@ -53,6 +52,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_sync_envp(&minishell);
 		minishell.line = readline(minishell.dirprompt);
+		if (!minishell.line)
+			break ;
 		ft_tokenizer(&minishell);
 		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
 			ft_cd(&minishell);
@@ -72,30 +73,23 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_tokens(minishell.tokens);
 		minishell.tokens = NULL;
 	}
-	rl_clear_history();
+	
 	// while (!g_signals.exit)
 	// {
 	// 	cmd_ast = ft_tokenizer(&minishell);
-	// 	// if (cmd_ast->value) {
-	// 	// 		char *result = ft_find_cmd_path(cmd_ast, minishell);
-	// 	// 		if (result) {
-	// 	// 			ft_printf("Comando ejecutable encontrado: %s\n", result);
-	// 	// 			free(result); // Liberar la memoria después de usar
-	// 	// 		} else {
-	// 	// 			ft_printf("Comando no encontrado: %s\n", cmd_ast->value);
-	// 	// 		}
-	// 	// 	}
-	// 	// ft_is_builtin(cmd_ast, minishell); 
+	// if (cmd_ast->value) {
+	// 		char *result = ft_find_cmd_path(cmd_ast, minishell);
+	// 		if (result) {
+	// 			ft_printf("Comando ejecutable encontrado: %s\n", result);
+	// 			free(result); // Liberar la memoria después de usar
+	// 		} else {
+	// 			ft_printf("Comando no encontrado: %s\n", cmd_ast->value);
+	// 		}
+	// 	}
+	// ft_is_builtin(cmd_ast, minishell); 
 	// }
-	//free(&minishell);	
-	i = 0;
-	while (minishell.envp[i])
-	{
-		free(minishell.envp[i]);
-		i++;
-	}
-	free(minishell.envp);
-	free(minishell.dirprompt);
-	free_envp_list(minishell.list_envp);
+
+	rl_clear_history();
+	ft_free_minishell(&minishell);
 	return (0);
 }

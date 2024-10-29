@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 16:02:32 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:11:53 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
 	int			i;
+	t_ast		*ast;
+	t_ast		*temp;
+	//char *temp;
 
 	(void)argc;
 	(void)argv;
@@ -78,23 +81,36 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
+		if (ft_strcmp(minishell.line, "") == 0)
+			printf("HOLA");
 		ft_tokenizer(&minishell);
-		ft_ast(&minishell);
-		if (ft_strnstr(minishell.line, "cd", ft_strlen("cd")))
-			ft_cd(&minishell);
-		else if (ft_strnstr(minishell.line, "env", ft_strlen("env")))
-			ft_env(&minishell);
-		else if (ft_strnstr(minishell.line, "pwd", ft_strlen("pwd")))
-			ft_pwd(&minishell);
-		else if (ft_strnstr(minishell.line, "echo", ft_strlen("echo")))
-			ft_echo(&minishell);
-		else if (ft_strnstr(minishell.line, "export", ft_strlen("export")))
-			ft_export(&minishell);
-		else if (ft_strnstr(minishell.line, "exit", ft_strlen("exit")))
-			break ;
-		else
-			ft_cmdexe(&minishell);
+		ast = ft_ast(&minishell);
+		temp = ast;
+		while (ast)
+		{
+			printf("%s %i\n", ast->value, ast->type);
+			if (ft_strcmp(ast->value, "cd") == 0)
+				ft_cd(&minishell, ast);
+			else if (ft_strcmp(ast->value, "env") == 0)
+				ft_env(&minishell);
+			else if (ft_strcmp(ast->value, "pwd") == 0)
+				ft_pwd(&minishell);
+			else if (ft_strcmp(ast->value, "echo") == 0)
+				ft_echo(&minishell);
+			else if (ft_strcmp(ast->value, "export") == 0)
+				ft_export(&minishell);
+			else if (ft_strcmp(ast->value, "exit") == 0)
+				i = 1;
+			else
+				ft_cmdexe(&minishell);
+			ast = ast->right;
+		}
+		
+		ast = temp;
+		printf("\n");
 		free(minishell.line);
+		if (i == 1)
+			break;
 	}
 	rl_clear_history();
 	i = 0;
@@ -105,7 +121,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_tokens(minishell.tokens);
 	// free_envp_list(minishell.list_envp);
-	free(minishell.line);
+	//free(minishell.line);
 	free(minishell.envp);
 	free(minishell.dirprompt);
 	free(minishell.list_envp->key);

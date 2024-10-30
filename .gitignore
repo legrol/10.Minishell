@@ -3,7 +3,6 @@
 
 # Object files
 *.o
-*/*.o
 *.ko
 *.obj
 *.elf
@@ -19,8 +18,6 @@
 
 # Libraries
 *.a
-*/*.a
-*/*/*.a
 *.lib
 *.la
 *.lo
@@ -55,6 +52,5 @@ Mkfile.old
 dkms.conf
 
 # Severals
-.vscode
+.vscode/
 .DS_Store
-settings.json

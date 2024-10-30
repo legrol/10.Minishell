@@ -66,6 +66,16 @@ int	ft_checker_quotes_unclosed(t_minishell *minishell)
 	if (ft_checker_quotes(minishell->line, ft_strlen(minishell->line)) != 0)
 	{
 		ft_putendl_fd(QUOTES_ERR, STDERR_FILENO);
+		if (minishell->line)
+		{
+			free(minishell->line);
+			minishell->line = NULL;
+		}
+		if (minishell->tokens)
+		{
+			ft_free_tokens(minishell->tokens);
+			minishell->tokens = NULL;
+		}
 		return (1);
 	}
 	return (0);

@@ -162,26 +162,18 @@ static t_token	*ft_get_tokens(char *line)
 
 void	*ft_tokenizer(t_minishell *minishell)
 {
-	// t_ast	*ast;
-
-	// ft_init_signals();
-	// minishell->line = readline(PROMPT);
 	if (!minishell->line)
 	{
 		minishell->exit = 1;
-		ft_putendl_fd("exit", STDERR_FILENO);
+		ft_putendl_fd(WHITOUT_COMMAND_ERR, STDERR_FILENO);
+		free(minishell->line);
+		minishell->line = NULL;
 		return (NULL);
 	}
 	if (*minishell->line)
 		add_history(minishell->line);
 	if (ft_checker_quotes_unclosed(minishell))
-	{
-		free(minishell->line);
-		minishell->line = NULL;
-		ft_free_tokens(minishell->tokens);
-		minishell->tokens = NULL;
 		return (NULL);
-	}
 	ft_free_tokens(minishell->tokens);
 	minishell->tokens = ft_get_tokens(minishell->line);
 	if (!minishell->tokens)
@@ -191,11 +183,5 @@ void	*ft_tokenizer(t_minishell *minishell)
 		return (NULL);
 	}
 	ft_print_tokens(minishell->tokens);
-	//***Pdte trabajar ast***/
-	// ast = ft_making_ast(minishell->tokens);
-	// if (ast)
-	// 	ft_print_ast(ast);
-	// free(minishell->line);
-	// return (ast);
 	return (NULL);
 }

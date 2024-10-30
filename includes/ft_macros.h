@@ -13,15 +13,15 @@
 #ifndef FT_MACROS_H
 # define FT_MACROS_H
 
-# define NUM_ARGV_ERR		"❗Arguments are not accepted"
-# define QUOTES_ERR			"❗Syntax error. Open quotes"
+# define NUM_ARGV_ERR			"❗Arguments are not accepted."
+# define QUOTES_ERR				"❗Syntax error. Open quotes."
+# define WHITOUT_COMMAND_ERR	"❗Sorry, i need a command to work."
 
-
-# define PROMPT             "minishell: ~ $ "
-# define STDIN              1
-# define STDOUT             2
-# define STDERR             3
-# define EX_SIGINT          130
-# define EX_SIGQUIT         131
+# define PROMPT					"minishell: ~ $ "
+# define STDIN					1
+# define STDOUT					2
+# define STDERR					3
+# define EX_SIGINT				130
+# define EX_SIGQUIT				131
 
 #endif

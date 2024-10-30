@@ -96,8 +96,19 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		if (ft_strcmp(minishell.line, "") == 0)
-			printf("HOLA");
+		// if (ft_strcmp(minishell.line, "") == 0)
+		// {
+		// 	ft_printf("HOLA\n");
+		// 	free(minishell.line);
+		// 	minishell.line = NULL;
+		// }
+		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
+		{
+			if (minishell.line)
+				free(minishell.line);
+			minishell.line = NULL;
+			continue ;
+		}
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
 		temp = ast;
@@ -123,6 +134,7 @@ int	main(int argc, char **argv, char **envp)
 		ast = temp;
 		printf("\n");
 		free(minishell.line);
+		minishell.line = NULL;
 		ft_free_tokens(minishell.tokens);
 		minishell.tokens = NULL;
 		if (i == 1)

@@ -182,6 +182,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 		minishell->tokens = NULL;
 		return (NULL);
 	}
+	ft_free_tokens(minishell->tokens);
 	minishell->tokens = ft_get_tokens(minishell->line);
 	if (!minishell->tokens)
 	{

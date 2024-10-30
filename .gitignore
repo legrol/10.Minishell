@@ -2,7 +2,7 @@
 *.d
 
 # Object files
-# *.o
+*.o
 */*.o
 *.ko
 *.obj
@@ -18,8 +18,9 @@
 *.pch
 
 # Libraries
-# *.a
+*.a
 */*.a
+*/*/*.a
 *.lib
 *.la
 *.lo
@@ -56,3 +57,4 @@ dkms.conf
 # Severals
 .vscode
 .DS_Store
+settings.json

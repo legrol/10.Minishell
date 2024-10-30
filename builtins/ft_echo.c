@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/30 12:23:16 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:56:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,46 +17,7 @@
  * FALTA liberar el split
 */
 
-/*static int	ft_echo_only(t_minishell *minishell)
-{
-	char *trim;
-
-	trim = ft_strtrim(minishell->line, " ");
-	if (ft_strcmp(trim, "echo") == 0)
-	{
-		printf("\n");
-		free(trim);
-		return (1);
-	}
-	free(trim);
-	return (0);
-}*/
-
-/*static void ft_print_echo(char *str, char c, t_minishell *minishell)
-{
-	char *trim;
-
-	if (ft_strchr(str, '\''))
-	{
-		trim = ft_strtrim(str, "\'");
-		if (ft_strcmp(trim, "$?") == 0)
-			ft_printf("%i%c", minishell->exit, c);
-		else 
-			ft_printf("%s%c", trim, c);
-	}
-	else 
-	{
-		trim = ft_strtrim(str, "\"");
-		if (ft_strcmp(trim, "$?") == 0)
-			ft_printf("%i%c", minishell->exit, c);
-		else 
-			ft_printf("%s%c", trim, c);
-	}
-	minishell->exit = 0;
-	free(trim);
-}*/
-
-void	ft_echo(t_ast *ast)
+static int ft_echo_init(t_ast *ast)
 {
 	int i;
 	t_ast *temp;
@@ -74,15 +35,22 @@ void	ft_echo(t_ast *ast)
 	}
 	ast = temp;
 	if (i == 1)
-	{
-		printf("\n");
-		return ;
-	}	
+		return (-1+(0*printf("\n")));
 	else if (i == 2 && f == 1)
-	{
-		printf("");
-		return ;
-	}
+		return (-1+(0*printf("")));
+	return (f);
+}
+
+void	ft_echo(t_ast *ast)
+{
+	t_ast *temp;
+	int f;
+
+	f = 0;
+	temp = ast;
+	f = ft_echo_init(ast);
+	if (f == -1)
+		return;
 	ast = ast->left;
 	if (f == 1)
 		ast = ast->left;
@@ -94,4 +62,5 @@ void	ft_echo(t_ast *ast)
 	printf("%s", ast->value);
 	if (f == 0)
 		printf("\n");
+	ast = temp;
 }

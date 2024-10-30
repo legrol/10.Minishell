@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:12:22 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:25:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,43 +85,33 @@ static char **ft_sort_print(t_minishell *minishell)
 	}
 	return (cpy);
 }
-static int ft_export_only(t_minishell *minishell)
+static void ft_export_only(t_minishell *minishell)
 {
 	char	**cpy;
 	int		i;
 	t_envp	*temp;
-	char 	*trim;
-
-	trim = ft_strtrim(minishell->line, " ");
-	if (ft_strcmp(trim, "export") == 0)
+	
+	cpy = ft_sort_print(minishell);
+	temp = minishell->list_envp;
+	i = 0;
+	while(cpy[i])
 	{
-		cpy = ft_sort_print(minishell);
-		temp = minishell->list_envp;
-		i = 0;
-		while(cpy[i])
-		{
-			while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
-				minishell->list_envp = minishell->list_envp->next;
-			if (ft_strcmp(cpy[i], "ZDOTDIR") == 0)
-				;
-			else if (minishell->list_envp->value)
-				ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
-				minishell->list_envp->value);
-			else
-				ft_printf("declare -x %s\n", minishell->list_envp->key);
-			free(cpy[i]);
-			minishell->list_envp = temp;
-			i++;
-		}
+		while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
+			minishell->list_envp = minishell->list_envp->next;
+		if (ft_strcmp(cpy[i], "ZDOTDIR") == 0)
+			;
+		else if (minishell->list_envp->value)
+			ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
+			minishell->list_envp->value);
+		else
+			ft_printf("declare -x %s\n", minishell->list_envp->key);
 		free(cpy[i]);
-		free(cpy[i+1]);
 		minishell->list_envp = temp;
-		free(cpy);
-		free(trim);
-		return (1);
+		i++;
 	}
-	free(trim);
-	return (0);
+	free(cpy[i]);
+	minishell->list_envp = temp;
+	free(cpy);
 }
 
 static int ft_find_key(t_minishell *minishell, char *key, char *value)
@@ -148,38 +138,40 @@ static int ft_find_key(t_minishell *minishell, char *key, char *value)
 	return (-1);
 }
 
-void ft_export(t_minishell *minishell)
+void ft_export(t_minishell *minishell, t_ast *ast)
 {
 	t_envp *temp;
 	t_envp *new_nodo;
-	char 	**formula;
 	char	**key_value;
+	int i;
+	t_ast *temp2;
 
-	if (ft_export_only(minishell) == 1)
-		return ;
-	formula = ft_split_m(minishell->line, ' ');
-	if(!formula)
-		return ;
-	key_value = ft_split_m(formula[1], '=');
-	if (key_value)
+	i = 0;
+	temp2 = ast;
+	while (ast)
+	{
+		i++;
+		ast = ast->left;
+	}
+	ast = temp2;
+	if (i == 1)
+	{
+		ft_export_only(minishell);
+		return;
+	}
+	ast = ast->left;
+	while(ast)
 	{
 		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
 			new_nodo = new_node_envp(key_value[0], key_value[1]);
 		else
 			return ;
+		temp = minishell->list_envp;
+		while(ft_strcmp(minishell->list_envp->key, "VSCODE_GIT_ASKPASS_NODE") != 0)
+			minishell->list_envp = minishell->list_envp->next;
+		new_nodo->next = minishell->list_envp->next;
+		minishell->list_envp->next = new_nodo;
+		minishell->list_envp = temp;
 	}
-	else
-	{
-		if (ft_find_key(minishell, formula[1], NULL) == -1)
-			new_nodo = new_node_envp(formula[1], NULL);
-		else
-			return ;
-	}
-	temp = minishell->list_envp;
-	while(ft_strcmp(minishell->list_envp->key, "VSCODE_GIT_ASKPASS_NODE") != 0)
-		minishell->list_envp = minishell->list_envp->next;
-	new_nodo->next = minishell->list_envp->next;
-	minishell->list_envp->next = new_nodo;
-	minishell->list_envp = temp;
 }
 

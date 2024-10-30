@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_envp_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-28 12:41:34 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-10-28 12:41:34 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/10/28 12:41:34 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/10/29 20:08:49 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 /**
  * 
- * The funbction "free_envp_list" releases all memory allocated for the linked
+ * The funbction "ft_free_envp_list" releases all memory allocated for the linked
  * list of environment variables. It iterates through each node in the list,
  * freeing the memory for each key-value pair and then the node itself.
  * 
- * @param t_envp *head		A pointer to the head of the linked list of 
+ * @param t_envp *envp_list	A pointer to the head of the linked list of 
  * 							environment variables (`t_envp`). This list will
  * 							be fully deallocated by the function. 
  * 
  */
 
-void	free_envp_list(t_envp *head)
+void	ft_free_envp_list(t_envp *envp_list)
 {
 	t_envp	*temp;
 
-	while (head)
+	while (envp_list)
 	{
-		temp = head;
-		head = head->next;
+		temp = envp_list;
+		envp_list = envp_list->next;
 		free(temp->key);
 		free(temp->value);
 		free(temp);

@@ -25,7 +25,7 @@
 # include <signal.h>			// for SIGINT, SIGQUIT...
 # include <readline/readline.h> // for readline...
 # include <readline/history.h>	// for clear_history...
-# include <sys/wait.h> 			//
+# include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
 
 // ============================================================================
 // Access to my libraries
@@ -111,8 +111,9 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 // Release funtions
 // ============================================================================
-void		free_tokens(t_token *token);
-void		free_envp_list(t_envp *head);
+void		ft_free_envp_list(t_envp *head);
+void		ft_free_minishell(t_minishell *minishell);
+void		ft_free_tokens(t_token *token);
 
 // ============================================================================
 // Initialization functions

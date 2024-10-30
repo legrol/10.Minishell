@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/28 09:48:43 by pabromer         ###   ########.fr       */
+/*   Created: Invalid Date        by              +#+  #+#    #+#             */
+/*   Updated: 2024/10/29 20:43:48 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,51 +111,53 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 
 static t_token	*ft_read_tokens(char *line, int *index)
 {
-	t_token	*token;
+	t_token	*token_rd;
 	int		token_size;
 
-	token = malloc(sizeof(t_token));
-	if (!token)
+	token_rd = malloc(sizeof(t_token));
+	if (!token_rd)
 		return (NULL);
 	token_size = ft_token_size(line, index);
-	token->token_value = malloc(sizeof(char) * token_size);
-	if (!token->token_value)
+	token_rd->token_value = malloc(sizeof(char) * token_size);
+	if (!token_rd->token_value)
 	{
-		free(token);
+		free(token_rd);
 		return (NULL);
 	}
-	ft_fill_token(token, line, index);
-	token->next = NULL;
-	token->prev = NULL;
-	return (token);
+	ft_fill_token(token_rd, line, index);
+	token_rd->next = NULL;
+	token_rd->prev = NULL;
+	return (token_rd);
 }
 
 static t_token	*ft_get_tokens(char *line)
 {
 	int		i;
-	t_token	*token;
+	t_token	*token_gt;
 	t_token	*prev;
 
 	i = 0;
+	token_gt = NULL;
 	prev = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
-		token = ft_read_tokens(line, &i);
-		if (!token)
+		token_gt = ft_read_tokens(line, &i);
+		if (!token_gt)
+		{
+			ft_free_tokens(prev);
 			return (NULL);
+		}
 		if (prev)
-			prev->next = token;
-		token->prev = prev;
-		prev = token;
-		ft_update_type_tokens(token);
+			prev->next = token_gt;
+		token_gt->prev = prev;
+		prev = token_gt;
+		ft_update_type_tokens(token_gt);
 		ft_skip_spaces(line, &i);
 	}
-	if (token)
-		token->next = NULL;
-	while (token && token->prev)
-		token = token->prev;
-	return (token);
+	while (token_gt && token_gt->prev)
+		token_gt = token_gt->prev;
+	return (token_gt);
 }
 
 void	*ft_tokenizer(t_minishell *minishell)
@@ -175,9 +177,18 @@ void	*ft_tokenizer(t_minishell *minishell)
 	if (ft_checker_quotes_unclosed(minishell))
 	{
 		free(minishell->line);
+		minishell->line = NULL;
+		ft_free_tokens(minishell->tokens);
+		minishell->tokens = NULL;
 		return (NULL);
 	}
 	minishell->tokens = ft_get_tokens(minishell->line);
+	if (!minishell->tokens)
+	{
+		free(minishell->line);
+		minishell->line = NULL;
+		return (NULL);
+	}
 	ft_print_tokens(minishell->tokens);
 	//***Pdte trabajar ast***/
 	// ast = ft_making_ast(minishell->tokens);

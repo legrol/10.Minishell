@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_change_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*    By: pabromer <pabromer@student.42malaga.com   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:53:36 by pabromer          #+#    #+#             */
 /*   Updated: 2024/10/24 19:01:33 by pabromer         ###   ########.fr       */

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
 /*   Updated: 2024/10/29 17:11:53 by pabromer         ###   ########.fr       */
@@ -104,28 +104,16 @@ int	main(int argc, char **argv, char **envp)
 			else
 				ft_cmdexe(&minishell);
 			ast = ast->right;
-		}
-		
+		}		
 		ast = temp;
 		printf("\n");
 		free(minishell.line);
+		ft_free_tokens(minishell.tokens);
+		minishell.tokens = NULL;
 		if (i == 1)
-			break;
+			break ;
 	}
 	rl_clear_history();
-	i = 0;
-	while (minishell.envp[i])
-	{
-		free(minishell.envp[i]);
-		i++;
-	}
-	free_tokens(minishell.tokens);
-	// free_envp_list(minishell.list_envp);
-	//free(minishell.line);
-	free(minishell.envp);
-	free(minishell.dirprompt);
-	free(minishell.list_envp->key);
-	free(minishell.list_envp->value);
-	free(minishell.list_envp);
+	ft_free_minishell(&minishell);
 	return (0);
 }

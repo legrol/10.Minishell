@@ -96,14 +96,12 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		
 		// if (ft_strcmp(minishell.line, "") == 0)
 		// {
 		// 	ft_printf("HOLA\n");
 		// 	free(minishell.line);
 		// 	minishell.line = NULL;
 		// }
-
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
 		{
 			if (minishell.line)

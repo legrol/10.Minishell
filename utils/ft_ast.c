@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/29 17:01:07 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:28:30 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_ast *ft_ast_node(t_tok_typ_enum type, char *value, t_ast *treee)
+t_ast *ft_ast_node(t_tok_typ_enum type, char *value)
 {
 	t_ast	*tree;
 
@@ -21,7 +21,7 @@ t_ast *ft_ast_node(t_tok_typ_enum type, char *value, t_ast *treee)
 		return (NULL);
 	tree->value = ft_strdup(value);
 	tree->type = type;
-	tree->right = treee;
+	tree->right = NULL;
 	tree->left =NULL;
 	return (tree);
 }
@@ -39,21 +39,21 @@ t_ast	*ft_ast(t_minishell *minishell)
 		printf("Not valid input\n");
 		return NULL;
 	}
-	tree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value, NULL);
+	tree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	temp_tree = tree;
-	printf("Type %i  Value %s\n", tree->type, tree->value);
+	//printf("Type %i  Value %s\n", tree->type, tree->value);
 	minishell->tokens = minishell->tokens->next;
 	while (minishell->tokens && (minishell->tokens->token_type == 6 || minishell->tokens->token_type == 7))
 	{
-		tree->left = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value, tree);
-		printf("Type %i  Value %s\n", tree->type, tree->value);
+		tree->left = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+		//printf("Type %i  Value %s\n", tree->type, tree->value);
 		tree = tree->left;
 		minishell->tokens = minishell->tokens->next;
 	}
 	tree = temp_tree;
 	while (tree)
 	{
-		printf("Type %i  Value %s\n", tree->type, tree->value);
+		//printf("Type %i  Value %s\n", tree->type, tree->value);
 		tree = tree->left;
 	}
 	tree = temp_tree;

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:58:14 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:23:16 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * FALTA liberar el split
 */
 
-static int	ft_echo_only(t_minishell *minishell)
+/*static int	ft_echo_only(t_minishell *minishell)
 {
 	char *trim;
 
@@ -30,9 +30,9 @@ static int	ft_echo_only(t_minishell *minishell)
 	}
 	free(trim);
 	return (0);
-}
+}*/
 
-static void ft_print_echo(char *str, char c, t_minishell *minishell)
+/*static void ft_print_echo(char *str, char c, t_minishell *minishell)
 {
 	char *trim;
 
@@ -54,22 +54,44 @@ static void ft_print_echo(char *str, char c, t_minishell *minishell)
 	}
 	minishell->exit = 0;
 	free(trim);
-}
+}*/
 
-void	ft_echo(t_minishell *minishell)
+void	ft_echo(t_ast *ast)
 {
-	char	*shorting;
-	char	**splited;
+	int i;
+	t_ast *temp;
+	int f;
 
-	if (ft_echo_only(minishell) == 1)
-		return;
-	shorting = ft_strnstr(minishell->line, "echo ", ft_strlen(minishell->line));
-	splited = ft_split_m(shorting, ' ');
-	if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && !splited[2])
-		ft_printf("");
-	else if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && splited[2])
-		ft_print_echo(splited[2], '\0', minishell);
-	else
-		ft_print_echo(splited[1], '\n', minishell);
-	//freessplit_m(splited, mallocsize_m(shorting, ' '));
+	f = 0;
+	i = 0;
+	temp = ast;
+	while (ast)
+	{
+		if (i == 1 && ft_strcmp(ast->value, "-n") == 0)
+			f = 1;
+		i++;
+		ast = ast->left;
+	}
+	ast = temp;
+	if (i == 1)
+	{
+		printf("\n");
+		return ;
+	}	
+	else if (i == 2 && f == 1)
+	{
+		printf("");
+		return ;
+	}
+	ast = ast->left;
+	if (f == 1)
+		ast = ast->left;
+	while(ast->left)
+	{
+		printf("%s ", ast->value);
+		ast = ast->left;
+	}
+	printf("%s", ast->value);
+	if (f == 0)
+		printf("\n");
 }

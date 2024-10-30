@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 17:11:53 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:24:37 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 		temp = ast;
 		while (ast)
 		{
-			printf("%s %i\n", ast->value, ast->type);
+			//printf("%s %i\n", ast->value, ast->type);
 			if (ft_strcmp(ast->value, "cd") == 0)
 				ft_cd(&minishell, ast);
 			else if (ft_strcmp(ast->value, "env") == 0)
@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (ft_strcmp(ast->value, "pwd") == 0)
 				ft_pwd(&minishell);
 			else if (ft_strcmp(ast->value, "echo") == 0)
-				ft_echo(&minishell);
+				ft_echo(ast);
 			else if (ft_strcmp(ast->value, "export") == 0)
 				ft_export(&minishell);
 			else if (ft_strcmp(ast->value, "exit") == 0)
@@ -121,7 +121,6 @@ int	main(int argc, char **argv, char **envp)
 			ast = ast->right;
 		}
 		ast = temp;
-		printf("\n");
 		free(minishell.line);
 		ft_free_tokens(minishell.tokens);
 		minishell.tokens = NULL;

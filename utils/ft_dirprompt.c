@@ -15,14 +15,12 @@
 /**
  * The function "ft_dirprompt" updates the value of dirprompt in minishell
  * structure
- *
- *  
  * 
  * @param char cwd[1024]	A string wich contains the working directory.
  * 
- * 
  * @param char *temp		A temporary string to join the PROMPT 
  * 							and the working directory.  
+ * 
  */
 
 void	ft_dirprompt(t_minishell	*minishell)
@@ -33,7 +31,7 @@ void	ft_dirprompt(t_minishell	*minishell)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		temp = ft_strjoin(PROMPT, cwd);
-		if(minishell->dirprompt != NULL)
+		if (minishell->dirprompt != NULL)
 			free(minishell->dirprompt);
 		minishell->dirprompt = ft_strjoin(temp, "$ ");
 		free (temp);

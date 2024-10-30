@@ -13,26 +13,42 @@
 #include "../includes/minishell.h"
 
 /**
- * The main function of minishell.
+ * The "main" function of minishell program.
  * 
- * @param int argc 		Number of arguments the program receives from the 
- * 						command line. This is expected to be 1 (just the 
- * 						program name), otherwise an error message is 
- * 						displayed.
- * @param char **argv	String array containing the arguments passed to the 
- * 						program. This program does not take any additional 
- * 						arguments beyond the program name, and passing more 
- * 						than that results in an error.
- * @param char **envp	String array containing the system environment 
- * 						variables. These are needed for initializing the 
- * 						`t_minishell` structure and managing the shell 
- * 						environment.
+ * @param int argc 			Number of arguments the program receives from the 
+ * 							command line. This is expected to be 1 (just the 
+ * 							program name), otherwise an error message is 
+ * 							displayed.
+ * @param char **argv		String array containing the arguments passed to the 
+ * 							program. This program does not take any additional 
+ * 							arguments beyond the program name, and passing more
+ * 							than that results in an error.
+ * @param char **envp		String array containing the system environment 
+ * 							variables. These are needed for initializing the 
+ * 							`t_minishell` structure and managing the shell 
+ * 							environment.
  * 
- * @param int g_signals.start Integer what indicates the minishell was initialized.
+ * NOTE: g_signals.start 	Integer what indicates the minishell was 
+ * 							initialized.
  * 
- * ft_init_envp			Function what initializes the envp inside the 
- * 						minishell structure.		
+ * The function "ft_init_envp" initializes the envp inside the minishell 
+ * structure. This function takes an array of environment variables (`envp`)
+ * and duplicates each entry into the `minishell->envp` array within the 
+ * `t_minishell` structure. The function calculates the number of entries
+ * in `envp`, allocates memory for each variable, and duplicates them 
+ * individually, adding a NULL pointer at the end. 
+ * 
+ * @param t_minishell *minishell	Pointer to the main minishell structure
+ *                                  where the environment variables will 
+ *                                  be stored.
+ * @param char **envp				Array of environment variables passed
+ *                                  to the program by the operating system.
  *  
+ * NOTE: t_signal g_signals			Is a global variable that handles input 
+ * 									signals. It must be accessible from any 
+ * 									area of ​​the minishell program, hence its
+ * 									global nature.
+ * 
  */
 
 t_signal g_signals;
@@ -43,7 +59,7 @@ static void	ft_init_envp(t_minishell *minishell, char **envp)
 
 	i = 0;
 	if (!envp)
-			return ;
+		return ;
 	while (envp[i])
 		i++;
 	minishell->envp = (char **)malloc((i + 1) * sizeof(char *));
@@ -64,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	t_ast		*ast;
 	t_ast		*temp;
-	//char *temp;
 
 	(void)argc;
 	(void)argv;
@@ -104,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 			else
 				ft_cmdexe(&minishell);
 			ast = ast->right;
-		}		
+		}
 		ast = temp;
 		printf("\n");
 		free(minishell.line);

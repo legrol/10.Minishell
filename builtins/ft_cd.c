@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 17:11:02 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:02:36 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,8 @@ static void	ft_cd_only(t_minishell *minishell)
 	ft_swap_pwd(minishell);
 }
 
-void	ft_cd(t_minishell *minishell, t_ast *ast)
+static void	ft_try_cd(t_minishell *minishell, t_ast *ast, int i)
 {
-	int i;
-	t_ast *temp;
-
-	i = 1;
-	temp = ast;
-	while (ast->left)
-	{
-		i++;
-		ast = ast->left;
-	}
-	minishell->exit = 0;
-	if (i == 1)
-	{
-		ft_cd_only(minishell);
-		ast = temp;
-		return ;
-	}
 	if (i > 2)
 	{
 		minishell->exit = 1;
@@ -87,5 +70,27 @@ void	ft_cd(t_minishell *minishell, t_ast *ast)
 	}
 	else
 		ft_swap_pwd(minishell);
+}
+
+void	ft_cd(t_minishell *minishell, t_ast *ast)
+{
+	int i;
+	t_ast *temp;
+
+	i = 1;
+	temp = ast;
+	while (ast->left)
+	{
+		i++;
+		ast = ast->left;
+	}
+	minishell->exit = 0;
+	if (i == 1)
+	{
+		ft_cd_only(minishell);
+		ast = temp;
+		return ;
+	}
+	ft_try_cd(minishell, ast, i);
 	ast = temp;
 }

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 15:02:20 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:38:26 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void		ft_echo(t_ast *ast);
 void		ft_env(t_minishell *minishell);
 void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(t_minishell *minishell);
+void		ft_unset(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================
 // Tokenizer functions

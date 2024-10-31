@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 15:23:41 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:07:20 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_echo(ast);
 			else if (ft_strcmp(ast->value, "export") == 0)
 				ft_export(&minishell, ast);
+			else if (ft_strcmp(ast->value, "unset") == 0)
+				ft_unset(&minishell, ast);
 			else if (ft_strcmp(ast->value, "exit") == 0)
 				i = 1;
 			else

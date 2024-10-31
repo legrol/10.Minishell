@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:58:14 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:56:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,50 @@
  * FALTA liberar el split
 */
 
-static int	ft_echo_only(t_minishell *minishell)
+static int ft_echo_init(t_ast *ast)
 {
-	char *trim;
+	int i;
+	t_ast *temp;
+	int f;
 
-	trim = ft_strtrim(minishell->line, " ");
-	if (ft_strcmp(trim, "echo") == 0)
+	f = 0;
+	i = 0;
+	temp = ast;
+	while (ast)
 	{
-		printf("\n");
-		free(trim);
-		return (1);
+		if (i == 1 && ft_strcmp(ast->value, "-n") == 0)
+			f = 1;
+		i++;
+		ast = ast->left;
 	}
-	free(trim);
-	return (0);
+	ast = temp;
+	if (i == 1)
+		return (-1+(0*printf("\n")));
+	else if (i == 2 && f == 1)
+		return (-1+(0*printf("")));
+	return (f);
 }
 
-static void ft_print_echo(char *str, char c, t_minishell *minishell)
+void	ft_echo(t_ast *ast)
 {
-	char *trim;
+	t_ast *temp;
+	int f;
 
-	if (ft_strchr(str, '\''))
-	{
-		trim = ft_strtrim(str, "\'");
-		if (ft_strcmp(trim, "$?") == 0)
-			ft_printf("%i%c", minishell->exit, c);
-		else 
-			ft_printf("%s%c", trim, c);
-	}
-	else 
-	{
-		trim = ft_strtrim(str, "\"");
-		if (ft_strcmp(trim, "$?") == 0)
-			ft_printf("%i%c", minishell->exit, c);
-		else 
-			ft_printf("%s%c", trim, c);
-	}
-	minishell->exit = 0;
-	free(trim);
-}
-
-void	ft_echo(t_minishell *minishell)
-{
-	char	*shorting;
-	char	**splited;
-
-	if (ft_echo_only(minishell) == 1)
+	f = 0;
+	temp = ast;
+	f = ft_echo_init(ast);
+	if (f == -1)
 		return;
-	shorting = ft_strnstr(minishell->line, "echo ", ft_strlen(minishell->line));
-	splited = ft_split_m(shorting, ' ');
-	if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && !splited[2])
-		ft_printf("");
-	else if (splited[1][0] == '-' && splited[1][1] == 'n' && splited[1][2] == '\0' && splited[2])
-		ft_print_echo(splited[2], '\0', minishell);
-	else
-		ft_print_echo(splited[1], '\n', minishell);
-	//freessplit_m(splited, mallocsize_m(shorting, ' '));
+	ast = ast->left;
+	if (f == 1)
+		ast = ast->left;
+	while(ast->left)
+	{
+		printf("%s ", ast->value);
+		ast = ast->left;
+	}
+	printf("%s", ast->value);
+	if (f == 0)
+		printf("\n");
+	ast = temp;
 }

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 17:01:39 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:17:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void		ft_init_signals(void);
 // Builtins functions
 // ============================================================================
 void		ft_cd(t_minishell *minishell, t_ast *ast);
-void		ft_echo(t_minishell *minishell);
+void		ft_echo(t_ast *ast);
 void		ft_env(t_minishell *minishell);
-void		ft_export(t_minishell *minishell);
+void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(t_minishell *minishell);
 
 // ============================================================================

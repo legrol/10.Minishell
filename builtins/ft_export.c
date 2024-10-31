@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 09:59:37 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:19:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_envp	*new_node_envp(char *key, char *value)
 		new_node->value = NULL;
 	else
 		new_node->value = ft_strdup(value);
-	new_node->next = NULL;
+	new_node->next = NULL;	
 	return (new_node);
 }
 
@@ -98,7 +98,7 @@ static void ft_export_only(t_minishell *minishell)
 	{
 		while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
 			minishell->list_envp = minishell->list_envp->next;
-		if (ft_strcmp(cpy[i], "ZDOTDIR") == 0)
+		if (ft_strcmp(cpy[i], "ZDOTDIR") == 0 || ft_strcmp(cpy[i], "_") == 0)
 			;
 		else if (minishell->list_envp->value)
 			ft_printf("declare -x %s=\"%s\"\n", minishell->list_envp->key, \
@@ -138,40 +138,101 @@ static int ft_find_key(t_minishell *minishell, char *key, char *value)
 	return (-1);
 }
 
-void ft_export(t_minishell *minishell, t_ast *ast)
+static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 {
-	t_envp *temp;
-	t_envp *new_nodo;
-	char	**key_value;
 	int i;
 	t_ast *temp2;
+	int f;
 
 	i = 0;
+	f = 0;
 	temp2 = ast;
 	while (ast)
 	{
+		if (ft_isalpha(ast->value[0]) == 0)
+		{
+			minishell->exit = 1;
+			ft_printf("minishell: export: \'%s\': not a valid identifier\n",\
+			ast->value);
+			f = -1;
+		}
 		i++;
 		ast = ast->left;
 	}
-	ast = temp2;
 	if (i == 1)
-	{
 		ft_export_only(minishell);
-		return;
+	if (f == -1)
+		return (f);
+	ast = temp2;
+	return (i);
+}
+
+static char **ft_init_keyvalue(void)
+{
+	char	**key_value;
+
+	key_value = (char **)malloc(2*sizeof(char*));
+	if (!key_value)
+		return NULL;
+	key_value[0] = NULL;
+	key_value[1] = NULL;
+	return (key_value);
+}
+
+static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
+{
+	if (ft_strchr(ast->value, '='))
+	{
+		key_value[0] = ft_substr(ast->value,0,ft_strlen(ast->value)-ft_strlen(ft_strchr(ast->value, '=')));
+		key_value[1] = ft_strdup(ft_strchr_exp(ast->value, '='));
 	}
-	ast = ast->left;
+	else
+	{
+		key_value[0] = ft_strdup(ast->value);
+		key_value[1] = NULL;
+	}
+}
+
+static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
+{
+	char	**key_value;
+	t_envp 	*temp;
+	t_envp 	*new_node;
+
+	key_value = ft_init_keyvalue();
 	while(ast)
 	{
+		ft_fill_keyvalue(key_value, ast);
 		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
-			new_nodo = new_node_envp(key_value[0], key_value[1]);
-		else
-			return ;
-		temp = minishell->list_envp;
-		while(ft_strcmp(minishell->list_envp->key, "VSCODE_GIT_ASKPASS_NODE") != 0)
-			minishell->list_envp = minishell->list_envp->next;
-		new_nodo->next = minishell->list_envp->next;
-		minishell->list_envp->next = new_nodo;
-		minishell->list_envp = temp;
+		{
+			new_node = new_node_envp(key_value[0], key_value[1]);
+			temp = minishell->list_envp;
+			while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
+				minishell->list_envp = minishell->list_envp->next;
+			new_node->next = minishell->list_envp->next;
+			minishell->list_envp->next = new_node;
+			minishell->list_envp = temp;
+		}
+		ast = ast->left;
+		free(key_value[0]);
+		if (key_value[1])
+			free(key_value[1]);
 	}
+	free(key_value);
+}
+
+void ft_export(t_minishell *minishell, t_ast *ast)
+{
+	int i;
+	t_ast *temp2;
+
+	minishell->exit = 0;
+	i = ft_arg_checker(ast, minishell);
+	if (i == -1 || i == 1)
+		return ;
+	temp2 = ast;
+	ast = ast->left;
+	ft_insert_node(minishell, ast);
+	ast = temp2;
 }
 

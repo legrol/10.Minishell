@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/30 13:17:18 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:23:41 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,42 @@
 
 t_signal g_signals;
 
-static void	ft_init_envp(t_minishell *minishell, char **envp)
+static int ft_start_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
 
 	i = 0;
 	if (!envp)
-		return ;
+		return (-1);
 	while (envp[i])
 		i++;
 	minishell->envp = (char **)malloc((i + 1) * sizeof(char *));
 	if (!minishell->envp)
+		return (-1);
+	return (0);
+}
+
+static void	ft_init_envp(t_minishell *minishell, char **envp)
+{
+	int		i;
+
+	i = 0;
+	if (ft_start_init_envp(minishell, envp))
 		return ;
 	i = 0;
 	while (envp[i])
 	{
 		minishell->envp[i] = ft_strdup(envp[i]);
+		if (!minishell->envp[i])
+		{
+			while (i > 0)
+			{
+				free(minishell->envp[--i]);
+			}
+			free(minishell->envp);
+			minishell->envp = NULL;
+			return ;
+		}
 		i++;
 	}
 	minishell->envp[i] = NULL;
@@ -81,6 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	t_ast		*ast;
 	t_ast		*temp;
 
+	i = 0;
 	(void)argc;
 	(void)argv;
 	if (argc != 1 || argv[1])
@@ -96,12 +117,6 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		// if (ft_strcmp(minishell.line, "") == 0)
-		// {
-		// 	ft_printf("HOLA\n");
-		// 	free(minishell.line);
-		// 	minishell.line = NULL;
-		// }
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
 		{
 			if (minishell.line)
@@ -114,7 +129,6 @@ int	main(int argc, char **argv, char **envp)
 		temp = ast;
 		while (ast)
 		{
-			//printf("%s %i\n", ast->value, ast->type);
 			if (ft_strcmp(ast->value, "cd") == 0)
 				ft_cd(&minishell, ast);
 			else if (ft_strcmp(ast->value, "env") == 0)
@@ -132,6 +146,7 @@ int	main(int argc, char **argv, char **envp)
 			ast = ast->right;
 		}
 		ast = temp;
+		ft_free_ast(ast);
 		free(minishell.line);
 		minishell.line = NULL;
 		ft_free_tokens(minishell.tokens);

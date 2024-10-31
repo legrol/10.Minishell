@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_envp_list.c                                :+:      :+:    :+:   */
+/*   ft_free_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:41:34 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 12:59:35 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:00:22 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,17 @@
 
 /**
  * 
- * The function "ft_free_envp_list" releases all memory allocated for the 
- * linked list of environment variables. It iterates through each node in the 
- * list, freeing the memory for each key-value pair and then the node itself.
- * 
- * @param t_envp *envp_list	A pointer to the head of the linked list of 
- * 							environment variables (`t_envp`). This list will
- * 							be fully deallocated by the function. 
  * 
  */
 
-void	ft_free_envp_list(t_envp *envp_list)
+void	ft_free_ast(t_ast *ast)
 {
-	t_envp	*temp;
+	t_ast	*temp;
 
-	while (envp_list)
+	while (ast)
 	{
-		temp = envp_list;
-		envp_list = envp_list->next;
-		free(temp->key);
+		temp = ast;
+		ast = ast->left;
 		free(temp->value);
 		free(temp);
 	}

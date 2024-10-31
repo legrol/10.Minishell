@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/30 13:17:14 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:02:20 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void		ft_manage_err(const char *err);
 void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_tokens(t_token *token);
+void		ft_free_ast(t_ast *ast);
 
 // ============================================================================
 // Initialization functions

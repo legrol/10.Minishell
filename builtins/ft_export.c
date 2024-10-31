@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static t_envp	*new_node_envp(char *key, char *value)
+/*static t_envp	*new_node_envp(char *key, char *value)
 {
 	t_envp	*new_node;
 
@@ -173,5 +173,5 @@ void ft_export(t_minishell *minishell, t_ast *ast)
 		minishell->list_envp->next = new_nodo;
 		minishell->list_envp = temp;
 	}
-}
+}*/
 

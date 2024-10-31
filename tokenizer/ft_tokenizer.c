@@ -148,6 +148,7 @@ static t_token	*ft_get_tokens(char *line)
 			ft_free_tokens(prev);
 			return (NULL);
 		}
+		ft_split_and_update_tokens(token_gt);
 		if (prev)
 			prev->next = token_gt;
 		token_gt->prev = prev;

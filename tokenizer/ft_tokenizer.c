@@ -21,13 +21,17 @@
  * @param t_minishell *minishell	A pointer to the minishell structure that
  * 									contains the input line and stores the 
  * 									tokens and the generated AST.
+ * @return void*					NULL if an error occurs; otherwise, 
+ *									processes the tokens.
  * 
  * The function "ft_get_tokens" breaks the input line into a list of tokens, 
  * each of which is processed and stored in a linked list. It skips spaces and 
  * updates token types.
  * 
  * @param char *line				A string containing the input line to be 
- * 									tokenized. 
+ * 									tokenized.
+ * @return t_token*					A pointer to the head of the linked list 
+ *									of tokens, or NULL if an error occurs.
  * 
  * The function "ft_read_tokens" reads a single token from the input line 
  * and allocates memory for it. It also handles the parsing of quotes and 
@@ -38,24 +42,28 @@
  * 									parsed.
  * @param int *index				A pointer to the current position in the 
  * 									line.
+ * @return t_token*					A pointer to the created token structure, 
+ *									or NULL if memory allocation fails.
  * 
- * The function "ft_fill_token" fills the token value from the input line.
- * 
- * @param t_token *token			A pointer to a t_token structure that will
- * 									store the extracted token value.
- * @param char *line				The string from which the tokens are being
- * 									read.
- * @param int *index				A pointer to an index that moves along the
- * 									line to process characters.
+ * The function "ft_fill_token" fills the token structure with the value 
+ * extracted from the input line.
+ *
+ * @param t_token *token			A pointer to the token structure to be 
+ *									filled with the extracted value.
+ * @param char *line				A string representing the input line from 
+ *									which the token is extracted.
+ * @param int *index				A pointer to the current position in the 
+ *									line.
  * 
  * The function "ft_token_size" calculates the size of a token in the input 
- * line, considering quoted strings and special characters.
+ * line, taking into account quoted strings and special characters.
  * 
- * @param char *line				A string containing the input line to 
- * 									calculate the token size.
+ * @param char *line				A string representing the input line from
+ *									which the token size is calculated.
  * @param int *index				A pointer to the current position in the 
- * 									line. This index is updated as the token 
- * 									is processed. 
+ *									line. This index is updated as the token 
+ *									is processed.
+ * @return int						The size of the token.
  * 
  */
 
@@ -63,28 +71,25 @@ static int	ft_token_size(char *line, int *index)
 {
 	int		i;
 	char	c;
-	int		size;
 
 	i = 0;
 	c = 32;
-	size = 0;
 	while (line[*index + i] && (line[*index + i] != 32 || c != 32))
 	{
-		if (c == 32 && (line[*index + i] == '\'' || line[*index + i] == '\"' ))
+		if (line[*index + i] == '"' || line[*index + i] == '\'')
 		{
 			c = line[*index + i];
 			i++;
 		}
-		else if (c != 32 && line[*index + i] == c)
+		else if (ft_strchr("<>|", line[*index + i]))
 		{
-			size += 2;
-			c = 32;
-			i++;
+			if (i == 0)
+				return (1);
+			break ;
 		}
-		else
-			i++;
+		i++;
 	}
-	return (i - size + 1);
+	return (i);
 }
 
 static void	ft_fill_token(t_token *token, char *line, int *index)
@@ -103,6 +108,12 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 			c = 32;
 			(*index)++;
 		}
+		else if (ft_strchr("<>|", line[*index]))
+		{
+			if (i == 0)
+				token->token_value[i++] = line[(*index)++];
+			break ;
+		}
 		else
 			token->token_value[i++] = line[(*index)++];
 	}
@@ -118,7 +129,7 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	if (!token_rd)
 		return (NULL);
 	token_size = ft_token_size(line, index);
-	token_rd->token_value = malloc(sizeof(char) * token_size);
+	token_rd->token_value = malloc(sizeof(char) * (token_size + 1));
 	if (!token_rd->token_value)
 	{
 		free(token_rd);
@@ -137,17 +148,13 @@ static t_token	*ft_get_tokens(char *line)
 	t_token	*prev;
 
 	i = 0;
-	token_gt = NULL;
 	prev = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
 		token_gt = ft_read_tokens(line, &i);
 		if (!token_gt)
-		{
-			ft_free_tokens(prev);
-			return (NULL);
-		}
+			return (ft_free_tokens(prev), NULL);
 		ft_split_and_update_tokens(token_gt);
 		if (prev)
 			prev->next = token_gt;

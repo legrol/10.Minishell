@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 15:19:29 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:55:04 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int ft_count_lines(t_minishell *minishell)
 
 	i = 0;
 	temp = minishell->list_envp;
-	while(minishell->list_envp->next)
+	while(minishell->list_envp)
 	{
 		i++;
 		minishell->list_envp = minishell->list_envp->next;
@@ -54,7 +54,7 @@ static char **ft_copy_env(t_minishell *minishell)
 		return (NULL);
 	temp = minishell->list_envp;
 	i = 0;
-	while(minishell->list_envp->next->next)
+	while(minishell->list_envp->next)
 	{
 		cpy[i] = ft_strdup(minishell->list_envp->key);
 		i++;

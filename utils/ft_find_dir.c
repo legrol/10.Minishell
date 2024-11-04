@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:53:36 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/24 19:00:56 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:15:51 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_find_dir(t_minishell *minishell, const char *str)
 	char	*result;
 	t_envp	*temp;
 
+	if (!str)
+		return (NULL);
 	temp = minishell->list_envp;
 	while (minishell->list_envp)
 	{

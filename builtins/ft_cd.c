@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/31 16:02:36 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:51:15 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 /**
  * static void ft_swap_pwd;
  * 
- * FALTA IMPLEMENTAR ~/blablabla
- * FALTA liberar el split
- * FALTA añadir los codigos de error
 */
 
 static void	ft_swap_pwd(t_minishell *minishell)
@@ -44,6 +41,20 @@ static void	ft_cd_only(t_minishell *minishell)
 	chdir(ft_find_dir(minishell, "HOME"));
 	ft_swap_pwd(minishell);
 }
+static void ft_abs_dir(t_minishell *minishell, t_ast *ast)
+{
+	char	*join;
+
+	join = ft_strjoin(ft_find_dir(minishell, "HOME"),ft_strchr(ast->value, '/'));
+	if (chdir(join) != 0)
+	{
+		minishell->exit = 1;
+		ft_printf("bash: cd: %s: No such file or directory\n", ast->value);
+	}
+	else
+		ft_swap_pwd(minishell);
+	free(join);
+}
 
 static void	ft_try_cd(t_minishell *minishell, t_ast *ast, int i)
 {
@@ -52,32 +63,34 @@ static void	ft_try_cd(t_minishell *minishell, t_ast *ast, int i)
 		minishell->exit = 1;
 		ft_printf("bash: cd: too many arguments\n");
 	}
-	else if (strcmp(ast->value, "~") == 0)
-	{
-		chdir(ft_find_dir(minishell, "HOME"));
-		ft_swap_pwd(minishell);
-	}
-	else if (strcmp(ast->value, "-") == 0)
+	else if (ft_strcmp(ast->value, "-") == 0)
 	{
 		chdir(ft_find_dir(minishell, "OLDPWD"));
 		ft_printf("%s\n", ft_find_dir(minishell, "OLDPWD"));
 		ft_swap_pwd(minishell);
 	}
-	else if (chdir(ast->value) != 0)
-	{
-		minishell->exit = 1;
-		ft_printf("bash: cd: %s: No such file or directory\n", ast->value);
-	}
+	else if (ast->value[0] == '~' && ast->value[1] == '/')
+		ft_abs_dir(minishell, ast);
 	else
-		ft_swap_pwd(minishell);
+	{
+		if (chdir(ast->value) != 0)
+		{
+			minishell->exit = 1;
+			ft_printf("bash: cd: %s: No such file or directory\n", ast->value);
+		}
+		else
+			ft_swap_pwd(minishell);
+	}
 }
 
 void	ft_cd(t_minishell *minishell, t_ast *ast)
 {
-	int i;
-	t_ast *temp;
-
+	int		i;
+	t_ast	*temp;
+	char	*join;
+	
 	i = 1;
+	join = NULL;
 	temp = ast;
 	while (ast->left)
 	{
@@ -85,7 +98,7 @@ void	ft_cd(t_minishell *minishell, t_ast *ast)
 		ast = ast->left;
 	}
 	minishell->exit = 0;
-	if (i == 1)
+	if (i == 1 || ft_strcmp(ast->value, "~") == 0)
 	{
 		ft_cd_only(minishell);
 		ast = temp;

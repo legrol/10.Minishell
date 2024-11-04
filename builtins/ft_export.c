@@ -235,4 +235,3 @@ void ft_export(t_minishell *minishell, t_ast *ast)
 	ft_insert_node(minishell, ast);
 	ast = temp2;
 }
-

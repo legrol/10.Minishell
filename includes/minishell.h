@@ -132,7 +132,7 @@ void		ft_init_signals(void);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
-// void		ft_export(t_minishell *minishell, t_ast *ast);
+void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(t_minishell *minishell);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 
@@ -145,6 +145,7 @@ int			ft_check_operators(char *line, int index);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
 void		ft_split_and_update_tokens(t_token *token);
+int			ft_token_size(char *line, int *index);
 void		*ft_tokenizer(t_minishell *minishell);
 // t_ast		*ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);

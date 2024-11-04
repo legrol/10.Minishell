@@ -105,14 +105,14 @@ void	ft_update_type_tokens(t_token *token)
 {
 	if (ft_strcmp(token->token_value, "") == 0)
 		ft_empty_tok_out(token);
-	else if (ft_strcmp(token->token_value, ">") == 0)
-		token->token_type = TOKEN_REDIR_STDOUT;
-	else if (ft_strcmp(token->token_value, "<") == 0)
-		token->token_type = TOKEN_REDIR_STDIN;
 	else if (ft_strcmp(token->token_value, ">>") == 0)
 		token->token_type = TOKEN_REDIR_APPEND;
+	else if (ft_strcmp(token->token_value, ">") == 0)
+		token->token_type = TOKEN_REDIR_STDOUT;
 	else if (ft_strcmp(token->token_value, "<<") == 0)
 		token->token_type = TOKEN_REDIR_HEREDOC;
+	else if (ft_strcmp(token->token_value, "<") == 0)
+		token->token_type = TOKEN_REDIR_STDIN;
 	else if (ft_strcmp(token->token_value, "|") == 0)
 		token->token_type = TOKEN_PIPE;
 	else if (ft_strchr(token->token_value, '-'))

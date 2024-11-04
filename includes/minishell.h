@@ -26,6 +26,7 @@
 # include <readline/readline.h> // for readline...
 # include <readline/history.h>	// for clear_history...
 # include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
+# include <string.h>			// for strchr, strcpy, etc.
 
 // ============================================================================
 // Access to my libraries
@@ -113,6 +114,7 @@ void		ft_manage_err(const char *err);
 // ============================================================================
 void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
+void		ft_free_split(char **sub_tokens);
 void		ft_free_tokens(t_token *token);
 void		ft_free_ast(t_ast *ast);
 
@@ -130,7 +132,7 @@ void		ft_init_signals(void);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_ast *ast);
 void		ft_env(t_minishell *minishell);
-void		ft_export(t_minishell *minishell, t_ast *ast);
+// void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(t_minishell *minishell);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 
@@ -142,6 +144,7 @@ int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
+void		ft_split_and_update_tokens(t_token *token);
 void		*ft_tokenizer(t_minishell *minishell);
 // t_ast		*ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);

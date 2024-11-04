@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static t_envp	*new_node_envp(char *key, char *value)
+/*static t_envp	*new_node_envp(char *key, char *value)
 {
 	t_envp	*new_node;
 
@@ -191,7 +191,7 @@ static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
 		key_value[0] = ft_strdup(ast->value);
 		key_value[1] = NULL;
 	}
-}
+}*/
 
 static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 {

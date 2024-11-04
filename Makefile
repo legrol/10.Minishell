@@ -106,6 +106,7 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 
 FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 						${FREE_DIR}/ft_free_minishell.c \
+						${FREE_DIR}/ft_free_split.c \
 						${FREE_DIR}/ft_free_tokens.c \
 						${FREE_DIR}/ft_free_ast.c
 
@@ -122,6 +123,7 @@ BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_unset.c
 
 TOK					= ${TOKENIZER_DIR}/ft_check_quotes.c \
+						${TOKENIZER_DIR}/ft_split_tokens.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
 						${TOKENIZER_DIR}/ft_tools_token.c						
 

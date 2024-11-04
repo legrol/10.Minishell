@@ -19,13 +19,16 @@
  * @param char *line		The string to be checked, representing a command 
  * 							line.
  * @param int index			The position in the string to check for an 
- * 							operator. 
+ * 							operator.
+ * @return int				Returns 1 if the character is an operator 
+ *							outside of quotes, otherwise 0.
  * 
  * The function "ft_skip_spaces" advances the index in the given string "line"
  * to skip any whitespace characters. It handles spaces (ASCII 32) as well
  * as other whitespace characters like tabs, newlines, carriage returns, etc. 
  * 
- * @param char *line		The input string where spaces are being skipped.
+ * @param char *line		The input string in which spaces need to be
+ * 							skipped.
  * @param int *index		A pointer to the integer index that indicates the
  *							current position in the string. The function will
  *							increment the index to skip over any whitespace 
@@ -33,17 +36,23 @@
  * 							The value pointed to by this index will be 
  * 							updated in place.
  * 
- * The function "ft_print_tokens" prints out the list of tokens, displaying 
- * the token value and its type for each token in the list. This function 
- * is useful for debugging and understanding how the input line has been 
- * tokenized.
+ * The function "ft_print_tokens" iterates through a linked list of tokens 
+ * and prints their values and types. This function is primarily used for 
+ * debugging purposes to visualize the tokens created during parsing.
  * 
  * @param t_token *tokens	A pointer to the head of the linked list of 
  * 							tokens. 
  * 							Each token in the list has a value and type that 
  * 							will be printed.
  * 
- * The function "ft_update_type_tokens" pdates the type of a given token based 
+ * The function "ft_empty_tok_out" checks if a token is empty or contains 
+ * only spaces, and sets its type to TOKEN_EMPTY. It prints an error 
+ * message indicating the presence of an empty token.
+ * 
+ * @param t_token *tokens	A pointer to the token to be checked and updated 
+ * if empty. 
+ * 
+ * The function "ft_update_type_tokens" updates the type of a given token based 
  * on its value and its position in the sequence of tokens. It categorizes the 
  * token into different types such as redirections, pipes, commands, or 
  * arguments.

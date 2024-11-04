@@ -132,7 +132,7 @@ void		ft_init_signals(void);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_ast *ast);
 void		ft_env(t_minishell *minishell);
-// void		ft_export(t_minishell *minishell, t_ast *ast);
+void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(t_minishell *minishell);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 

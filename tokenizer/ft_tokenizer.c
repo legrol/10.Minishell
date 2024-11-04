@@ -67,6 +67,31 @@
  * 
  */
 
+// static int	ft_token_size(char *line, int *index)
+// {
+// 	int		i;
+// 	char	c;
+
+// 	i = 0;
+// 	c = 32;
+// 	while (line[*index + i] && (line[*index + i] != 32 || c != 32))
+// 	{
+// 		if (line[*index + i] == '"' || line[*index + i] == '\'')
+// 		{
+// 			c = line[*index + i];
+// 			i++;
+// 		}
+// 		else if (ft_strchr("<>|", line[*index + i]))
+// 		{
+// 			if (i == 0)
+// 				return (1);
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	return (i);
+// }
+
 static int	ft_token_size(char *line, int *index)
 {
 	int		i;
@@ -83,9 +108,12 @@ static int	ft_token_size(char *line, int *index)
 		}
 		else if (ft_strchr("<>|", line[*index + i]))
 		{
-			if (i == 0)
-				return (1);
-			break ;
+			if (line[*index + i] == '>' || line[*index + i] == '<')
+			{
+				if (line[*index + i] == line[*index + i + 1])
+					return (2);
+			}
+			return (1);
 		}
 		i++;
 	}
@@ -110,7 +138,13 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 		}
 		else if (ft_strchr("<>|", line[*index]))
 		{
-			if (i == 0)
+			if (i == 0 && (line[*index] == '>' || line[*index] == '<') \
+			&& line[*index] == line[*index + 1])
+			{
+				token->token_value[i++] = line[(*index)++];
+				token->token_value[i++] = line[(*index)++];
+			}
+			else if (i == 0)
 				token->token_value[i++] = line[(*index)++];
 			break ;
 		}
@@ -119,6 +153,34 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 	}
 	token->token_value[i] = '\0';
 }
+
+// static void	ft_fill_token(t_token *token, char *line, int *index)
+// {
+// 	int		i;
+// 	char	c;
+
+// 	i = 0;
+// 	c = 32;
+// 	while (line[*index] && (line[*index] != 32 || c != 32))
+// 	{
+// 		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
+// 			c = line[(*index)++];
+// 		else if (line[*index] == c)
+// 		{
+// 			c = 32;
+// 			(*index)++;
+// 		}
+// 		else if (ft_strchr("<>|", line[*index]))
+// 		{
+// 			if (i == 0)
+// 				token->token_value[i++] = line[(*index)++];
+// 			break ;
+// 		}
+// 		else
+// 			token->token_value[i++] = line[(*index)++];
+// 	}
+// 	token->token_value[i] = '\0';
+// }
 
 static t_token	*ft_read_tokens(char *line, int *index)
 {

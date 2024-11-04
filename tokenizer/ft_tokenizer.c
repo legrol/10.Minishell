@@ -55,68 +55,33 @@
  * @param int *index				A pointer to the current position in the 
  *									line.
  * 
- * The function "ft_token_size" calculates the size of a token in the input 
- * line, taking into account quoted strings and special characters.
+ * The function "ft_handle_special_char" processes special characters at the 
+ * start of a token. It checks for `>>` or `<<` and tokenizes them as a 
+ * single token. If neither is found, it handles a single character like `>`, 
+ * `<`, or `|`.
  * 
- * @param char *line				A string representing the input line from
- *									which the token size is calculated.
- * @param int *index				A pointer to the current position in the 
- *									line. This index is updated as the token 
- *									is processed.
- * @return int						The size of the token.
+ * @param t_token *token		A pointer to the token structure being filled.
+ * @param char *line			The input line containing the characters to be 
+ *								processed.
+ * @param int *index			A pointer to the current position in the line, 
+ *								which will be updated as characters are 
+ * 								processed.
+ * @param int i					The current position in the token's value.
+ * @return int					The updated position in the token's value.
  * 
  */
 
-// static int	ft_token_size(char *line, int *index)
-// {
-// 	int		i;
-// 	char	c;
-
-// 	i = 0;
-// 	c = 32;
-// 	while (line[*index + i] && (line[*index + i] != 32 || c != 32))
-// 	{
-// 		if (line[*index + i] == '"' || line[*index + i] == '\'')
-// 		{
-// 			c = line[*index + i];
-// 			i++;
-// 		}
-// 		else if (ft_strchr("<>|", line[*index + i]))
-// 		{
-// 			if (i == 0)
-// 				return (1);
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	return (i);
-// }
-
-static int	ft_token_size(char *line, int *index)
+static int	ft_handle_special_char(t_token *token, char *line, \
+int *index, int i)
 {
-	int		i;
-	char	c;
-
-	i = 0;
-	c = 32;
-	while (line[*index + i] && (line[*index + i] != 32 || c != 32))
+	if (i == 0 && (line[*index] == '>' || line[*index] == '<') \
+	&& line[*index] == line[*index + 1])
 	{
-		if (line[*index + i] == '"' || line[*index + i] == '\'')
-		{
-			c = line[*index + i];
-			i++;
-		}
-		else if (ft_strchr("<>|", line[*index + i]))
-		{
-			if (line[*index + i] == '>' || line[*index + i] == '<')
-			{
-				if (line[*index + i] == line[*index + i + 1])
-					return (2);
-			}
-			return (1);
-		}
-		i++;
+		token->token_value[i++] = line[(*index)++];
+		token->token_value[i++] = line[(*index)++];
 	}
+	else if (i == 0)
+		token->token_value[i++] = line[(*index)++];
 	return (i);
 }
 
@@ -138,14 +103,7 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 		}
 		else if (ft_strchr("<>|", line[*index]))
 		{
-			if (i == 0 && (line[*index] == '>' || line[*index] == '<') \
-			&& line[*index] == line[*index + 1])
-			{
-				token->token_value[i++] = line[(*index)++];
-				token->token_value[i++] = line[(*index)++];
-			}
-			else if (i == 0)
-				token->token_value[i++] = line[(*index)++];
+			i = ft_handle_special_char(token, line, index, i);
 			break ;
 		}
 		else
@@ -153,34 +111,6 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 	}
 	token->token_value[i] = '\0';
 }
-
-// static void	ft_fill_token(t_token *token, char *line, int *index)
-// {
-// 	int		i;
-// 	char	c;
-
-// 	i = 0;
-// 	c = 32;
-// 	while (line[*index] && (line[*index] != 32 || c != 32))
-// 	{
-// 		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
-// 			c = line[(*index)++];
-// 		else if (line[*index] == c)
-// 		{
-// 			c = 32;
-// 			(*index)++;
-// 		}
-// 		else if (ft_strchr("<>|", line[*index]))
-// 		{
-// 			if (i == 0)
-// 				token->token_value[i++] = line[(*index)++];
-// 			break ;
-// 		}
-// 		else
-// 			token->token_value[i++] = line[(*index)++];
-// 	}
-// 	token->token_value[i] = '\0';
-// }
 
 static t_token	*ft_read_tokens(char *line, int *index)
 {

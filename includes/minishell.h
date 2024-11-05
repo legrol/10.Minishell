@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 14:19:55 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/05 09:59:59 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
 void		ft_export(t_minishell *minishell, t_ast *ast);
-void		ft_pwd(t_minishell *minishell);
+void		ft_pwd(void);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================

@@ -53,7 +53,7 @@
 
 t_signal g_signals;
 
-static int ft_start_init_envp(t_minishell *minishell, char **envp)
+static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
 
@@ -116,7 +116,13 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_signals();
 			ft_init_minishell(&minishell);
 		}
+		if (g_signals.sigint)
+		{
+			ft_dirprompt(&minishell);
+			g_signals.sigint = 0;
+		}
 		minishell.line = readline(minishell.dirprompt);
+		ft_handle_eof(minishell.line);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
 		{
 			if (minishell.line)
@@ -137,8 +143,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_pwd(&minishell);
 			else if (ft_strcmp(ast->value, "echo") == 0)
 				ft_echo(&minishell, ast);
-			else if (ft_strcmp(ast->value, "export") == 0)
-				ft_export(&minishell, ast);
+			// else if (ft_strcmp(ast->value, "export") == 0)
+			// 	ft_export(&minishell, ast);
 			else if (ft_strcmp(ast->value, "unset") == 0)
 				ft_unset(&minishell, ast);
 			else if (ft_strcmp(ast->value, "exit") == 0)

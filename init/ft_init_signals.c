@@ -34,6 +34,26 @@
  * 								has several fields related to signal handling 
  * 								such as SIGINT and SIGQUIT.
  * 
+ * The function `ft_handle_eof` handles the scenario where an EOF (End Of File) 
+ * is detected, typically when the user presses Ctrl+D. When EOF is 
+ * encountered, the function prints "exit" and gracefully exits the `minishell`
+ * program.
+ *
+ * @param char *line - The current input line being read. If NULL, it indicates
+ *                     EOF (Ctrl+D) has been detected.
+ *
+ * 		Steps:
+ * 			1. Check if the input line is NULL, which indicates the EOF 
+ * 			   condition.
+ * 			2. Print "exit" followed by a newline to notify the user that the 
+ * 			   shell is terminating.
+ * 			3. Exit the program with a status code of 0, indicating successful 
+ * 			   termination.
+ * 
+ * 		Notes lines:
+ * 			First line.  Print "exit" to indicate termination.
+ * 			Second line. Exit the program with a success status.
+ * 
  * 
  * 						*******************
  * 						NOTES ABOUT SIGNALS
@@ -66,6 +86,15 @@
  * 
  */
 
+void	ft_handle_eof(char *line)
+{
+	if (!line)
+	{
+		ft_putstr_fd("exit\n", STDERR);
+		exit (0);
+	}
+}
+
 void	ft_init_struc_sig(t_signal *signals)
 {
 	signals->pid = 0;
@@ -82,7 +111,8 @@ static void	sig_int(int status)
 	if (g_signals.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
-		ft_putstr_fd(PROMPT, STDERR);
+		// ft_dirprompt(minishell);
+		// ft_putstr_fd(PROMPT, STDERR);
 		g_signals.exit = 1;
 	}
 	else
@@ -109,4 +139,6 @@ void	ft_init_signals(void)
 {
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
+	ft_enable_print();
 }
+

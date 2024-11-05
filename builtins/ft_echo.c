@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 15:19:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:14:51 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
  * 
  * FALTA liberar el split
 */
+
+static char ft_find_special_char(char *s)
+{
+	char a;
+	int i;
+
+	i=0;
+	while(s[i])
+	{
+		
+	}
+}
+
 static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 {
 	char	**split;
@@ -37,6 +50,7 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 	ft_printf(" ");
 	free(split);
 }
+
 static char *ft_trim_ast(t_ast *ast)
 {
 	char *trim;

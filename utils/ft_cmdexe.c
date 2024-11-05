@@ -6,9 +6,15 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/28 15:59:30 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:44:08 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+ * Buscar y ejecutar el ejecutable correcto (basado en la variable PATH o mediante el
+uso de rutas relativas o absolutas). FALTA EL USO DE VARIABLES RELATIVAS O ABSOLUTAS
+ * 
+*/
 
 #include "../includes/minishell.h"
 

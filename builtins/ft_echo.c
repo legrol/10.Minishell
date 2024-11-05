@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 12:40:49 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:19:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,42 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 	ft_printf(" ");
 	free(split);
 }
+static char *ft_trim_ast(t_ast *ast)
+{
+	char *trim;
+
+	if (ast->value[0] == '-')
+		trim = ft_strtrim(ast->value, "n");
+	else
+		trim = ft_strdup(ast->value);
+	return (trim);
+}
 
 static int ft_echo_init(t_ast *ast)
 {
 	int i;
 	t_ast *temp;
 	int f;
+	char *trim;
 
 	f = 0;
 	i = 0;
 	temp = ast;
 	while (ast)
 	{
-		if (i == 1 && ft_strcmp(ast->value, "-n") == 0)
+		trim = ft_trim_ast(ast);
+		if (i >= 1 && ft_strcmp(trim, "-") == 0 && f!= 2)
 			f = 1;
+		if (i >=1 && ft_strcmp(trim, "-") != 0)
+			f = 2;
 		i++;
 		ast = ast->left;
+		free(trim);
 	}
 	ast = temp;
 	if (i == 1)
 		return (-1+(0*printf("\n")));
-	else if (i == 2 && f == 1)
+	else if (f == 1)
 		return (-1+(0*printf("")));
 	return (f);
 }
@@ -73,7 +88,8 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 	if (f == -1)
 		return;
 	ast = ast->left;
-	if (f == 1)
+	if (f == 2)
+	while(ast && ft_strcmp(ast->value,"-n") == 0)
 		ast = ast->left;
 	while(ast)
 	{

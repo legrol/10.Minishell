@@ -6,13 +6,13 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 10:55:04 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:20:32 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*static t_envp	*new_node_envp(char *key, char *value)
+static t_envp	*new_node_envp(char *key, char *value)
 {
 	t_envp	*new_node;
 
@@ -191,7 +191,7 @@ static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
 		key_value[0] = ft_strdup(ast->value);
 		key_value[1] = NULL;
 	}
-}*/
+}
 
 static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 {

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/05 13:14:51 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:01:24 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,40 @@
 
 static char ft_find_special_char(char *s)
 {
-	char a;
 	int i;
 
 	i=0;
 	while(s[i])
 	{
-		
+		if (ft_isalnum(s[i]) == 0 && s[i] != '_')
+			return (s[i]);
+		i++;
 	}
+	return ('\0');
 }
 
 static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 {
 	char	**split;
 	int		i;
+	char	a;
 
 	i = 0;
 	split = ft_split_m(ast->value, '$');
 	while(split[i])
 	{
+		a = ft_find_special_char(split[i]);
+		//printf("split %i: %s\n", i+1, split[i]);
 		if(split[i][0] == '?')
 			ft_printf("%i%s", minishell->exit, ft_strchr_exp(split[i], '?'));
-		else if(ft_strchr(split[i], '?'))
-			ft_printf("%s", ft_strchr(split[i], '?'));
+		else if(a && ft_strchr(split[i], a))
+		{
+			ft_printf("%s%s",ft_find_dir(minishell,ft_substr(split[i], 0, ft_strlen(split[i]) - ft_strlen(ft_strchr(split[i], a)))) ,ft_strchr(split[i], a));
+		}
 		else if (ft_find_dir(minishell, split[i]))
 			ft_printf("%s", ft_find_dir(minishell, split[i]));
+		else 
+			ft_printf("%s", split[i]);
 		free(split[i]);
 		i++;
 	}
@@ -75,9 +84,9 @@ static int ft_echo_init(t_ast *ast)
 	while (ast)
 	{
 		trim = ft_trim_ast(ast);
-		if (i >= 1 && ft_strcmp(trim, "-") == 0 && f!= 2)
+		if (i >= 1 && ft_strcmp(trim, "-") == 0 && f == 0)
 			f = 1;
-		if (i >=1 && ft_strcmp(trim, "-") != 0)
+		if (i >=1 && ft_strcmp(trim, "-") == 0)
 			f = 2;
 		i++;
 		ast = ast->left;
@@ -88,6 +97,7 @@ static int ft_echo_init(t_ast *ast)
 		return (-1+(0*printf("\n")));
 	else if (f == 1)
 		return (-1+(0*printf("")));
+	printf("%i\n", f);
 	return (f);
 }
 

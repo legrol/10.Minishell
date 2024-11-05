@@ -35,6 +35,7 @@
 # ifndef ECHOCTL
 #  define ECHOCTL 0001000
 # endif
+
 // ============================================================================
 // Access to my libraries
 // ============================================================================
@@ -133,7 +134,7 @@ void		ft_handle_eof(char *line);
 t_envp		*ft_init_list_envp(char **envp);
 void		ft_init_minishell(t_minishell *minishell);
 void		ft_init_struc_sig(t_signal *signals);
-void		ft_init_signals(void);
+void		ft_init_signals(t_minishell *minishell);
 
 // ============================================================================
 // Builtins functions

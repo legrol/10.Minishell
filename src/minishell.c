@@ -113,13 +113,8 @@ int	main(int argc, char **argv, char **envp)
 		if (g_signals.start != 1)
 		{
 			ft_init_struc_sig(&g_signals);
-			ft_init_signals();
+			ft_init_signals(&minishell);
 			ft_init_minishell(&minishell);
-		}
-		if (g_signals.sigint)
-		{
-			ft_dirprompt(&minishell);
-			g_signals.sigint = 0;
 		}
 		minishell.line = readline(minishell.dirprompt);
 		ft_handle_eof(minishell.line);

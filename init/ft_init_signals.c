@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_signals.c                                  :+:      :+:    :+:   */
+/*   ft_init_signals .c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 21:11:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 10:56:10 by pabromer         ###   ########.fr       */
+/*   Created: 2024-11-06 06:55:30 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024-11-06 06:55:30 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
 #include "../includes/minishell.h"
 
 /**
@@ -105,74 +104,14 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->start = 1;
 }
 
-// static void	sig_int(int status, t_minishell *minishell)
-// {
-// 	(void) status;
-
-// 	if (g_signals.pid == 0)
-// 	{
-// 		ft_putstr_fd("\n", STDERR);
-// 		if (minishell != NULL)
-// 		{
-// 			ft_dirprompt(minishell);
-// 			ft_putstr_fd(minishell->dirprompt, STDERR);
-// 		}
-// 		g_signals.exit = 1;
-// 	}
-// 	else
-// 	{
-// 		ft_putstr_fd("\n", STDERR);
-// 		g_signals.exit = EX_SIGINT;
-// 	}
-// 	g_signals.sigint = 1;
-// }
-
-// static void	sig_int(int status)
-// {
-// 	(void) status;
-
-// 	if (g_signals.pid == 0)
-// 	{
-// 		ft_putstr_fd("\n", STDERR);
-// 		g_signals.exit = 1;
-// 	}
-// 	else
-// 	{
-// 		ft_putstr_fd("\n", STDERR);
-// 		g_signals.exit = EX_SIGINT;
-// 	}
-// 	g_signals.sigint = 1;
-// }
-
-static t_minishell	*get_minishell_instance(void)
-{
-	static t_minishell	*instance;
-
-	instance = NULL;
-	return (instance);
-}
-
-void	set_minishell_instance(t_minishell *minishell)
-{
-	static t_minishell	**instance;
-
-	instance = &minishell;
-}
-
 static void	sig_int(int status)
 {
-	t_minishell	*minishell;
-
 	(void) status;
-	minishell = get_minishell_instance();
-	if (g_signals.pid == 0 && minishell != NULL)
+
+	if (g_signals.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		ft_dirprompt(minishell);
-		ft_putstr_fd(minishell->dirprompt, STDERR);
-		rl_redisplay();
+		ft_putstr_fd(PROMPT, STDERR);
 		g_signals.exit = 1;
 	}
 	else
@@ -194,110 +133,11 @@ static void	sig_quit(int status)
 	}
 	g_signals.sigquit = 1;
 }
-// void	ft_init_signals(t_minishell *minishell)
-// {
-// 	// signal(SIGINT, &sig_int);
-// 	signal(SIGQUIT, &sig_quit);
-// 	ft_enable_print();
-// }
 
-// void	ft_init_signals(t_minishell *minishell)
-// {
-// 	struct sigaction	sa_int;
-// 	struct sigaction	sa_quit;
-
-// 	// Configurar el manejador para SIGINT
-// 	sa_int.sa_handler = (__sighandler_t)(void (*)(int))sig_int;
-// 	sigemptyset(&sa_int.sa_mask);
-// 	sa_int.sa_flags = SA_RESTART;
-// 	sigaction(SIGINT, &sa_int, NULL);
-
-// 	sig_int(0, minishell);
-
-// 	sa_quit.sa_handler = &sig_quit;
-// 	sigemptyset(&sa_quit.sa_mask);
-// 	sa_quit.sa_flags = SA_RESTART;
-// 	sigaction(SIGQUIT, &sa_quit, NULL);
-
-
-// 	// signal(SIGQUIT, &sig_quit);
-// 	ft_enable_print();
-// }
-
-
-// void	ft_init_signals(t_minishell *minishell)
-// {
-// 	struct sigaction	sa_int;
-// 	struct sigaction	sa_quit;
-
-// 	(void) minishell;
-// 	// Configurar el manejador para SIGINT
-// 	sa_int.sa_handler = &sig_int;
-// 	sigemptyset(&sa_int.sa_mask);
-// 	sa_int.sa_flags = SA_RESTART;
-// 	sigaction(SIGINT, &sa_int, NULL);
-
-// 	// Configurar el manejador para SIGQUIT
-// 	sa_quit.sa_handler = &sig_quit;
-// 	sigemptyset(&sa_quit.sa_mask);
-// 	sa_quit.sa_flags = SA_RESTART;
-// 	sigaction(SIGQUIT, &sa_quit, NULL);
-
-// 	ft_enable_print();
-// }
-
-void sig_int_wrapper(int status)
+void	ft_init_signals(t_minishell *minishell)
 {
-	t_minishell	*minishell;
-
-	(void)status;
-	minishell = get_minishell_instance();
-	if (g_signals.pid == 0 && minishell != NULL)
-	{
-		ft_putstr_fd("\n", STDERR);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		ft_dirprompt(minishell);
-		ft_putstr_fd(minishell->dirprompt, STDERR);
-		rl_redisplay();
-		g_signals.exit = 1;
-	}
-	else
-	{
-		ft_putstr_fd("\n", STDERR);
-		g_signals.exit = EX_SIGINT;
-	}
-	g_signals.sigint = 1;
-}
-
-void	sig_quit_wrapper(int status)
-{
-	(void)status;
-
-	if (g_signals.pid != 0)
-	{
-		ft_putstr_fd("\n", STDERR);
-		g_signals.exit = EX_SIGQUIT;
-	}
-	g_signals.sigquit = 1;
-}
-
-void	ft_register_signals(t_minishell *minishell)
-{
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
-
-	set_minishell_instance(minishell);
-
-	sa_int.sa_handler = &sig_int_wrapper;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_int, NULL);
-
-	sa_quit.sa_handler = &sig_quit_wrapper;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
-
+	(void) minishell;
+	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, &sig_quit);
 	ft_enable_print();
 }

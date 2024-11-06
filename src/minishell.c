@@ -119,13 +119,15 @@ int	main(int argc, char **argv, char **envp)
 		}
 		minishell.line = readline(minishell.dirprompt);
 		ft_handle_eof(minishell.line);
-		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
+		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
+		|| *minishell.line == '\0')
 		{
 			if (minishell.line)
 				free(minishell.line);
 			minishell.line = NULL;
 			continue ;
 		}
+		ft_check_empty_line(minishell.line, &minishell);
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
 		temp = ast;

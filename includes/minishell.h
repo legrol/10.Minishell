@@ -150,6 +150,7 @@ void		ft_unset(t_minishell *minishell, t_ast *ast);
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
+void		ft_check_empty_line(char *line, t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);

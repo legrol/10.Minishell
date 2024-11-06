@@ -53,7 +53,7 @@
 
 t_signal g_signals;
 
-static int ft_start_init_envp(t_minishell *minishell, char **envp)
+static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
 
@@ -91,6 +91,7 @@ static void	ft_init_envp(t_minishell *minishell, char **envp)
 		}
 		i++;
 	}
+	minishell->dirprompt = NULL;
 	minishell->envp[i] = NULL;
 }
 
@@ -113,10 +114,11 @@ int	main(int argc, char **argv, char **envp)
 		if (g_signals.start != 1)
 		{
 			ft_init_struc_sig(&g_signals);
-			ft_init_signals();
+			ft_init_signals(&minishell);
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
+		ft_handle_eof(minishell.line);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell))
 		{
 			if (minishell.line)

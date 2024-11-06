@@ -27,6 +27,14 @@
 # include <readline/history.h>	// for clear_history...
 # include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
 # include <string.h>			// for strchr, strcpy, etc.
+# include <termios.h>			// for terminal I/O interfaces.
+
+// ============================================================================
+// Define ECHOCTL (if it's not already defined)
+// ============================================================================
+# ifndef ECHOCTL
+#  define ECHOCTL 0001000
+# endif
 
 // ============================================================================
 // Access to my libraries
@@ -70,6 +78,7 @@ typedef struct s_signal
 	int				sigquit;
 	int				exit;
 	int				start;
+	char			*dupdirprompt;
 }					t_signal;
 
 typedef struct s_token
@@ -121,10 +130,12 @@ void		ft_free_ast(t_ast *ast);
 // ============================================================================
 // Initialization functions
 // ============================================================================
+void		ft_enable_print(void);
+void		ft_handle_eof(char *line);
 t_envp		*ft_init_list_envp(char **envp);
 void		ft_init_minishell(t_minishell *minishell);
 void		ft_init_struc_sig(t_signal *signals);
-void		ft_init_signals(void);
+void		ft_init_signals(t_minishell *minishell);
 
 // ============================================================================
 // Builtins functions

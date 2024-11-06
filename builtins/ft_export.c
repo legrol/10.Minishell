@@ -195,45 +195,46 @@ static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
 
 
 
-// static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
-// {
-// 	char	**key_value;
-// 	t_envp 	*temp;
-// 	t_envp 	*new_node;
+static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
+{
+	char	**key_value;
+	t_envp	*temp;
+	t_envp	*new_node;
 
-// 	key_value = ft_init_keyvalue();
-// 	while(ast)
-// 	{
-// 		ft_fill_keyvalue(key_value, ast);
-// 		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
-// 		{
-// 			new_node = new_node_envp(key_value[0], key_value[1]);
-// 			temp = minishell->list_envp;
-// 			while(ft_strcmp(minishell->list_envp->key, "XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
-// 				minishell->list_envp = minishell->list_envp->next;
-// 			new_node->next = minishell->list_envp->next;
-// 			minishell->list_envp->next = new_node;
-// 			minishell->list_envp = temp;
-// 		}
-// 		ast = ast->left;
-// 		free(key_value[0]);
-// 		if (key_value[1])
-// 			free(key_value[1]);
-// 	}
-// 	free(key_value);
-// }
+	key_value = ft_init_keyvalue();
+	while (ast)
+	{
+		ft_fill_keyvalue(key_value, ast);
+		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
+		{
+			new_node = new_node_envp(key_value[0], key_value[1]);
+			temp = minishell->list_envp;
+			while (ft_strcmp(minishell->list_envp->key, \
+			"XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
+				minishell->list_envp = minishell->list_envp->next;
+			new_node->next = minishell->list_envp->next;
+			minishell->list_envp->next = new_node;
+			minishell->list_envp = temp;
+		}
+		ast = ast->left;
+		free(key_value[0]);
+		if (key_value[1])
+			free(key_value[1]);
+	}
+	free(key_value);
+}
 
-// void ft_export(t_minishell *minishell, t_ast *ast)
-// {
-// 	int i;
-// 	t_ast *temp2;
+void	ft_export(t_minishell *minishell, t_ast *ast)
+{
+	int		i;
+	t_ast	*temp2;
 
-// 	minishell->exit = 0;
-// 	i = ft_arg_checker(ast, minishell);
-// 	if (i == -1 || i == 1)
-// 		return ;
-// 	temp2 = ast;
-// 	ast = ast->left;
-// 	ft_insert_node(minishell, ast);
-// 	ast = temp2;
-// }
+	minishell->exit = 0;
+	i = ft_arg_checker(ast, minishell);
+	if (i == -1 || i == 1)
+		return ;
+	temp2 = ast;
+	ast = ast->left;
+	ft_insert_node(minishell, ast);
+	ast = temp2;
+}

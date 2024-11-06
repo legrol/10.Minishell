@@ -139,8 +139,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_pwd(&minishell);
 			else if (ft_strcmp(ast->value, "echo") == 0)
 				ft_echo(&minishell, ast);
-			// else if (ft_strcmp(ast->value, "export") == 0)
-			// 	ft_export(&minishell, ast);
+			else if (ft_strcmp(ast->value, "export") == 0)
+				ft_export(&minishell, ast);
 			else if (ft_strcmp(ast->value, "unset") == 0)
 				ft_unset(&minishell, ast);
 			else if (ft_strcmp(ast->value, "exit") == 0)

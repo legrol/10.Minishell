@@ -91,6 +91,7 @@ static void	ft_init_envp(t_minishell *minishell, char **envp)
 		}
 		i++;
 	}
+	minishell->dirprompt = NULL;
 	minishell->envp[i] = NULL;
 }
 

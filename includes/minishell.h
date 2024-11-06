@@ -78,6 +78,7 @@ typedef struct s_signal
 	int				sigquit;
 	int				exit;
 	int				start;
+	char			*dupdirprompt;
 }					t_signal;
 
 typedef struct s_token

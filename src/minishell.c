@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/06 15:09:13 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:28:31 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,50 @@
  */
 
 t_signal g_signals;
+
+/*static void ft_exec_ast(t_minishell *minishell, t_ast *ast)
+{
+    if (!ast)
+        return;
+    if (ast->type == TOKEN_COMMAND)
+        ft_exec(minishell, ast);
+    else if (ast->type == TOKEN_PIPE)
+        ft_exec_pipe(minishell, ast);
+    if (ast->left)
+    {
+        ft_printf("  └ Left: ");
+        ft_exec_ast(minishell, ast->left);
+    }
+    if (ast->right)
+    {
+        ft_printf("  └ Right: ");
+        ft_exec_ast(minishell, ast->right);
+    }
+}*/
+
+static void ft_print_ast(t_ast *node)
+{
+    if (!node)
+        return;
+    if (node->type == TOKEN_COMMAND)
+        ft_printf("Comando: %s\n", node->value);
+    else if (node->type == TOKEN_ARG)
+        ft_printf("Argumento: %s\n", node->value);
+	 else if (node->type == TOKEN_OPTION)
+        ft_printf("Argumento: %s\n", node->value);
+    else if (node->type == TOKEN_PIPE)
+        ft_printf("Operador (Pipe): %s\n", node->value);
+    if (node->left)
+    {
+        ft_printf("  └ Left: ");
+        ft_print_ast(node->left);
+    }
+    if (node->right)
+    {
+        ft_printf("  └ Right: ");
+        ft_print_ast(node->right);
+    }
+}
 
 static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 {
@@ -100,8 +144,8 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	minishell;
 	int			i;
 	t_ast		*ast;
-	t_ast		*temp;
-	t_ast		*ltemp;
+	//t_ast		*temp;
+	//t_ast		*ltemp;
 
 	i = 0;
 	(void)argc;
@@ -129,42 +173,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
-		ft_printf("AQUI ESTOY\n");
-		temp = ast;
-		while (ast)
-		{
-			ft_printf("Node: %s\n", ast->value);
-			ltemp = ast;
-			while(ast->left)
-			{
-				ast = ast->left;
-				ft_printf("Left: %s\n", ast->value);
-			}
-			ast = ltemp;
-			ast = ast->right;
-		}
-		ast = temp;
-		/*while (ast)
-		{
-			if (ft_strcmp(ast->value, "cd") == 0)
-				ft_cd(&minishell, ast);
-			else if (ft_strcmp(ast->value, "env") == 0)
-				ft_env(&minishell);
-			else if (ft_strcmp(ast->value, "pwd") == 0)
-				ft_pwd();
-			else if (ft_strcmp(ast->value, "echo") == 0)
-				ft_echo(&minishell, ast);
-			else if (ft_strcmp(ast->value, "export") == 0)
-				ft_export(&minishell, ast);
-			else if (ft_strcmp(ast->value, "unset") == 0)
-				ft_unset(&minishell, ast);
-			else if (ft_strcmp(ast->value, "exit") == 0)
-				i = 1;
-			else
-				ft_cmdexe(&minishell);
-			ast = ast->right;
-		}*/
-		ast = temp;
+		ft_print_ast(ast);
+		i = ft_exec(&minishell, ast);
 		ft_free_ast(ast);
 		free(minishell.line);
 		minishell.line = NULL;
@@ -181,24 +191,18 @@ int	main(int argc, char **argv, char **envp)
 
 
 
-/*void ft_print_ast(t_ast *node)
+/*static void ft_print_ast(t_ast *node)
 {
     if (!node)
         return;
     if (node->type == TOKEN_COMMAND)
         ft_printf("Comando: %s\n", node->value);
-    else if (node->type == TOKEN_ARGUMENT)
+    else if (node->type == TOKEN_ARG)
+        ft_printf("Argumento: %s\n", node->value);
+	 else if (node->type == TOKEN_OPTION)
         ft_printf("Argumento: %s\n", node->value);
     else if (node->type == TOKEN_PIPE)
         ft_printf("Operador (Pipe): %s\n", node->value);
-    else if (node->type == TOKEN_REDIRECT_IN)
-        ft_printf("Redirección In: %s\n", node->value);
-    else if (node->type == TOKEN_REDIRECT_OUT)
-        ft_printf("Redirección Out: %s\n", node->value);
-    else if (node->type == TOKEN_REDIRECT_APPEND)
-        ft_printf("Redirección Append: %s\n", node->value);
-    else if (node->type == TOKEN_REDIRECT_HEREDOC)
-        ft_printf("Redirección Heredoc: %s\n", node->value);
     if (node->left)
     {
         ft_printf("  └ Left: ");

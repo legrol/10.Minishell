@@ -36,14 +36,21 @@ static int	ft_only_spaces(const char *line)
 	return (1);
 }
 
-void	ft_check_empty_line(char *line, t_minishell *minishell)
+void	ft_check_empty_line(t_minishell *minishell)
 {
-	if (!line || *line == '\0' || ft_only_spaces(line))
+	char	*line;
+
+	if (minishell->line)
 	{
-		ft_dirprompt(minishell);
-		ft_putstr_fd(minishell->dirprompt, STDERR);
-		minishell->exit = 1;
-		return ;
+		line = ft_strdup(minishell->line);
+		if (!line || *line == '\0' || ft_only_spaces(line))
+		{
+			ft_dirprompt(minishell);
+			ft_putstr_fd(minishell->dirprompt, STDERR);
+			minishell->exit = 1;
+			free(line);
+			return ;
+		}
 	}
 }
 
@@ -62,14 +69,14 @@ void	ft_check_empty_line(char *line, t_minishell *minishell)
 // 	if (ft_only_spaces(line))
 // 	{
 // 		fprintf(stderr, "Solo se detectaron espacios\n");
-// 		// ft_dirprompt(minishell);
-// 		// if (minishell->dirprompt == NULL)
-// 		// {
-// 		// 	fprintf(stderr, "Error: minishell->dirprompt es NULL\n");
-// 		// 	return ;
-// 		// }
-// 		// ft_putstr_fd(minishell->dirprompt, STDERR);
-// 		// minishell->exit = 1;
+// 		ft_dirprompt(minishell);
+// 		if (minishell->dirprompt == NULL)
+// 		{
+// 			fprintf(stderr, "Error: minishell->dirprompt es NULL\n");
+// 			return ;
+// 		}
+// 		ft_putstr_fd(minishell->dirprompt, STDERR);
+// 		minishell->exit = 1;
 // 		return ;
 // 	}
 // }

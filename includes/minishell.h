@@ -150,7 +150,7 @@ void		ft_unset(t_minishell *minishell, t_ast *ast);
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
-void		ft_check_empty_line(char *line, t_minishell *minishell);
+void		ft_check_empty_line(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
@@ -173,7 +173,6 @@ char		*ft_find_dir(t_minishell *minishell, const char *str);
 char		**ft_path(t_minishell *minishell);
 void		ft_print_init(void);
 void		ft_sync_envp(t_minishell *minishell);
-char		*ft_workingdir(void);
 t_ast		*ft_ast(t_minishell *minishell);
 
 #endif

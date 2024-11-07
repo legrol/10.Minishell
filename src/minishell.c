@@ -67,32 +67,60 @@ static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 		return (-1);
 	return (0);
 }
+//Antes de cambios para arreglar espacio + enter
+// static void	ft_init_envp(t_minishell *minishell, char **envp)
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	if (ft_start_init_envp(minishell, envp))
+// 		return ;
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		minishell->envp[i] = ft_strdup(envp[i]);
+// 		if (!minishell->envp[i])
+// 		{
+// 			while (i > 0)
+// 			{
+// 				free(minishell->envp[--i]);
+// 			}
+// 			free(minishell->envp);
+// 			minishell->envp = NULL;
+// 			return ;
+// 		}
+// 		i++;
+// 	}
+// 	minishell->dirprompt = NULL;
+// 	minishell->envp[i] = NULL;
+// }
 
 static void	ft_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
 
 	i = 0;
-	if (ft_start_init_envp(minishell, envp))
+	if (ft_start_init_envp(minishell, envp) == -1)
+	{
+		ft_putstr_fd("Error: Unable to allocate memory for envp\n", STDERR);
 		return ;
-	i = 0;
+	}
 	while (envp[i])
 	{
 		minishell->envp[i] = ft_strdup(envp[i]);
 		if (!minishell->envp[i])
 		{
 			while (i > 0)
-			{
 				free(minishell->envp[--i]);
-			}
 			free(minishell->envp);
 			minishell->envp = NULL;
+			ft_putstr_fd("Error: Memory allocation failure in envp\n", STDERR);
 			return ;
 		}
 		i++;
 	}
-	minishell->dirprompt = NULL;
 	minishell->envp[i] = NULL;
+	minishell->dirprompt = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -118,7 +146,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
+
 		ft_handle_eof(minishell.line);
+
+
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
 		|| *minishell.line == '\0')
 		{
@@ -127,7 +158,9 @@ int	main(int argc, char **argv, char **envp)
 			minishell.line = NULL;
 			continue ;
 		}
-		ft_check_empty_line(minishell.line, &minishell);
+		ft_check_empty_line(&minishell);
+
+
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
 		temp = ast;

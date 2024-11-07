@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 11:51:15 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:46:56 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ void	ft_cd(t_minishell *minishell, t_ast *ast)
 {
 	int		i;
 	t_ast	*temp;
-	char	*join;
+	// char	*join;
 	
 	i = 1;
-	join = NULL;
+	// join = NULL;
 	temp = ast;
 	while (ast->left)
 	{

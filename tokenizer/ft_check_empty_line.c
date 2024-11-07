@@ -3,20 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_empty_line.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-06 12:13:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-06 12:13:47 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/11/06 12:13:47 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/07 22:21:15 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_check_empty_line" xxx
+ * The function "ft_check_empty_line" verifies if the current line in the 
+ * minishell structure is empty or contains only whitespace. If true, it 
+ * sets the exit status to 1 and avoids further processing.
  * 
- * @param char *line				xxx
- * @param t_minishell *minishell	xxx
+ * @param t_minishell *minishell	A pointer to the t_minishell structure, 
+ * 									which contains information about the 
+ * 									current state, including the line to be 
+ * 									checked and the exit status.
+ * 
+ * The function "ft_only_spaces" checks if a given string contains only
+ * whitespace characters (spaces).
+ * 
+ * @param line 						A constant character pointer representing 
+ * 									the line to check.
+ * 
+ * @return 							Returns 1 if the line only contains spaces,
+ * 									or 0 otherwise.
  * 
  */
 
@@ -45,39 +58,9 @@ void	ft_check_empty_line(t_minishell *minishell)
 		line = ft_strdup(minishell->line);
 		if (!line || *line == '\0' || ft_only_spaces(line))
 		{
-			ft_dirprompt(minishell);
-			ft_putstr_fd(minishell->dirprompt, STDERR);
 			minishell->exit = 1;
 			free(line);
 			return ;
 		}
 	}
 }
-
-// void	ft_check_empty_line(char *line, t_minishell *minishell)
-// {
-// 	if (!line)
-// 	{
-// 		fprintf(stderr, "Error: line es NULL\n");
-// 		return ;
-// 	}
-// 	if (*line == '\0')
-// 	{
-// 		fprintf(stderr, "Error: line está vacío\n");
-// 		return ;
-// 	}
-// 	if (ft_only_spaces(line))
-// 	{
-// 		fprintf(stderr, "Solo se detectaron espacios\n");
-// 		ft_dirprompt(minishell);
-// 		if (minishell->dirprompt == NULL)
-// 		{
-// 			fprintf(stderr, "Error: minishell->dirprompt es NULL\n");
-// 			return ;
-// 		}
-// 		ft_putstr_fd(minishell->dirprompt, STDERR);
-// 		minishell->exit = 1;
-// 		return ;
-// 	}
-// }
-

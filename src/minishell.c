@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/04 11:57:26 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/07 22:16:09 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,34 +67,6 @@ static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 		return (-1);
 	return (0);
 }
-//Antes de cambios para arreglar espacio + enter
-// static void	ft_init_envp(t_minishell *minishell, char **envp)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (ft_start_init_envp(minishell, envp))
-// 		return ;
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		minishell->envp[i] = ft_strdup(envp[i]);
-// 		if (!minishell->envp[i])
-// 		{
-// 			while (i > 0)
-// 			{
-// 				free(minishell->envp[--i]);
-// 			}
-// 			free(minishell->envp);
-// 			minishell->envp = NULL;
-// 			return ;
-// 		}
-// 		i++;
-// 	}
-// 	minishell->dirprompt = NULL;
-// 	minishell->envp[i] = NULL;
-// }
-
 static void	ft_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
@@ -146,21 +118,15 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-
-		ft_handle_eof(minishell.line);
-
-
+		ft_handle_eof(minishell.line);		
+		ft_check_empty_line(&minishell);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
-		|| *minishell.line == '\0')
+		|| *minishell.line == '\0' || minishell.exit == 1)
 		{
-			if (minishell.line)
-				free(minishell.line);
+			free(minishell.line);
 			minishell.line = NULL;
 			continue ;
 		}
-		ft_check_empty_line(&minishell);
-
-
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
 		temp = ast;

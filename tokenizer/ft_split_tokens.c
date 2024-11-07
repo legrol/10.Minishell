@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-10-31 11:01:14 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/07 20:02:12 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ void	ft_split_and_update_tokens(t_token *token)
 	t_token	*last_token;
 
 	last_token = ft_split_tokens(token);
-	ft_update_tokens(token);
+	ft_update_tokens(last_token);
+	//ft_update_tokens(token);
 }

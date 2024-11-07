@@ -53,49 +53,47 @@ t_ast	*ft_ast_left(t_minishell *minishell)
 
 t_ast *ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 {
-	t_token *temp;
-	t_ast	*tree;
+	t_ast 	*pipe_node;
+	t_ast	*right_cmd;
 
 	ft_printf("Dentro PIPE\n");
-	temp = minishell->tokens;
-	if(temp->token_type != 8)
+	if(minishell->tokens->token_type != 8)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
+	pipe_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value, NULL);
+	minishell->tokens = minishell->tokens->next;
+	if(!minishell->tokens || minishell->tokens->token_type != 5)
+	{
+		printf("Not valid input 2\n");
+		return NULL;
+	}
+	right_cmd = ft_ast_left(minishell);
+	pipe_node->left = ltree;
+	pipe_node->right = right_cmd;
+	return pipe_node;
 
 }
 
 t_ast *ft_ast(t_minishell *minishell)
 {
-	t_token *temp;
 	t_ast	*tree;
-	t_ast	*temp_tree;
-	t_ast	*ltree;
-	//t_ast	*ltemp;
-
-	temp = minishell->tokens;
-	if(temp->token_type != 5)
+	
+	if(!minishell->tokens)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
-	tree = ft_ast_left(minishell);
-	if (minishell->tokens)
+	while (minishell->tokens)
 	{
-		ft_printf("CONTINUANDO\n");
-		ltree = tree;
-		tree = tree->right;
+		if(minishell->tokens->token_type == 5)
+			tree =ft_ast_left(minishell);
+		else if (minishell->tokens->token_type == 8)
+			tree =ft_ast_pipe(tree, minishell);
+		else
+			minishell->tokens = minishell->tokens->next;
 	}
-	else 
-	{
-		ft_printf("SALIENDO\n");
-		minishell->tokens = temp;
-		return (tree);
-	}
-	
-	minishell->tokens = temp;
-	tree = temp_tree;
 	return (tree);
 }
 

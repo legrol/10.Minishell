@@ -177,3 +177,36 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_minishell(&minishell);
 	return (0);
 }
+
+
+
+
+/*void ft_print_ast(t_ast *node)
+{
+    if (!node)
+        return;
+    if (node->type == TOKEN_COMMAND)
+        ft_printf("Comando: %s\n", node->value);
+    else if (node->type == TOKEN_ARGUMENT)
+        ft_printf("Argumento: %s\n", node->value);
+    else if (node->type == TOKEN_PIPE)
+        ft_printf("Operador (Pipe): %s\n", node->value);
+    else if (node->type == TOKEN_REDIRECT_IN)
+        ft_printf("Redirección In: %s\n", node->value);
+    else if (node->type == TOKEN_REDIRECT_OUT)
+        ft_printf("Redirección Out: %s\n", node->value);
+    else if (node->type == TOKEN_REDIRECT_APPEND)
+        ft_printf("Redirección Append: %s\n", node->value);
+    else if (node->type == TOKEN_REDIRECT_HEREDOC)
+        ft_printf("Redirección Heredoc: %s\n", node->value);
+    if (node->left)
+    {
+        ft_printf("  └ Left: ");
+        ft_print_ast(node->left);
+    }
+    if (node->right)
+    {
+        ft_printf("  └ Right: ");
+        ft_print_ast(node->right);
+    }
+}*/

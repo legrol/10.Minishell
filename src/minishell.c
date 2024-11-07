@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/05 12:32:59 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:09:13 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv, char **envp)
 	int			i;
 	t_ast		*ast;
 	t_ast		*temp;
+	t_ast		*ltemp;
 
 	i = 0;
 	(void)argc;
@@ -128,8 +129,22 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
+		ft_printf("AQUI ESTOY\n");
 		temp = ast;
 		while (ast)
+		{
+			ft_printf("Node: %s\n", ast->value);
+			ltemp = ast;
+			while(ast->left)
+			{
+				ast = ast->left;
+				ft_printf("Left: %s\n", ast->value);
+			}
+			ast = ltemp;
+			ast = ast->right;
+		}
+		ast = temp;
+		/*while (ast)
 		{
 			if (ft_strcmp(ast->value, "cd") == 0)
 				ft_cd(&minishell, ast);
@@ -148,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 			else
 				ft_cmdexe(&minishell);
 			ast = ast->right;
-		}
+		}*/
 		ast = temp;
 		ft_free_ast(ast);
 		free(minishell.line);

@@ -6,11 +6,12 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/05 11:35:15 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:03:16 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 /**
  * static void ft_swap_pwd;
@@ -40,10 +41,13 @@ static void	ft_cd_only(t_minishell *minishell, t_ast *ast, int i, char *pwd)
 {
 	if (i == 1)
 	{
-		if (chdir(ft_find_dir(minishell, "HOME")) != 0)
+		if (ft_find_dir(minishell, "HOME") == NULL)
 			ft_printf("bash: cd: HOME not set\n");
 		else
+		{
+			chdir(ft_find_dir(minishell, "HOME"));
 			ft_swap_pwd(minishell, pwd);
+		}
 	}
 	else if (ft_strcmp(ast->value, "~") == 0)
 	{

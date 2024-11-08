@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/07 16:28:31 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:56:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 
 t_signal g_signals;
 
-/*static void ft_exec_ast(t_minishell *minishell, t_ast *ast)
+static void ft_exec_ast(t_minishell *minishell, t_ast *ast)
 {
     if (!ast)
         return;
@@ -61,17 +61,7 @@ t_signal g_signals;
         ft_exec(minishell, ast);
     else if (ast->type == TOKEN_PIPE)
         ft_exec_pipe(minishell, ast);
-    if (ast->left)
-    {
-        ft_printf("  └ Left: ");
-        ft_exec_ast(minishell, ast->left);
-    }
-    if (ast->right)
-    {
-        ft_printf("  └ Right: ");
-        ft_exec_ast(minishell, ast->right);
-    }
-}*/
+}
 
 static void ft_print_ast(t_ast *node)
 {
@@ -174,7 +164,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
 		ft_print_ast(ast);
-		i = ft_exec(&minishell, ast);
+		ft_exec_ast(&minishell, ast);
+		//i = ft_exec(&minishell, ast);
 		ft_free_ast(ast);
 		free(minishell.line);
 		minishell.line = NULL;

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/07 16:22:21 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 09:17:13 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 	else if (ft_strcmp(ast->value, "exit") == 0)
 		return 1;
 	else
-		ft_cmdexe(minishell);
+		ft_cmdexe(minishell, ast);
 	return 0;
 }
 

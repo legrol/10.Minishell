@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/10/21 10:26:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:32:51 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ static unsigned int	p_mallocsize(char const *s, char c)
 	return (ms);
 }
 
+static char **ft_no_path(void)
+{
+	char	**split_path;
+	char	cwd[1024];
+	
+	split_path = (char **)malloc(2 * sizeof(char *));
+	if (!split_path)
+		exit(EXIT_FAILURE);
+	split_path[0] = getcwd(cwd, sizeof(cwd));
+	split_path[1] = NULL;
+	return (split_path);
+}
+
 char	**ft_path(t_minishell *minishell)
 {
 	int		i;
@@ -40,6 +53,8 @@ char	**ft_path(t_minishell *minishell)
 	char	*str;
 
 	str = ft_find_dir(minishell, "PATH");
+	if (!str)
+		return (ft_no_path());
 	cp_split_path = ft_split(str, ':');
 	split_path = (char **)malloc((2 + p_mallocsize(str, ':')) * \
 				sizeof(char *));

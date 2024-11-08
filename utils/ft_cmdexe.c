@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/05 12:44:08 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:21:21 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,54 @@ static char	*ft_cmd_action(char **path, char *arg)
 		i++;
 	}
 	free(temp);
+	if (access(arg, X_OK) == 0)
+		return(ft_strdup(arg));
 	return (NULL);
 }
 
-void	ft_cmdexe(t_minishell *minishell)
+static char *ft_cmd_maker(t_minishell *minishell, t_ast *ast)
+{
+	char	**path;
+	char	*cmd;
+
+	path = ft_path(minishell);
+	cmd = ft_cmd_action(path, ast->value);
+	return (cmd);
+}
+
+static char **ft_arg_maker(t_ast *ast)
+{
+	char	**arg;
+	t_ast	*temp;
+	int		i;
+
+	i = 0;
+	temp = ast;
+	while(ast)
+	{
+		i++;
+		ast = ast->left;
+	}
+	ast = temp;
+	arg = (char **)malloc((i+1)*sizeof(char *));
+	if (!arg)
+		return NULL;
+	i = 0;
+	while(ast)
+	{
+		arg[i] = ft_strdup(ast->value);
+		ast = ast->left;
+		i++;
+	}
+	arg[i] = NULL;
+	ast = temp;
+	return (arg);
+}
+
+void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 {
 	char	**arg;
 	char	*cmd;
-	char	**path;
 	pid_t	pid;
 	int		status;
 
@@ -58,9 +98,8 @@ void	ft_cmdexe(t_minishell *minishell)
 	}
 	else if (pid == 0)
 	{
-		path = ft_path(minishell);
-		arg = ft_split(minishell->line, ' ');
-		cmd = ft_cmd_action(path, arg[0]);
+		arg = ft_arg_maker(ast);
+		cmd = ft_cmd_maker(minishell, ast);
 		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
 		exit(EXIT_FAILURE);

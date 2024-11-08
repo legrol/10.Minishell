@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/05 09:31:20 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:32:05 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 	temp2 = ast;
 	while (ast)
 	{
-		if (ft_isalpha(ast->value[0]) == 0)
+		if (ft_isalnum(ast->value[0]) == 0 && ast->value[0] != '_')
 		{
 			minishell->exit = 1;
 			f = -1;

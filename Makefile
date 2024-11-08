@@ -103,7 +103,8 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_cmdexe.c \
 						${UTILS_DIR}/ft_path.c \
 						${UTILS_DIR}/ft_sync_envp.c \
-						${UTILS_DIR}/ft_ast.c
+						${UTILS_DIR}/ft_ast.c \
+						${UTILS_DIR}/ft_exec.c
 
 FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 						${FREE_DIR}/ft_free_minishell.c \

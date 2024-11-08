@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/07 22:16:09 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:57:26 by rdel-olm        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (ft_strcmp(ast->value, "env") == 0)
 				ft_env(&minishell);
 			else if (ft_strcmp(ast->value, "pwd") == 0)
-				ft_pwd(&minishell);
+				ft_pwd();
 			else if (ft_strcmp(ast->value, "echo") == 0)
 				ft_echo(&minishell, ast);
 			else if (ft_strcmp(ast->value, "export") == 0)

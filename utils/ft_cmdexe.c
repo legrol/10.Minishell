@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/08 10:21:21 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:32:32 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 	pid_t	pid;
 	int		status;
 
+	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -110,3 +111,5 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 		minishell->exit = WEXITSTATUS(status);
 	}
 }
+
+

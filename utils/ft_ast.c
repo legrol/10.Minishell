@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/07 10:13:00 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:28:25 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_ast *ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 	t_ast 	*pipe_node;
 	t_ast	*right_cmd;
 
-	ft_printf("Dentro PIPE\n");
 	if(minishell->tokens->token_type != 8)
 	{
 		printf("Not valid input\n");

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/08 11:52:15 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:35:31 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,43 +33,77 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 	return 0;
 }
 
+static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
+{
+	char	**arg;
+	char	*cmd;
+	pid_t	pid;
+
+	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
+	if (pid < 0)
+	{
+		ft_printf("Error making fork");
+		close(fd[0]);
+		close(fd[1]);
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		execve(cmd, arg, minishell->envp);
+		perror("execve cmd2:");
+		exit(EXIT_FAILURE);
+	}
+	return (pid);
+}
+
+static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
+{
+	char	**arg;
+	char	*cmd;
+	pid_t	pid;
+
+	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
+	pid = fork();
+	if (pid == -1)
+	{
+		ft_printf("Error making fork");
+		close(fd[0]);
+		close(fd[1]);
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		execve(cmd, arg, minishell->envp);
+		perror("execve cmd2:");
+		exit(EXIT_FAILURE);
+	}
+	return (pid);
+}
+
 void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 {
 	int fd[2];
 	pid_t pid1;
 	pid_t pid2;
+	int status;
 
 	if(pipe(fd) == -1)
 	{
 		ft_printf("Error making pipe");
 		return ;
 	}
-	pid1 = fork();
-	if (pid1 < 0)
-	{
-		ft_printf("Error making fork");
-		return ;
-	}
-	if (pid1 == 0)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		ft_cmdexe(minishell, ast->left);
-	}
-	pid2 = fork();
-	if (pid2 < 0)
-	{
-		ft_printf("Error making fork");
-		return ;
-	}
-	if (pid2 == 0)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		ft_cmdexe(minishell, ast->right);
-	}
+	pid1 = ft_cmdexe_pid1(minishell, ast->left, fd);
+	pid2 = ft_cmdexe_pid2(minishell, ast->right, fd);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, &status, 0);
+    waitpid(pid2, &status, 0);
 }
 
 

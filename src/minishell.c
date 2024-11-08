@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/08 13:36:57 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:16:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void ft_exec_ast(t_minishell *minishell, t_ast *ast)
         ft_exec_pipe(minishell, ast);
 }
 
-static void ft_print_ast(t_ast *node)
+/*static void ft_print_ast(t_ast *node)
 {
     if (!node)
         return;
@@ -85,7 +85,7 @@ static void ft_print_ast(t_ast *node)
         ft_printf("  └ Right: ");
         ft_print_ast(node->right);
     }
-}
+}*/
 
 static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 {
@@ -164,7 +164,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_tokenizer(&minishell);
 		ast = ft_ast(&minishell);
-		ft_print_ast(ast);
+		/*ft_printf("    %s\n   ", ast->value);
+		ft_printf("/\\  \n");
+		ft_printf("%s", ast->left->value);
+		ft_printf("    %s\n", ast->right->value);
+		ft_printf("%s", ast->left->left->value);
+		ft_printf("    %s\n", ast->right->left->value);*/
+		//ft_print_ast(ast);
 		ft_exec_ast(&minishell, ast);
 		//i = ft_exec(&minishell, ast);
 		ft_free_ast(ast);
@@ -172,8 +178,8 @@ int	main(int argc, char **argv, char **envp)
 		minishell.line = NULL;
 		ft_free_tokens(minishell.tokens);
 		minishell.tokens = NULL;
-		if (i == 1)
-			break ;
+		/*if (i == 1)
+			break ;*/
 	}
 	rl_clear_history();
 	ft_free_minishell(&minishell);

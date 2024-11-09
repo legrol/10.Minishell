@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/08 16:35:31 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:37:32 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 		ft_cmdexe(minishell, ast);
 	return 0;
 }
-
 static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 {
 	char	**arg;
@@ -40,6 +39,7 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 	pid_t	pid;
 
 	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
+	pid = fork();
 	if (pid < 0)
 	{
 		ft_printf("Error making fork");
@@ -52,6 +52,8 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+		arg = ft_arg_maker(ast);
+		cmd = ft_cmd_maker(minishell, ast);
 		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
 		exit(EXIT_FAILURE);
@@ -79,6 +81,8 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+		arg = ft_arg_maker(ast);
+		cmd = ft_cmd_maker(minishell, ast);
 		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
 		exit(EXIT_FAILURE);
@@ -100,6 +104,7 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	}
 	pid1 = ft_cmdexe_pid1(minishell, ast->left, fd);
 	pid2 = ft_cmdexe_pid2(minishell, ast->right, fd);
+	if (pid1)
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, &status, 0);

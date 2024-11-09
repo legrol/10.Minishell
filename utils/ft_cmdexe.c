@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/08 16:32:32 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/09 10:55:22 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ uso de rutas relativas o absolutas). FALTA EL USO DE VARIABLES RELATIVAS O ABSOL
 
 #include "../includes/minishell.h"
 
-static char	*ft_cmd_action(char **path, char *arg)
+char	*ft_cmd_action(char **path, char *arg)
 {
 	int		i;
 	char	*cmd;
@@ -44,7 +44,7 @@ static char	*ft_cmd_action(char **path, char *arg)
 	return (NULL);
 }
 
-static char *ft_cmd_maker(t_minishell *minishell, t_ast *ast)
+char *ft_cmd_maker(t_minishell *minishell, t_ast *ast)
 {
 	char	**path;
 	char	*cmd;
@@ -54,7 +54,7 @@ static char *ft_cmd_maker(t_minishell *minishell, t_ast *ast)
 	return (cmd);
 }
 
-static char **ft_arg_maker(t_ast *ast)
+char **ft_arg_maker(t_ast *ast)
 {
 	char	**arg;
 	t_ast	*temp;

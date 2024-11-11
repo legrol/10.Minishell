@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/09 11:37:32 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:35:37 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 }
 static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 {
-	char	**arg;
-	char	*cmd;
 	pid_t	pid;
 
 	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
@@ -52,10 +50,7 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		arg = ft_arg_maker(ast);
-		cmd = ft_cmd_maker(minishell, ast);
-		execve(cmd, arg, minishell->envp);
-		perror("execve cmd2:");
+		ft_exec_ast(minishell, ast->left);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -63,8 +58,6 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 
 static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 {
-	char	**arg;
-	char	*cmd;
 	pid_t	pid;
 
 	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
@@ -81,10 +74,7 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		arg = ft_arg_maker(ast);
-		cmd = ft_cmd_maker(minishell, ast);
-		execve(cmd, arg, minishell->envp);
-		perror("execve cmd2:");
+		ft_exec_ast(minishell, ast->right);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -93,8 +83,8 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 {
 	int fd[2];
-	pid_t pid1;
-	pid_t pid2;
+	pid_t pid1 = 0;
+	pid_t pid2 = 0;
 	int status;
 
 	if(pipe(fd) == -1)
@@ -102,13 +92,16 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 		ft_printf("Error making pipe");
 		return ;
 	}
-	pid1 = ft_cmdexe_pid1(minishell, ast->left, fd);
-	pid2 = ft_cmdexe_pid2(minishell, ast->right, fd);
-	if (pid1)
+	pid1 = ft_cmdexe_pid1(minishell, ast, fd);
+	pid2 = ft_cmdexe_pid2(minishell, ast, fd);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, &status, 0);
     waitpid(pid2, &status, 0);
 }
+
+
+
+
 
 

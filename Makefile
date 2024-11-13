@@ -93,6 +93,7 @@ ERR					= ${ERRORS_DIR}/ft_manage_err.c
 
 INT					= ${INIT_DIR}/ft_enable_print.c \
 						${INIT_DIR}/ft_init_env.c \
+						${INIT_DIR}/ft_init_envp.c \
 						${INIT_DIR}/ft_init_minishell.c \
 						${INIT_DIR}/ft_init_signals.c
 
@@ -102,7 +103,6 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_change_env.c \
 						${UTILS_DIR}/ft_cmdexe.c \
 						${UTILS_DIR}/ft_path.c \
-						${UTILS_DIR}/ft_sync_envp.c \
 						${UTILS_DIR}/ft_ast.c \
 						${UTILS_DIR}/ft_exec.c
 

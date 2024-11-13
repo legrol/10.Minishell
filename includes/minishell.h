@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/13 11:43:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:59:10 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_envp		*ft_init_list_envp(char **envp);
 void		ft_init_minishell(t_minishell *minishell);
 void		ft_init_struc_sig(t_signal *signals);
 void		ft_init_signals(t_minishell *minishell);
+void		ft_init_envp(t_minishell *minishell, char **envp);
 
 // ============================================================================
 // Builtins functions

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/11 19:34:43 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:39:58 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,6 @@
  */
 
 t_signal g_signals;
-
-void ft_exec_ast(t_minishell *minishell, t_ast *ast)
-{
-    if (!ast)
-        return;
-    if (ast->type == TOKEN_COMMAND)
-        ft_exec(minishell, ast);
-    else if (ast->type == TOKEN_PIPE)
-        ft_exec_pipe(minishell, ast);
-}
 
 /*static void ft_print_ast(t_ast *node)
 {

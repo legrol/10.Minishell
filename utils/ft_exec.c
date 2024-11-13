@@ -6,11 +6,26 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/11 19:35:37 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:52:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/**
+ * This file will be one of the executor files:
+ * 
+ * int ft_exec(t_minishell *minishell, t_ast *ast) executes the builtints or the commands in the PATH.
+ * 
+ * void ft_exec_ast(t_minishell *minishell, t_ast *ast) identifies the kind of token an call to the proper function.
+ * 
+ * void ft_exec_pipe(t_minishell *minishell, t_ast *ast) execute the pipes executing the left command in the pid1 y the right command in pid2.
+ * 
+ * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) duplicate the output to the writting file descriptor fd[1] and call ft_exec_ast for the left command in recursive mode.
+ *  
+ * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) duplicate the output to the reading file descriptor fd[0] and call ft_exec_ast for the right command in recursive mode.
+ * 
+ */
 
 int ft_exec(t_minishell *minishell, t_ast *ast)
 {
@@ -32,11 +47,20 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 		ft_cmdexe(minishell, ast);
 	return 0;
 }
+
+void ft_exec_ast(t_minishell *minishell, t_ast *ast)
+{
+    if (!ast)
+        return ;
+    if (ast->type == TOKEN_COMMAND)
+        ft_exec(minishell, ast);
+    else if (ast->type == TOKEN_PIPE)
+        ft_exec_pipe(minishell, ast);
+}
 static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 {
 	pid_t	pid;
 
-	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -60,7 +84,6 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 {
 	pid_t	pid;
 
-	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -99,6 +122,7 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	waitpid(pid1, &status, 0);
     waitpid(pid2, &status, 0);
 }
+
 
 
 

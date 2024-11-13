@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/11 19:34:40 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:43:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,6 @@ void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
 char		*ft_cmd_action(char **path, char *arg);
 char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
 char		**ft_arg_maker(t_ast *ast);
-void 		ft_exec_ast(t_minishell *minishell, t_ast *ast);
+void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 12:40:06 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:00:27 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void ft_exec_ast(t_minishell *minishell, t_ast *ast)
         ft_exec(minishell, ast);
     else if (ast->type == TOKEN_PIPE)
         ft_exec_pipe(minishell, ast);
+	else if (ast->type == TOKEN_REDIR_STDIN)
+		ft_exec_redir_in(minishell, ast);
 	else if (ast->type == TOKEN_REDIR_STDOUT)
 		ft_exec_redir_out(minishell, ast);
 	else if (ast->type == TOKEN_REDIR_APPEND)

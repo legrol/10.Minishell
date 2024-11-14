@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 12:04:13 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/14 19:06:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 	}
 	else if (pid == 0)
 	{
+		if (fd[1] < 0)
+        {
+            ft_printf("Error opening file prueba");
+            exit(EXIT_FAILURE);
+        }
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);

@@ -115,6 +115,7 @@ EXE					= ${EXEC_DIR}/ft_cmdexe.c \
 						${EXEC_DIR}/ft_path.c \
 						${EXEC_DIR}/ft_exec.c \
 						${EXEC_DIR}/ft_exec_pipe.c \
+						${EXEC_DIR}/ft_exec_redir_in.c \
 						${EXEC_DIR}/ft_exec_redir_out.c \
 						${EXEC_DIR}/ft_exec_redir_append.c
 

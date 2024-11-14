@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2024/10/29 20:43:48 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/14 22:36:25 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ static t_token	*ft_get_tokens(char *line)
 	while (line[i])
 	{
 		token_gt = ft_read_tokens(line, &i);
+		ft_printf(RED"\ntoken_gt = %s\n\n"RESET, token_gt->token_value); //ELIMINAR
 		if (!token_gt)
 			return (ft_free_tokens(prev), NULL);
 		ft_split_and_update_tokens(token_gt);

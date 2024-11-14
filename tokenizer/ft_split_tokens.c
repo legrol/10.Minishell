@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/07 20:02:12 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/14 22:35:52 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,50 +56,126 @@ static void	ft_update_tokens(t_token *token)
 
 static t_token	*ft_create_new_token(t_token *current, char *value)
 {
-	current->next = malloc(sizeof(t_token));
-	if (!current->next)
-		return (NULL);
-	current->next->prev = current;
-	current = current->next;
-	current->token_value = strdup(value);
-	current->next = NULL;
-	return (current);
-}
-
-static t_token	*ft_split_tokens(t_token *token)
-{
-	int		i;
-	char	**sub_tokens;
-	t_token	*current;
-
-	if (!ft_strchr(token->token_value, '|'))
-		return (token);
-	sub_tokens = ft_split(token->token_value, '|');
-	if (!sub_tokens)
-		return (token);
-	current = token;
-	i = 0;
-	while (sub_tokens[i])
+	t_token *new_node = malloc(sizeof(t_token));
+	if (!new_node)
+		return (NULL);	
+	new_node->token_value = strdup(value);
+	if (!new_node->token_value)
 	{
-		free(current->token_value);
-		current->token_value = strdup(sub_tokens[i++]);
-		if (!current->token_value)
-			return (ft_free_split(sub_tokens), NULL);
-		if (sub_tokens[i])
-		{
-			current = ft_create_new_token(current, sub_tokens[i]);
-			if (!current)
-				return (ft_free_split(sub_tokens), NULL);
-		}
+		free(new_node);
+		return (NULL);
 	}
-	return (ft_free_split(sub_tokens), token);
+	new_node->prev = current;
+	new_node->next = NULL;
+	current->next = new_node;
+	return (new_node);
 }
 
-void	ft_split_and_update_tokens(t_token *token)
+static t_token *ft_split_tokens(t_token *token)
 {
-	t_token	*last_token;
+	char **sub_tokens;
+	t_token *current = token;
+	t_token *last_node = NULL;
+	int	i = 0;
+	int j = 0; //ELIMINAR
 
-	last_token = ft_split_tokens(token);
-	ft_update_tokens(last_token);
-	//ft_update_tokens(token);
+	ft_printf(CYAN"Estoy en split_tokens\n"RESET);  //ELIMINAR
+	ft_printf(GREEN"param_token_value = %s\n"RESET, token->token_value); //ELIMINAR
+	ft_printf(GREEN"current_token = %s\n"RESET, current->token_value);	//ELIMINAR
+
+	if (ft_strchr(token->token_value, '-'))
+	{
+		sub_tokens = ft_split_minus(token->token_value, '-');
+
+		while (sub_tokens[i] != NULL) //ELIMINAR
+		{ //ELIMINAR
+			ft_printf("sub_token = %s i = %i\n", sub_tokens[i], i); //ELIMINAR
+			i++; //ELIMINAR
+		} //ELIMINAR
+
+		i = 0;		
+		while (sub_tokens[i])
+		{
+			ft_printf("\nsub_token = %s i = %i\n", sub_tokens[i], i); //ELIMINAR
+			if (i == 0)
+			{
+				free(current->token_value);
+				current->token_value = strdup(sub_tokens[i]);
+				if (!current->token_value)
+					return (ft_free_split(sub_tokens), NULL);
+				ft_printf("index = %i current_token_value = %s\n", i, current->token_value); //ELIMINAR
+			}
+			else
+			{
+				ft_printf("Entro en else secundario\n"); //ELIMINAR
+				// last_node = ft_create_new_token(last_node, sub_tokens[i]); //ELIMINAR
+				last_node = ft_create_new_token(current, sub_tokens[i]);
+				if (!last_node)
+					return (ft_free_split(sub_tokens), NULL);
+				// if (!current) //ELIMINAR
+				// 	return (ft_free_split(sub_tokens), NULL); //ELIMINAR
+				ft_printf("new_node_token_value = %s\n", current->token_value); //ELIMINAR
+				ft_printf("new_node_next_token_value = %s\n", current->next->token_value); //ELIMINAR
+			}
+			i++;
+		}
+
+		while (current != NULL) //ELIMINAR
+		{ //ELIMINAR
+			ft_printf("Token_current %d: %s\n", j, current->token_value); //ELIMINAR
+        	current = current->next; //ELIMINAR
+        	j++; //ELIMINAR
+		} //ELIMINAR
+
+		ft_free_split(sub_tokens);
+	}
+	else
+	{
+		ft_printf("Entro en else principal si no hay un -\n"); //ELIMINAR
+		current->token_value = strdup(token->token_value);
+		if (!current->token_value)
+			return NULL;
+		ft_printf("single_token_value = %s\n", current->token_value); //ELIMINAR
+	}
+
+	return last_node;
+}
+
+void ft_split_and_update_tokens(t_token *token)
+{
+	t_token *current = token;
+	t_token *last_token = NULL;
+	int j = 0;
+
+	while (current)
+	{
+		last_token = ft_split_tokens(current);
+		ft_printf("Verificando el last_token en principal\n"); //ELIMINAR
+		while (last_token != NULL) //ELIMINAR
+		{ //ELIMINAR
+			ft_printf("Token_last_token %d: %s\n", j, last_token->token_value); //ELIMINAR
+        	last_token = last_token->next; //ELIMINAR
+        	j++; //ELIMINAR
+		} //ELIMINAR
+
+		// if (!last_token)
+		// {
+		// 	ft_printf("Saliendo de principal\n");
+		// 	return;
+		// }
+		
+		ft_printf("Último token después de split_tokens: %s\n\n", last_token->token_value); //ELIMINAR
+		if (last_token->next == NULL)
+			current = current->next;
+		else
+			current = last_token->next;
+	}
+	t_token *temp = token;
+	ft_printf("\nLista de tokens final:\n"); //ELIMINAR
+	while (temp) //ELIMINAR
+	{ //ELIMINAR
+		ft_printf("Token en lista: %s\n", temp->token_value); //ELIMINAR
+		temp = temp->next; //ELIMINAR
+	} //ELIMINAR
+	ft_update_tokens(token);
 }

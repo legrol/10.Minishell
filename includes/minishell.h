@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/13 17:09:22 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/14 12:15:53 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,16 @@ void		ft_update_type_tokens(t_token *token);
 // ============================================================================
 void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
-void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
 void		ft_dirprompt(t_minishell	*minishell);
 char		*ft_find_dir(t_minishell *minishell, const char *str);
-char		**ft_path(t_minishell *minishell);
 void		ft_print_init(void);
-void		ft_sync_envp(t_minishell *minishell);
 t_ast		*ft_ast(t_minishell *minishell);
+
+// ============================================================================
+// Exec functions
+// ============================================================================
+char		**ft_path(t_minishell *minishell);
+void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
 int 		ft_exec(t_minishell *minishell, t_ast *ast);
 void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
 char		*ft_cmd_action(char **path, char *arg);
@@ -182,5 +185,6 @@ char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
 char		**ft_arg_maker(t_ast *ast);
 void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
 
 #endif

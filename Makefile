@@ -101,10 +101,7 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
 						${UTILS_DIR}/ft_change_env.c \
-						${UTILS_DIR}/ft_cmdexe.c \
-						${UTILS_DIR}/ft_path.c \
 						${UTILS_DIR}/ft_ast.c \
-						${UTILS_DIR}/ft_exec.c
 
 FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 						${FREE_DIR}/ft_free_minishell.c \
@@ -114,7 +111,12 @@ FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 
 # PAR					= ${PARSER_DIR}/ft_xxx.c
 
-# EXE					= ${EXEC_DIR}/ft_xxx.c
+EXE					= ${EXEC_DIR}/ft_cmdexe.c \
+						${EXEC_DIR}/ft_path.c \
+						${EXEC_DIR}/ft_exec.c \
+						${EXEC_DIR}/ft_exec_pipe.c \
+						${EXEC_DIR}/ft_exec_redir_out.c \
+						${EXEC_DIR}/ft_exec_redir_append.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_echo.c \
@@ -139,7 +141,7 @@ OBJ_INT				= $(patsubst ${INIT_DIR}/%.c, ${OBJ_DIR}/%.o, ${INT})
 OBJ_UTL				= $(patsubst ${UTILS_DIR}/%.c, ${OBJ_DIR}/%.o, ${UTL})
 OBJ_FRE				= $(patsubst ${FREE_DIR}/%.c, ${OBJ_DIR}/%.o, ${FRE})
 # OBJ_PAR				= $(patsubst ${PARSER_DIR}/%.c, ${OBJ_DIR}/%.o, ${PAR})
-# OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
+OBJ_EXE				= $(patsubst ${EXEC_DIR}/%.c, ${OBJ_DIR}/%.o, ${EXE})
 OBJ_BUI				= $(patsubst ${BUILTINS_DIR}/%.c, ${OBJ_DIR}/%.o, ${BUI})
 OBJ_TOK				= $(patsubst ${TOKENIZER_DIR}/%.c, ${OBJ_DIR}/%.o, ${TOK})
 
@@ -187,9 +189,9 @@ ${OBJ_DIR}/%.o: ${FREE_DIR}/%.c
 # 	@${MKD} $(dir $@)
 # 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
-# ${OBJ_DIR}/%.o: ${EXEC_DIR}/%.c
-# 	@${MKD} $(dir $@)
-# 	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
+${OBJ_DIR}/%.o: ${EXEC_DIR}/%.c
+	@${MKD} $(dir $@)
+	@$(CC) ${CFLAGS} ${IFLAGS} -c $< -o $@
 
 ${OBJ_DIR}/%.o: ${BUILTINS_DIR}/%.c
 	@${MKD} $(dir $@)

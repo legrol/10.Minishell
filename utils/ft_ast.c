@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/13 17:10:57 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:40:59 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,29 @@ t_ast *ft_ast_redir_out(t_ast *ltree, t_minishell *minishell)
 	return redir_out_node;
 }
 
+t_ast *ft_ast_redir_append(t_ast *ltree, t_minishell *minishell)
+{
+	t_ast 	*redir_out_node;
+	t_ast	*rtree;
+
+	if(minishell->tokens->token_type != 3)
+	{
+		printf("Not valid input\n");
+		return NULL;
+	}
+	redir_out_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+	minishell->tokens = minishell->tokens->next;
+	if(!minishell->tokens || minishell->tokens->token_type != 7)
+	{
+		printf("Not valid input 2\n");
+		return NULL;
+	}
+	rtree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+	redir_out_node->left = ltree;
+	redir_out_node->right = rtree;
+	return redir_out_node;
+}
+
 t_ast *ft_ast(t_minishell *minishell)
 {
 	t_ast	*tree;
@@ -127,6 +150,8 @@ t_ast *ft_ast(t_minishell *minishell)
 			tree = ft_ast_pipe(tree, minishell);
 		else if (minishell->tokens->token_type == 2)
 			tree = ft_ast_redir_out(tree, minishell);
+		else if (minishell->tokens->token_type == 3)
+			tree = ft_ast_redir_append(tree, minishell);
 		else
 			minishell->tokens = minishell->tokens->next;
 	}

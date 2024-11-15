@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/15 12:38:49 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:47:07 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,46 @@ static void ft_export_only(t_minishell *minishell)
 	free(cpy);
 }
 
-static int ft_find_key(t_minishell *minishell, char *key, char *value)
+static void	ft_trim_key(char *key)
+{
+	char	*temp;
+	int		l;
+
+	l = ft_strlen(key) - 1;
+	temp = ft_substr(key, 0, l);
+	free(key);
+	key = ft_strdup(temp);
+	free(temp);
+}
+
+static int ft_find_key(t_minishell *minishell, char *key, char *value, int check)
 {
 	t_envp *temp;
-
+	char *temp_value;
+	
 	temp = minishell->list_envp;
+	if (check == 2)
+		 ft_trim_key(key);
 	while(minishell->list_envp)
 	{
 		if(ft_strcmp(key, minishell->list_envp->key) == 0)
 		{
-			if (minishell->list_envp->value)
+			if (minishell->list_envp->value && check == 2 && value)
+			{
+				temp_value = ft_strdup(minishell->list_envp->value);
 				free(minishell->list_envp->value);
-			if (!value)
-				minishell->list_envp->value = NULL;
-			else
-				minishell->list_envp->value = ft_strdup(value);
+				minishell->list_envp->value = ft_strjoin(temp_value, value);
+				free(temp_value);
+			}
+			else if ((minishell->list_envp->value || value) && check != 2)
+			{
+				if(minishell->list_envp->value)
+					free(minishell->list_envp->value);
+				if (!value )
+					minishell->list_envp->value = NULL;
+				else
+					minishell->list_envp->value = ft_strdup(value);
+			}
 			minishell->list_envp = temp;
 			return (0);
 		}
@@ -260,7 +285,7 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 			ast = ast->left;
 		else 
 		{
-			if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
+			if (ft_find_key(minishell, key_value[0], key_value[1], check) == -1)
 			{
 				new_node = new_node_envp(key_value[0], key_value[1]);
 				temp = minishell->list_envp;

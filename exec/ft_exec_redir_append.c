@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 12:05:39 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:40:00 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ void	ft_exec_redir_append(t_minishell *minishell, t_ast *ast)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		ft_exec_ast(minishell, ast->left);
+		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
+	ft_free_ast(ast);
 	close(fd);
 }
 

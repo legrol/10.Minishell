@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/09 10:55:22 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:39:36 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,13 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 		cmd = ft_cmd_maker(minishell, ast);
 		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
+		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		waitpid(pid ,&status, 0);
+		ft_free_ast(ast);
 		minishell->exit = WEXITSTATUS(status);
 	}
 }

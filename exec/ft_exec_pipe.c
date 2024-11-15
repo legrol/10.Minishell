@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 19:06:52 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:39:53 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 		ft_exec_ast(minishell, ast->left);
+		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -71,6 +72,7 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 		ft_exec_ast(minishell, ast->right);
+		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -79,9 +81,9 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 {
 	int fd[2];
-	pid_t pid1 = 0;
-	pid_t pid2 = 0;
 	int status;
+	pid_t pid1;
+	pid_t pid2;
 
 	if(pipe(fd) == -1)
 	{
@@ -93,7 +95,8 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, &status, 0);
-    waitpid(pid2, &status, 0);
+	waitpid(pid2, &status, 0);
+	ft_free_ast(ast);
 }
 
 

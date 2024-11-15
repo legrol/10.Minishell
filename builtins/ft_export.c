@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/06 10:32:05 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:38:49 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,24 @@ static int ft_find_key(t_minishell *minishell, char *key, char *value)
 	return (-1);
 }
 
+static int ft_find_only_key(t_minishell *minishell, char *key)
+{
+	t_envp *temp;
+
+	temp = minishell->list_envp;
+	while(minishell->list_envp)
+	{
+		if(ft_strcmp(key, minishell->list_envp->key) == 0)
+		{
+			minishell->list_envp = temp;
+			return (0);
+		}
+		minishell->list_envp = minishell->list_envp->next;
+	}
+	minishell->list_envp = temp;
+	return (-1);
+}
+
 static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 {
 	int i;
@@ -162,21 +180,6 @@ static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 	if (f == -1)
 		return (f);
 	ast = temp2;
-	return (i);
-}
-
-static int ft_ast_checker(t_ast *ast, t_minishell *minishell)
-{
-	int i;
-
-	i = 0;
-	if (ft_isalpha(ast->value[0]) == 0)
-	{
-			minishell->exit = 1;
-			ft_printf("minishell: export: \'%s\': not a valid identifier\n",\
-			ast->value);
-			i = -1;
-	}
 	return (i);
 }
 
@@ -206,32 +209,70 @@ static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
 	}
 }
 
+static int ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
+{
+	int i;
+	int j;
+	int l;
 
+	i = 0;
+	j = 0;
+	l = ft_strlen(key) - 1;
+	if (key[l] == '+')
+		i = 2;
+	while (j < l)
+	{
+		if (ft_isalpha(key[j]) == 0 && key[j] != '_')
+				i = -1;
+		j++;
+	}
+	if (ft_isalpha(key[j]) == 0 && key[j] != '_' && key[j] != '+')
+				i = -1;
+	if (i == -1)
+	{
+		minishell->exit = 0;
+		ft_printf("minishell: export: \'%s\': not a valid identifier\n",\
+		ast->value);
+	}
+	ft_printf("i: %i\n", i);
+	return (i);
+}
 
 static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 {
 	char	**key_value;
 	t_envp	*temp;
 	t_envp	*new_node;
+	int		check;
 
 	key_value = ft_init_keyvalue();
 	while (ast)
 	{
-		if (ft_ast_checker(ast, minishell) == -1)
-			ast = ast->left;
 		ft_fill_keyvalue(key_value, ast);
-		if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
+		check = ft_ast_checker(key_value[0], ast, minishell);
+		if (check == -1)
 		{
-			new_node = new_node_envp(key_value[0], key_value[1]);
-			temp = minishell->list_envp;
-			while (ft_strcmp(minishell->list_envp->key, \
-			"XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
-				minishell->list_envp = minishell->list_envp->next;
-			new_node->next = minishell->list_envp->next;
-			minishell->list_envp->next = new_node;
-			minishell->list_envp = temp;
+			if (!ast->left)
+				return;
+			ast = ast->left;
 		}
-		ast = ast->left;
+		if (!ft_strchr(ast->value, '=') && ft_find_only_key(minishell, key_value[0]) == 0)
+			ast = ast->left;
+		else 
+		{
+			if (ft_find_key(minishell, key_value[0], key_value[1]) == -1)
+			{
+				new_node = new_node_envp(key_value[0], key_value[1]);
+				temp = minishell->list_envp;
+				while (ft_strcmp(minishell->list_envp->key, \
+				"XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
+					minishell->list_envp = minishell->list_envp->next;
+				new_node->next = minishell->list_envp->next;
+				minishell->list_envp->next = new_node;
+				minishell->list_envp = temp;
+			}
+			ast = ast->left;
+		}
 		free(key_value[0]);
 		if (key_value[1])
 			free(key_value[1]);

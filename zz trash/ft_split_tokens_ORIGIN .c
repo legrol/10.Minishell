@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_tokens.c                                  :+:      :+:    :+:   */
+/*   ft_split_tokens_ORIGIN .c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/17 17:26:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:04:20 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static t_token	*ft_split_tokens(t_token *token)
 	return (ft_free_split(sub_tokens), token);
 }
 
-void	ft_split_and_update_tokens(t_token *token)
+void	ft_split_and_update_tokens_ORIGIN(t_token *token)
 {
 	t_token	*last_token;
 

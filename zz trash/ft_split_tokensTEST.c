@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/17 17:26:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:21:29 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,53 +53,102 @@ static void	ft_update_tokens(t_token *token)
 		token = token->next;
 	}
 }
-
-static t_token	*ft_create_new_token(t_token *current, char *value)
+static t_token	*ft_create_new_token(t_token *current, const char *value)
 {
-	current->next = malloc(sizeof(t_token));
-	if (!current->next)
-		return (NULL);
-	current->next->prev = current;
-	current = current->next;
-	current->token_value = strdup(value);
-	current->next = NULL;
-	return (current);
+	t_token *new_token = malloc(sizeof(t_token));
+	if (!new_token)
+		return NULL;
+
+	new_token->token_value = strdup(value);
+	if (!new_token->token_value)
+	{
+		free(new_token);
+		return NULL;
+	}
+	new_token->prev = current;
+	new_token->next = NULL;
+	if (current)
+		current->next = new_token;
+
+	return new_token;
 }
 
 static t_token	*ft_split_tokens(t_token *token)
 {
 	int		i;
-	char	**sub_tokens;
+	char	**space_split;
 	t_token	*current;
 
-	if (!ft_strchr(token->token_value, '|'))
-		return (token);
-	sub_tokens = ft_split(token->token_value, '|');
-	if (!sub_tokens)
-		return (token);
+	// Primero, dividir el token por espacios para manejar `ls -l`
+	space_split = ft_split(token->token_value, ' ');
+	if (!space_split)
+		return token;
+
 	current = token;
 	i = 0;
-	while (sub_tokens[i])
+
+	// Iterar sobre tokens separados por espacio
+	while (space_split[i])
 	{
-		free(current->token_value);
-		current->token_value = strdup(sub_tokens[i++]);
-		if (!current->token_value)
-			return (ft_free_split(sub_tokens), NULL);
-		if (sub_tokens[i])
+		// Reemplazar el valor del primer token
+		if (i == 0)
 		{
-			current = ft_create_new_token(current, sub_tokens[i]);
-			if (!current)
-				return (ft_free_split(sub_tokens), NULL);
+			free(current->token_value);
+			current->token_value = strdup(space_split[i]);
+			if (!current->token_value)
+				return (ft_free_split(space_split), NULL);
 		}
+		else
+		{
+			// Crear un nuevo token para cada parte y enlazarlo
+			current = ft_create_new_token(current, space_split[i]);
+			if (!current)
+				return (ft_free_split(space_split), NULL);
+		}
+		i++;
 	}
-	return (ft_free_split(sub_tokens), token);
+	ft_free_split(space_split);
+
+	// Segundo, revisar cada token y dividir por `|` si está presente
+	current = token;
+	while (current)
+	{
+		if (ft_strchr(current->token_value, '|'))
+		{
+			// Dividir el token actual por `|` y actualizar la lista
+			char **pipe_split = ft_split(current->token_value, '|');
+			if (!pipe_split)
+				return token;
+
+			free(current->token_value);
+			current->token_value = strdup(pipe_split[0]);
+			if (!current->token_value)
+				return (ft_free_split(pipe_split), NULL);
+
+			int j = 1;
+			while (pipe_split[j])
+			{
+				// Crear y enlazar un nuevo token para `|`
+				current = ft_create_new_token(current, "|");
+				if (!current)
+					return (ft_free_split(pipe_split), NULL);
+
+				// Crear y enlazar el siguiente token
+				current = ft_create_new_token(current, pipe_split[j++]);
+				if (!current)
+					return (ft_free_split(pipe_split), NULL);
+			}
+			ft_free_split(pipe_split);
+		}
+		current = current->next;
+	}
+	return token;
 }
 
-void	ft_split_and_update_tokens(t_token *token)
+void	ft_split_and_update_tokens2(t_token *token)
 {
 	t_token	*last_token;
 
 	last_token = ft_split_tokens(token);
 	ft_update_tokens(last_token);
-	//ft_update_tokens(token);
 }

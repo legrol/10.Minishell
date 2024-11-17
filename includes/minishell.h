@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/12 19:29:15 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:47:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ extern	t_signal g_signals;
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
+void		ft_manage_err_simple(const char *err);
 
 // ============================================================================
 // Release funtions

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/15 10:39:53 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:43:47 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	pid_t pid1;
 	pid_t pid2;
 
+	pid1 = 0;
 	if(pipe(fd) == -1)
 	{
 		ft_printf("Error making pipe");

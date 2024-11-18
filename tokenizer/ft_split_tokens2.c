@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_tokens.c                                  :+:      :+:    :+:   */
+/*   ft_split_tokens2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/17 17:26:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:20:48 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,61 +45,104 @@
  * 
  */
 
-static void	ft_update_tokens(t_token *token)
-{
-	while (token)
-	{
-		ft_update_type_tokens(token);
-		token = token->next;
-	}
-}
+// static void	ft_update_tokens(t_token *token)
+// {
+// 	while (token)
+// 	{
+// 		ft_update_type_tokens(token);
+// 		token = token->next;
+// 	}
+// }
 
 static t_token	*ft_create_new_token(t_token *current, char *value)
 {
-	current->next = malloc(sizeof(t_token));
-	if (!current->next)
+	t_token *new_node = malloc(sizeof(t_token));
+	if (!new_node)
+		return (NULL);	
+	new_node->token_value = strdup(value);
+	if (!new_node->token_value)
+	{
+		free(new_node);
 		return (NULL);
-	current->next->prev = current;
-	current = current->next;
-	current->token_value = strdup(value);
-	current->next = NULL;
-	return (current);
+	}
+	new_node->prev = current;
+	new_node->next = NULL;
+	if (current)
+		current->next = new_node;
+	return (new_node);
 }
 
 static t_token	*ft_split_tokens(t_token *token)
 {
 	int		i;
-	char	**sub_tokens;
+	char	*token_value;
 	t_token	*current;
 
-	if (!ft_strchr(token->token_value, '|'))
-		return (token);
-	sub_tokens = ft_split(token->token_value, '|');
-	if (!sub_tokens)
-		return (token);
+	token_value = token->token_value;
 	current = token;
-	i = 0;
-	while (sub_tokens[i])
+	if (strchr(token_value, '|'))
 	{
-		free(current->token_value);
-		current->token_value = strdup(sub_tokens[i++]);
-		if (!current->token_value)
-			return (ft_free_split(sub_tokens), NULL);
-		if (sub_tokens[i])
+		char **sub_tokens = ft_split(token_value, '|');
+		if (!sub_tokens)
+			return (token);
+		i = 0;
+		while (sub_tokens[i])
 		{
-			current = ft_create_new_token(current, sub_tokens[i]);
-			if (!current)
+			free(current->token_value);
+			current->token_value = strdup(sub_tokens[i++]);
+			if (!current->token_value)
 				return (ft_free_split(sub_tokens), NULL);
+			if (sub_tokens[i])
+			{
+				current = ft_create_new_token(current, sub_tokens[i]);
+				if (!current)
+					return (ft_free_split(sub_tokens), NULL);
+			}
 		}
+		ft_free_split(sub_tokens);
 	}
-	return (ft_free_split(sub_tokens), token);
+	current = token;
+	while (current)
+	{
+		if (strchr(token_value, '-'))
+		{
+			ft_printf(ORANGE"token_value: %s\n"RESET, token_value); //ELIMINAR	
+		}
+		
+		char *delimiter_position = strchr(current->token_value, '-');
+		ft_printf(RED"delimiter_position: %s\n"RESET, delimiter_position); //ELIMINAR
+		
+		// verifica que no es NULL 									delimiter_position
+		// verifica que el "-" no esta al inicio del token 			delimiter_position != current->token_value
+		// verifica que el "-" no esta al final del token 			*(delimiter_position + 1) != '\0'
+		if (delimiter_position && delimiter_position != current->token_value && *(delimiter_position + 1) != '\0')
+		{
+			int prefix_length = delimiter_position - current->token_value;
+			ft_printf("prefix_length: %i\n", prefix_length); //ELIMINAR
+			if (prefix_length > 0)
+			{
+				char *first_part = strndup(current->token_value, prefix_length);
+				ft_printf("first_part: %s\n", first_part); //ELIMINAR
+				if (!first_part)
+					return (NULL);
+				free(current->token_value);
+				current->token_value = first_part;
+				ft_printf("current->token_value: %s\n", current->token_value); //ELIMINAR
+				current = ft_create_new_token(current, delimiter_position);
+				if (!current)
+					return (NULL);				
+			}
+		}
+		current = current->next;
+	}	
+	return token;
 }
-
+ 
 void	ft_split_and_update_tokens(t_token *token)
 {
 	t_token	*last_token;
 
 	last_token = ft_split_tokens(token);
+	//ft_split_tokens(token);
 	ft_update_tokens(last_token);
-	//ft_update_tokens(token);
 }

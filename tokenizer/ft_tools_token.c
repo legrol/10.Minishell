@@ -115,7 +115,7 @@ void	ft_update_type_tokens(t_token *token)
 		token->token_type = TOKEN_REDIR_STDIN;
 	else if (ft_strcmp(token->token_value, "|") == 0)
 		token->token_type = TOKEN_PIPE;
-	else if (ft_strchr(token->token_value, '-'))
+	else if (token->token_value[0] == '-')
 		token->token_type = TOKEN_OPTION;
 	else if (token->prev != NULL && (\
 		token->prev->token_type == TOKEN_REDIR_STDIN || \

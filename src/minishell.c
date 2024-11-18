@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/15 10:25:06 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:53:02 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_handle_eof(minishell.line);		
 		ft_check_empty_line(&minishell);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
-		|| *minishell.line == '\0' || minishell.exit == 1)
+		|| *minishell.line == '\0')
 		{
 			free(minishell.line);
 			minishell.line = NULL;

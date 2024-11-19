@@ -161,7 +161,6 @@ void		ft_skip_spaces(char *line, int *index);
 void		ft_split_and_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
 void		*ft_tokenizer(t_minishell *minishell);
-// t_ast		*ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);
 
 // ============================================================================

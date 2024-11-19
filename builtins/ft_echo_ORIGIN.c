@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/19 22:04:14 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:09:50 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int ft_echo_init(t_ast *ast)
 		trim = ft_trim_ast(ast);
 		if (i >= 1 && ft_strcmp(trim, "-") == 0 && f == 0)
 			f = 1;
-		if (i >= 1 && ft_strcmp(trim, "-") == 0)
+		if (i >=1 && ft_strcmp(trim, "-") == 0)
 			f = 2;
 		i++;
 		ast = ast->left;
@@ -97,9 +97,9 @@ static int ft_echo_init(t_ast *ast)
 	}
 	ast = temp;
 	if (i == 1)
-		return (-1 + (0 * printf("\n")));
+		return (-1+(0*printf("\n")));
 	else if (f == 1)
-		return (-1 + (0 * printf("")));
+		return (-1+(0*printf("")));
 	return (f);
 }
 
@@ -107,7 +107,7 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 {
 	t_ast *temp;
 	int f;
-	//char	*trim;
+	char	*trim;
 
 	f = 0;
 	temp = ast;
@@ -115,47 +115,17 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 	if (f == -1)
 		return;
 	ast = ast->left;
-	if (f == 2) //?????????
+	if (f == 2)
 	while(ast && ft_strcmp(ast->value,"-n") == 0)
 		ast = ast->left;
 	while(ast)
 	{
-		// trim = ft_strtrim(ast->value, "'");
-		// if (ft_strcmp(ast->value, "$HOME") == 0)
-		// 	ft_printf("$HOME");
-		// else if (ft_strcmp(ast->value, "\"$HOME\"") == 0 || ft_strcmp(ast->value, "'$HOME'") == 0)
-		// 	ft_printf("%s ", getenv("HOME"));
-		// else if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
-		// 	ft_expand_echo(minishell, ast);
-		// else
-		// 	ft_printf("%s ", trim);
-		// Verificar si el token actual es "$HOME", '$HOME', o $HOME sin comillas.
-		if (ft_strcmp(ast->value, "\"$HOME\"") == 0)  // Caso "$HOME"
-		{
-			// Expande la variable de entorno HOME para "$HOME"
-			ft_printf("%s ", getenv("HOME"));
-		}
-		else if (ft_strcmp(ast->value, "'$HOME'") == 0)  // Caso '$HOME'
-		{
-			// Expande la variable de entorno HOME para '$HOME'
-			ft_printf("%s ", getenv("HOME"));
-		}
-		else if (ft_strcmp(ast->value, "$HOME") == 0)  // Caso $HOME sin comillas
-		{
-			// Imprime "$HOME" textualmente si no está entre comillas
-			ft_printf("$HOME ");
-		}
-		else if (ft_strchr(ast->value, '$'))
-		{
-			// Si contiene '$' en cualquier otra forma, llama a ft_expand_echo para manejarlo
+		trim = ft_strtrim(ast->value, "'");
+		if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
 			ft_expand_echo(minishell, ast);
-		}
 		else
-		{
-			// En cualquier otro caso, imprime el valor directamente
-			ft_printf("%s ", ast->value);
-		}
-		//free(trim);
+			ft_printf("%s ", trim);
+		free(trim);
 		ast = ast->left;
 	}
 	if (f == 0)

@@ -89,7 +89,8 @@ GNL					= ${LIBRARIES}/${GNL_DIR}/get_next_line.c \
 						${LIBRARIES}/${GNL_DIR}/get_next_line_bonus.c \
 						${LIBRARIES}/${GNL_DIR}/get_next_line_utils_bonus.c
 
-ERR					= ${ERRORS_DIR}/ft_manage_err.c
+ERR					= ${ERRORS_DIR}/ft_manage_err.c \
+						${ERRORS_DIR}/ft_syntax_error.c
 
 INT					= ${INIT_DIR}/ft_enable_print.c \
 						${INIT_DIR}/ft_init_env.c \

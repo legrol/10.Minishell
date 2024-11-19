@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/18 11:51:42 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:05:30 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ extern	t_signal g_signals;
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
+int			ft_syntax_error(t_minishell *minishell);
 
 // ============================================================================
 // Release funtions

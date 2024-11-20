@@ -26,14 +26,14 @@
 void	ft_free_tokens(t_token *token)
 {
 	t_token	*current;
-	t_token	*next;
 
+	if (!token)
+		return ;
 	current = token;
 	while (current != NULL)
 	{
-		next = current->next;
 		free(current->token_value);
 		free(current);
-		current = next;
+		current = current->next;
 	}
 }

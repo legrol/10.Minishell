@@ -126,6 +126,7 @@ void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_split(char **sub_tokens);
 void		ft_free_tokens(t_token *token);
+void		ft_free_tokens_simple(t_token *token);
 void		ft_free_ast(t_ast *ast);
 
 // ============================================================================

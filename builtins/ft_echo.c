@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/06 10:09:50 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:05:48 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 	int		i;
 	char	a;
 	char	*b;
+	char	*trim;
 
 	i = 0;
-	split = ft_split_m(ast->value, '$');
+	trim = ft_strtrim(ast->value, "\"");
+	split = ft_split_m(trim, '$');
 	b = NULL;
 	while(split[i])
 	{
@@ -54,13 +56,14 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 		}
 		else if (ft_find_dir(minishell, split[i]))
 			ft_printf("%s", ft_find_dir(minishell, split[i]));
-		else 
-			ft_printf("%s", split[i]);
+		else if (!ft_find_dir(minishell, split[i]))
+			ft_printf("");
 		free(split[i]);
 		i++;
 	}
 	ft_printf(" ");
 	free(split);
+	free(trim);
 }
 
 static char *ft_trim_ast(t_ast *ast)

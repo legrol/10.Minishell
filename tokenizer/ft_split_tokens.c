@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/17 17:26:52 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:57:20 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,209 @@ static t_token	*ft_create_new_token(t_token *current, char *value)
 	return (current);
 }
 
+static int ft_count_nothing(t_token *token, int i, int *c)
+{
+	int j;
+
+	j = 0;
+	while(token->token_value[i] && token->token_value[i] != 32 && token->token_value[i] != '\"' && token->token_value[i] != '\'')
+	{
+		i++;
+		j++;
+	}
+	if (j != 0)
+		(*c)++;
+	return (i);
+}
+
+static int ft_count_double(t_token *token, int i, int *c)
+{
+	int j;
+	int f;
+
+	f = 0;
+	if (token->token_value[i] == '\"')
+		{
+			f = 1;
+			i++;
+		}
+	j = 0;
+	while(token->token_value[i] && f == 1)
+	{
+		if (token->token_value[i] == '\"')
+			f = 0;
+		i++;
+		j++;
+	}
+	if (j != 0)
+		(*c)++;
+	return (i);
+}
+
+static int ft_count_simple(t_token *token, int i, int *c)
+{
+	int j;
+	int f;
+
+	f = 0;
+	if (token->token_value[i] == '\'')
+		{
+			f = 1;
+			i++;
+		}
+	j = 0;
+	while(token->token_value[i] && f == 1)
+	{
+		if (token->token_value[i] == '\'')
+			f = 0;
+		i++;
+		j++;
+	}
+	if (j != 0)
+		(*c)++;
+	return (i);
+}
+
+static char **ft_fill_sub(t_token *token, int c)
+{
+	char	**sub;
+	int		i;
+	int		j;
+	int		k;
+	int		f;
+	int		start;
+	int		end;
+
+	sub = (char **)malloc(c * sizeof(char*));
+	if (!sub)
+		return NULL;
+	i = 0;
+	k = 0;
+	f = 0;
+	while(k < c)
+	{
+		j = 0;
+		while(token->token_value[i] && token->token_value[i] == 32)
+			i++;
+		start = i;
+		while(token->token_value[i] && token->token_value[i] != 32 && token->token_value[i] != '\"' && token->token_value[i] != '\'')
+			i++;
+		end = i;
+		if (end - start > 0)
+			sub[k] = (char *)malloc((end - start + 1)*sizeof(char));
+		i = start;
+		while(token->token_value[i] && token->token_value[i] != 32 && token->token_value[i] != '\"' && token->token_value[i] != '\'')
+		{
+			sub[k][j] = token->token_value[i];
+			i++;
+			j++;
+		}
+		if (j != 0)
+		{
+			sub[k][j] = '\0';
+			k++;
+		}
+		start = i;
+		f = 0;
+		if (token->token_value[i] == '\"')
+		{
+			f = 1;
+			i++;
+		}
+		j = 0;
+		while(token->token_value[i] && f == 1)
+		{
+			if (token->token_value[i] == '\"')
+				f = 0;
+			i++;
+			j++;
+		}
+		end = i;
+		if (end - start > 0)
+			sub[k] = (char *)malloc((end - start + 1)*sizeof(char));
+		i = start;
+		j = 0;
+		if(token->token_value[i] && token->token_value[i] == '\"')
+		{
+			f = 1;
+			sub[k][j] = token->token_value[i];
+			i++;
+			j++;
+		}
+		while (token->token_value[i] && f == 1)
+		{
+			if (token->token_value[i] == '\"')
+				f = 0;
+			sub[k][j] = token->token_value[i];
+			i++;
+			j++;
+		}
+		if (j != 0)
+		{
+			sub[k][j] = '\0';
+			k++;
+		}
+		j = 0;
+		if(token->token_value[i] && token->token_value[i] == '\'')
+		{
+			f = 1;
+			sub[k][j] = token->token_value[i];
+			i++;
+			j++;
+		}
+		while (token->token_value[i] && f == 1)
+		{
+			if (token->token_value[i] == '\'')
+				f = 0;
+			sub[k][j] = token->token_value[i];
+			i++;
+			j++;
+		}
+		if (j != 0)
+		{
+			sub[k][j] = '\0';
+			k++;
+		}
+		ft_printf("%s\n", sub[k]);
+	}
+	return (sub);
+}
+
+static char	**ft_divide_token(t_token *token)
+{
+	int 	i;
+	int 	c;
+	char	**sub;
+
+	i = 0;
+	c = 0;
+	sub = NULL;
+	while (token->token_value[i])
+	{
+		while(token->token_value[i] && token->token_value[i] == 32)
+			i++;
+		i = ft_count_nothing(token, i, &c);
+		i = ft_count_double(token, i, &c);
+		i = ft_count_simple(token, i, &c);
+	}
+	ft_printf("TOKENS %i\n", c);
+	if (c == 1)
+		return NULL;
+	sub = ft_fill_sub(token, c);
+	return (sub);
+}
+
 static t_token	*ft_split_tokens(t_token *token)
 {
 	int		i;
 	char	**sub_tokens;
 	t_token	*current;
 
-	if (!ft_strchr(token->token_value, '|'))
-		return (token);
-	sub_tokens = ft_split(token->token_value, '|');
+	sub_tokens = NULL;
+	if (ft_strchr(token->token_value, '|'))
+		sub_tokens = ft_split(token->token_value, '|');
+	else if (ft_strchr(token->token_value, '$'))
+		sub_tokens = ft_divide_token(token);
 	if (!sub_tokens)
 		return (token);
 	current = token;

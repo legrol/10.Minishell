@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid Date        by              +#+  #+#    #+#             */
-/*   Updated: 2024/11/15 12:22:52 by rdel-olm         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/20 15:25:01 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,28 +88,61 @@ int *index, int i)
 static void	ft_fill_token(t_token *token, char *line, int *index)
 {
 	int		i;
+	int		flag;
 	char	c;
 
 	i = 0;
 	c = 32;
-	while (line[*index] && (line[*index] != 32 || c != 32))
+	flag = 0;
+	if (!ft_strchr(line, '$'))
 	{
-		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
-			c = line[(*index)++];
-		else if (line[*index] == c)
+		while (line[*index] && (line[*index] != 32 || c != 32))
 		{
-			c = 32;
-			(*index)++;
+			if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
+				c = line[(*index)++];
+			else if (line[*index] == c)
+			{
+				c = 32;
+				(*index)++;
+			}
+			else if (ft_strchr("<>|", line[*index]))
+			{
+				i = ft_handle_special_char(token, line, index, i);
+				break ;
+			}
+			else
+				token->token_value[i++] = line[(*index)++];
 		}
-		else if (ft_strchr("<>|", line[*index]))
-		{
-			i = ft_handle_special_char(token, line, index, i);
-			break ;
-		}
-		else
-			token->token_value[i++] = line[(*index)++];
+		token->token_value[i] = '\0';
 	}
-	token->token_value[i] = '\0';
+	else
+	{
+		while (line[*index] && (line[*index] != 32 || c != 32))
+		{
+			if ((line[*index] == '"' || line[*index] == '\'' ) && c == 32 && flag == 0)
+			{
+				c = line[(*index)];
+				flag = 1;
+			}
+			else if (line[*index] == c && flag == 0)
+			{
+				c = 32;
+				(*index)++;
+			}
+			if (ft_strchr("<>|", line[*index]))
+			{
+				i = ft_handle_special_char(token, line, index, i);
+				break ;
+			}
+			else
+			{
+				token->token_value[i] = line[(*index)];
+				i++;
+				(*index)++;
+			}
+		}
+		token->token_value[i] = '\0';
+	}
 }
 
 static t_token	*ft_read_tokens(char *line, int *index)

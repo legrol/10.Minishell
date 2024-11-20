@@ -14,12 +14,14 @@
 
 /**
  * 
- * ft_init_envp(t_minishell *minishell, char **envp) before to init minishell we want to init the env that works in case we want to open a new minishell in minishell.
+ * ft_init_envp(t_minishell *minishell, char **envp) before to init minishell 
+ * we want to init the env that works in case we want to open a new minishell
+ * in minishell.
  * 
- * static int	ft_start_init_envp(t_minishell *minishell, char **envp) to reserve the memory for the env.
+ * static int	ft_start_init_envp(t_minishell *minishell, char **envp) to 
+ * reserve the memory for the env.
  * 
  */
-
 
 static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 {
@@ -35,6 +37,7 @@ static int	ft_start_init_envp(t_minishell *minishell, char **envp)
 		return (-1);
 	return (0);
 }
+
 void	ft_init_envp(t_minishell *minishell, char **envp)
 {
 	int		i;
@@ -62,4 +65,3 @@ void	ft_init_envp(t_minishell *minishell, char **envp)
 	minishell->envp[i] = NULL;
 	minishell->dirprompt = NULL;
 }
-

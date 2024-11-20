@@ -55,7 +55,6 @@
 	minishell->envp[i] = NULL;
 }*/
 
-
 void	ft_init_minishell(t_minishell *minishell)
 {
 	minishell->list_envp = ft_init_list_envp(minishell->envp);

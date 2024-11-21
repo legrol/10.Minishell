@@ -101,5 +101,4 @@ void	ft_split_and_update_tokens(t_token *token)
 
 	last_token = ft_split_tokens(token);
 	ft_update_tokens(last_token);
-	//ft_update_tokens(token);
 }

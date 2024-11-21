@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/19 21:36:35 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:23:45 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ extern	t_signal g_signals;
 // Management errors
 // ============================================================================
 void		ft_manage_err(const char *err);
+int			ft_syntax_error(t_minishell *minishell);
 
 // ============================================================================
 // Release funtions
@@ -125,6 +126,7 @@ void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_split(char **sub_tokens);
 void		ft_free_tokens(t_token *token);
+void		ft_free_tokens_simple(t_token *token);
 void		ft_free_ast(t_ast *ast);
 
 // ============================================================================
@@ -182,6 +184,11 @@ void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
 char		*ft_cmd_action(char **path, char *arg);
 char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
 char		**ft_arg_maker(t_ast *ast);
+void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
+void		ft_free_ast(t_ast *ast);
+void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
 void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
 void		ft_free_ast(t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);

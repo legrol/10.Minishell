@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 18:14:34 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:32:55 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_ast *ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 	t_ast 	*pipe_node;
 	t_ast	*rtree;
 
-	if(minishell->tokens->token_type != 8)
+	if(!ltree && minishell->tokens->token_type != 8)
 	{
 		printf("Not valid input\n");
 		return NULL;
@@ -81,8 +81,8 @@ t_ast *ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 		return NULL;
 	}
 	rtree = ft_ast_left(minishell);
-	pipe_node->left = ltree;
 	pipe_node->right = rtree;
+	pipe_node->left = ltree;
 	return pipe_node;
 
 }

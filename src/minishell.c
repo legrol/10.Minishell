@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/15 10:25:06 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:06:43 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,11 @@
 
 t_signal g_signals;
 
-/*static void ft_print_ast(t_ast *node)
-{
-    if (!node)
-        return;
-    if (node->type == TOKEN_COMMAND)
-        ft_printf("Comando: %s\n", node->value);
-    else if (node->type == TOKEN_ARG)
-        ft_printf("Argumento: %s\n", node->value);
-	 else if (node->type == TOKEN_OPTION)
-        ft_printf("Argumento: %s\n", node->value);
-    else if (node->type == TOKEN_PIPE)
-        ft_printf("Operador (Pipe): %s\n", node->value);
-    if (node->left)
-    {
-        ft_printf("  └ Left: ");
-        ft_print_ast(node->left);
-    }
-    if (node->right)
-    {
-        ft_printf("  └ Right: ");
-        ft_print_ast(node->right);
-    }
-}*/
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
 	int			i;
 	t_ast		*ast;
-	//t_ast		*temp;
-	//t_ast		*ltemp;
 
 	i = 0;
 	(void)argc;
@@ -104,59 +78,26 @@ int	main(int argc, char **argv, char **envp)
 		ft_handle_eof(minishell.line);		
 		ft_check_empty_line(&minishell);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
-		|| *minishell.line == '\0' || minishell.exit == 1)
+		|| *minishell.line == '\0')
 		{
 			free(minishell.line);
 			minishell.line = NULL;
 			continue ;
 		}
 		ft_tokenizer(&minishell);
-		ast = ft_ast(&minishell);
-		/*ft_printf("    %s\n   ", ast->value);
-		ft_printf("/\\  \n");
-		ft_printf("%s", ast->left->value);
-		ft_printf("    %s\n", ast->right->value);
-		ft_printf("%s", ast->left->left->value);
-		ft_printf("    %s\n", ast->right->left->value);*/
-		//ft_print_ast(ast);
-		ft_exec_ast(&minishell, ast);
-		//i = ft_exec(&minishell, ast);
-		//ft_free_ast(ast);
-		free(minishell.line);
-		minishell.line = NULL;
-		ft_free_tokens(minishell.tokens);
-		minishell.tokens = NULL;
-		if (i == 1)
-			break ;
+		if (ft_syntax_error(&minishell) != -1)
+		{
+			ast = ft_ast(&minishell);
+			ft_exec_ast(&minishell, ast);
+			free(minishell.line);
+			minishell.line = NULL;
+			ft_free_tokens(minishell.tokens);
+			minishell.tokens = NULL;
+			if (i == 1)
+				break ;
+		}
 	}
 	rl_clear_history();
 	ft_free_minishell(&minishell);
 	return (0);
 }
-
-
-
-
-/*static void ft_print_ast(t_ast *node)
-{
-    if (!node)
-        return;
-    if (node->type == TOKEN_COMMAND)
-        ft_printf("Comando: %s\n", node->value);
-    else if (node->type == TOKEN_ARG)
-        ft_printf("Argumento: %s\n", node->value);
-	 else if (node->type == TOKEN_OPTION)
-        ft_printf("Argumento: %s\n", node->value);
-    else if (node->type == TOKEN_PIPE)
-        ft_printf("Operador (Pipe): %s\n", node->value);
-    if (node->left)
-    {
-        ft_printf("  └ Left: ");
-        ft_print_ast(node->left);
-    }
-    if (node->right)
-    {
-        ft_printf("  └ Right: ");
-        ft_print_ast(node->right);
-    }
-}*/

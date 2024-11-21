@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:41:34 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/15 10:05:22 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:48:50 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void	ft_free_ast(t_ast *ast)
 	ft_free_ast(ast->right);
 	free(ast->value);
 	free(ast);
-
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dirprompt1.c                                    :+:      :+:    :+:   */
+/*   ft_dirprompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-20 14:27:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-20 14:27:24 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/10/16 10:37:37 by pabromer          #+#    #+#             */
+/*   Updated: 2024/10/17 17:33:11 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,15 @@ void	ft_dirprompt(t_minishell	*minishell)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		printf("Current working directory: %s\n", cwd);
-		temp = ft_strjoin("minishell: ", cwd);
-		if (!temp)
-		{
-			perror("Error allocating moemroy for temp");
-			return ;
-		}
-		if (minishell->dirprompt)
-		{
-			printf("Freeing old dirprompt: %s\n", minishell->dirprompt);
+		temp = ft_strjoin(PROMPT, cwd);
+		if (minishell->dirprompt != NULL)
 			free(minishell->dirprompt);
-		}
 		minishell->dirprompt = ft_strjoin(temp, "$ ");
-		if (!minishell->dirprompt)
-		{
-			perror("Error allocating memory for dirprompt");
-			free(temp);
-			return ;
-		}
-		printf("Final dirprompt: %s\n", minishell->dirprompt);
-		free(temp);
+		free (temp);
 	}
 	else
 	{
 		perror("getcwd() error");
-		if (minishell->dirprompt)
-		{
-			free(minishell->dirprompt);
-			minishell->dirprompt = NULL;
-		}
+		minishell->dirprompt = NULL;
 	}
 }

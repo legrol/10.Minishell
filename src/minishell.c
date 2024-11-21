@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/19 17:06:43 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:08:50 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,16 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	ft_free_minishell(&minishell);
+	if (minishell.dirprompt)
+	{
+		free(minishell.dirprompt);
+		minishell.dirprompt = NULL;
+	}
+
+	if (g_signals.dupdirprompt)
+	{
+		free(g_signals.dupdirprompt);
+		g_signals.dupdirprompt = NULL;
+	}
 	return (0);
 }

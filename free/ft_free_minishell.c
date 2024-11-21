@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:23:05 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 20:12:27 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:30:50 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,20 @@ void	ft_free_minishell(t_minishell *minishell)
 		while (minishell->envp[i])
 			free(minishell->envp[i++]);
 		free(minishell->envp);
+		minishell->envp = NULL;
 	}
-	free(minishell->dirprompt);
+	if (minishell->dirprompt)
+	{
+		free(minishell->dirprompt);
+		minishell->dirprompt = NULL;
+	}
 	ft_free_envp_list(minishell->list_envp);
 	ft_free_tokens(minishell->tokens);
 	free(minishell->line);
+	minishell->line = NULL;
+	if (g_signals.dupdirprompt)
+	{
+		free(g_signals.dupdirprompt);
+		g_signals.dupdirprompt = NULL;
+	}
 }

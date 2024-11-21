@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:06:37 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/28 11:03:03 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:48:14 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

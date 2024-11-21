@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:45:06 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 17:11:24 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:10:32 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 void	ft_free_tokens(t_token *token)
 {
-	t_token	*current;
+	/*t_token	*current;
 	t_token	*next;
 
 	current = token;
@@ -35,5 +35,11 @@ void	ft_free_tokens(t_token *token)
 		free(current->token_value);
 		free(current);
 		current = next;
-	}
+	}*/
+	if(!token)
+		return ;
+	ft_free_tokens(token->prev);
+	ft_free_tokens(token->next);
+	free(token->token_value);
+	free(token);
 }

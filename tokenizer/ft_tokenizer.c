@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/20 15:25:01 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 11:11:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	return (token_rd);
 }
 
-static t_token	*ft_get_tokens(char *line)
+static t_token	*ft_get_tokens(char *line, t_minishell *minishell)
 {
 	int		i;
 	t_token	*token_gt;
@@ -181,7 +181,7 @@ static t_token	*ft_get_tokens(char *line)
 		// ft_printf(RED"\ntoken_gt = %s\n\n"RESET, token_gt->token_value); //ELIMINAR
 		if (!token_gt)
 			return (ft_free_tokens(prev), NULL);
-		ft_split_and_update_tokens(token_gt);
+		ft_split_and_update_tokens(token_gt, minishell);
 		if (prev)
 			prev->next = token_gt;
 		token_gt->prev = prev;
@@ -209,7 +209,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 	if (ft_checker_quotes_unclosed(minishell))
 		return (NULL);
 	ft_free_tokens(minishell->tokens);
-	minishell->tokens = ft_get_tokens(minishell->line);
+	minishell->tokens = ft_get_tokens(minishell->line, minishell);
 	if (!minishell->tokens)
 	{
 		free(minishell->line);

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/20 13:05:48 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:12:22 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * FALTA liberar el split
 */
 
-static char ft_find_special_char(char *s)
+/*static char ft_find_special_char(char *s)
 {
 	int i;
 
@@ -64,7 +64,7 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 	ft_printf(" ");
 	free(split);
 	free(trim);
-}
+}*/
 
 static char *ft_trim_ast(t_ast *ast)
 {
@@ -124,10 +124,10 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 	while(ast)
 	{
 		trim = ft_strtrim(ast->value, "'");
-		if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
+		/*if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
 			ft_expand_echo(minishell, ast);
-		else
-			ft_printf("%s ", trim);
+		else*/
+		ft_printf("%s ", trim);
 		free(trim);
 		ast = ast->left;
 	}
@@ -135,4 +135,6 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 		ft_printf("\n");
 	minishell->exit = 0;
 	ast = temp;
+	ft_free_ast(ast);
+	ft_free_tokens(minishell->tokens);
 }

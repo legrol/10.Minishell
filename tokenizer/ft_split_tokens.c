@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:14 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/20 16:57:20 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:44:55 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static void	ft_update_tokens(t_token *token)
 	}
 }
 
+
+
 static t_token	*ft_create_new_token(t_token *current, char *value)
 {
 	current->next = malloc(sizeof(t_token));
@@ -61,7 +63,7 @@ static t_token	*ft_create_new_token(t_token *current, char *value)
 		return (NULL);
 	current->next->prev = current;
 	current = current->next;
-	current->token_value = strdup(value);
+	current->token_value = ft_strdup(value);
 	current->next = NULL;
 	return (current);
 }
@@ -139,7 +141,7 @@ static char **ft_fill_sub(t_token *token, int c)
 	int		start;
 	int		end;
 
-	sub = (char **)malloc(c * sizeof(char*));
+	sub = (char **)malloc((c+1) * sizeof(char*));
 	if (!sub)
 		return NULL;
 	i = 0;
@@ -169,7 +171,6 @@ static char **ft_fill_sub(t_token *token, int c)
 			k++;
 		}
 		start = i;
-		f = 0;
 		if (token->token_value[i] == '\"')
 		{
 			f = 1;
@@ -208,6 +209,24 @@ static char **ft_fill_sub(t_token *token, int c)
 			sub[k][j] = '\0';
 			k++;
 		}
+		start = i;
+		if (token->token_value[i] == '\'')
+		{
+			f = 1;
+			i++;
+		}
+		j = 0;
+		while(token->token_value[i] && f == 1)
+		{
+			if (token->token_value[i] == '\'')
+				f = 0;
+			i++;
+			j++;
+		}
+		end = i;
+		if (end - start > 0)
+			sub[k] = (char *)malloc((end - start + 1)*sizeof(char));
+		i = start;
 		j = 0;
 		if(token->token_value[i] && token->token_value[i] == '\'')
 		{
@@ -229,12 +248,149 @@ static char **ft_fill_sub(t_token *token, int c)
 			sub[k][j] = '\0';
 			k++;
 		}
-		ft_printf("%s\n", sub[k]);
 	}
+	sub[k] = NULL;
 	return (sub);
 }
 
-static char	**ft_divide_token(t_token *token)
+/*static char ft_find_special_char(char *s)
+{
+	int i;
+
+	i=0;
+	while(s[i])
+	{
+		if (ft_isalnum(s[i]) == 0 && s[i] != '_')
+			return (s[i]);
+		i++;
+	}
+	return ('\0');
+}*/
+
+static char	*ft_expand_var(t_minishell *minishell, char *sub)
+{
+	int		i;
+	int		c;
+
+	i = 0;
+	c = 0;
+	while(sub[i])
+	{
+		if(sub[i] == '$')
+			c++;
+		i++;
+	}
+	ft_printf("%i\n",c);
+	ft_printf("%s\n", minishell->list_envp->value);
+	return (sub);
+	
+}
+
+static char *ft_expand_simplequote(char *exp_token, char *sub)
+{
+	char *trim;
+	char *temp;
+
+	trim = ft_strtrim(sub, "\'");
+	if(exp_token == NULL)
+	{
+		if (ft_strcmp(trim, sub) != 0)
+			exp_token = ft_strdup(trim);
+	}
+	else
+	{
+		if (ft_strcmp(trim, sub) != 0)
+		{
+			temp = ft_strdup(exp_token);
+			free(exp_token);
+			exp_token = ft_strjoin(temp, trim);
+			free(temp);
+		}
+	}
+	if (ft_strcmp(trim, sub) != 0)
+		free(sub);
+	free(trim);
+	return (exp_token);
+}
+
+static char *ft_expand_noquote(t_minishell *minishell, char *exp_token, char *sub)
+{
+	char *temp;
+
+	if(exp_token == NULL)
+	{
+		if (!ft_strchr(sub, '$'))
+			exp_token = ft_strdup(sub);
+		else
+			exp_token = ft_expand_var(minishell, sub);
+	}
+	else
+	{
+		if (!ft_strchr(sub, '$'))
+		{
+			temp = ft_strdup(exp_token);
+			free(exp_token);
+			exp_token = ft_strjoin(temp, sub);
+			free(temp);
+		}
+		else
+		{
+			temp = ft_strdup(exp_token);
+			free(exp_token);
+			exp_token = ft_strjoin(temp, ft_expand_var(minishell, sub));
+			free(temp);
+		}
+	}
+	free(sub);
+	return (exp_token);
+}
+
+static void ft_expand_token(char **sub, t_token *token, t_minishell *minishell)
+{
+	char *exp_token;
+	int i;
+
+	i = 0;
+	exp_token = NULL;
+	while(sub[i])
+	{
+		ft_printf("%s\n", sub[i]);
+		i++;
+	}
+	if (!exp_token && !ft_strchr(sub[0], '\'') && !ft_strchr(sub[0], '\"'))
+		exp_token = ft_expand_noquote(minishell, exp_token, sub[0]);
+	else
+		exp_token = ft_expand_simplequote(exp_token, sub[0]);
+	i = 1;
+	while (sub[i])
+	{
+		if (exp_token && !ft_strchr(sub[i], '\'') && !ft_strchr(sub[i], '\"'))
+			exp_token = ft_expand_noquote(minishell, exp_token, sub[i]);
+		else
+			exp_token = ft_expand_simplequote(exp_token, sub[i]);
+		i++;
+		ft_printf("%s\n", exp_token);
+	}
+	free(token->token_value);
+	free(sub);
+	token->token_value = ft_strdup(exp_token);
+	ft_printf("%s\n", token->token_value);
+	ft_printf("%s\n", exp_token);
+	free(exp_token);
+}
+static char **ft_sub_one_value(t_token *token)
+{
+	char **sub;
+
+	sub = (char **)malloc(2*sizeof(char*));
+	if (!sub)
+		return NULL;
+	sub[0] = ft_strdup(token->token_value);
+	sub[1] = NULL;
+	return (sub);
+}
+
+static void ft_divide_token(t_token *token, t_minishell *minishell)
 {
 	int 	i;
 	int 	c;
@@ -251,14 +407,15 @@ static char	**ft_divide_token(t_token *token)
 		i = ft_count_double(token, i, &c);
 		i = ft_count_simple(token, i, &c);
 	}
-	ft_printf("TOKENS %i\n", c);
 	if (c == 1)
-		return NULL;
-	sub = ft_fill_sub(token, c);
-	return (sub);
+		sub = ft_sub_one_value(token);
+	else
+		sub = ft_fill_sub(token, c);
+	ft_expand_token(sub, token, minishell);
+
 }
 
-static t_token	*ft_split_tokens(t_token *token)
+static t_token	*ft_split_tokens(t_token *token, t_minishell *minishell)
 {
 	int		i;
 	char	**sub_tokens;
@@ -268,7 +425,7 @@ static t_token	*ft_split_tokens(t_token *token)
 	if (ft_strchr(token->token_value, '|'))
 		sub_tokens = ft_split(token->token_value, '|');
 	else if (ft_strchr(token->token_value, '$'))
-		sub_tokens = ft_divide_token(token);
+		ft_divide_token(token, minishell);
 	if (!sub_tokens)
 		return (token);
 	current = token;
@@ -276,7 +433,7 @@ static t_token	*ft_split_tokens(t_token *token)
 	while (sub_tokens[i])
 	{
 		free(current->token_value);
-		current->token_value = strdup(sub_tokens[i++]);
+		current->token_value = ft_strdup(sub_tokens[i++]);
 		if (!current->token_value)
 			return (ft_free_split(sub_tokens), NULL);
 		if (sub_tokens[i])
@@ -289,11 +446,11 @@ static t_token	*ft_split_tokens(t_token *token)
 	return (ft_free_split(sub_tokens), token);
 }
 
-void	ft_split_and_update_tokens(t_token *token)
+void	ft_split_and_update_tokens(t_token *token, t_minishell *minishell)
 {
 	t_token	*last_token;
 
-	last_token = ft_split_tokens(token);
+	last_token = ft_split_tokens(token, minishell);
 	ft_update_tokens(last_token);
 	//ft_update_tokens(token);
 }

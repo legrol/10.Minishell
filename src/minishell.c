@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/19 17:06:43 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:13:33 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_exec_ast(&minishell, ast);
 			free(minishell.line);
 			minishell.line = NULL;
-			ft_free_tokens(minishell.tokens);
+			//ft_free_tokens(minishell.tokens);
 			minishell.tokens = NULL;
 			if (i == 1)
 				break ;

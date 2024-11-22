@@ -133,7 +133,8 @@ TOK					= ${TOKENIZER_DIR}/ft_check_empty_line.c \
 						${TOKENIZER_DIR}/ft_split_tokens.c \
 						${TOKENIZER_DIR}/ft_token_size.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
-						${TOKENIZER_DIR}/ft_tools_token.c
+						${TOKENIZER_DIR}/ft_tools_token.c \
+						${TOKENIZER_DIR}/ft_expander.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 OBJ_GNL				= $(patsubst ${LIBRARIES}/${GNL_DIR}/%.c, ${OBJ_DIR}/%.o, \

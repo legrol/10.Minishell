@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 15:13:33 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:38:31 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		ft_tokenizer(&minishell);
+		ft_expander(&minishell);
 		if (ft_syntax_error(&minishell) != -1)
 		{
 			ast = ft_ast(&minishell);

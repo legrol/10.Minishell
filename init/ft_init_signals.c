@@ -161,7 +161,7 @@ void	ft_init_signals(t_minishell *minishell)
 	ft_dirprompt(minishell);
 	if (g_signals.dupdirprompt)
 	{
-		printf("Liberando dupdirprompt: %s\n", g_signals.dupdirprompt); // Debug: Antes de liberar dupdirprompt
+		//ft_printf("Liberando dupdirprompt: %s\n",	g_signals.dupdirprompt); // Debug: Antes de liberar dupdirprompt
 		free(g_signals.dupdirprompt);
 		g_signals.dupdirprompt = NULL;
 	}

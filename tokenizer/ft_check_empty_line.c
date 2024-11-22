@@ -56,11 +56,14 @@ void	ft_check_empty_line(t_minishell *minishell)
 	if (minishell->line)
 	{
 		line = ft_strdup(minishell->line);
+		if (!line)
+			return ;
 		if (!line || *line == '\0' || ft_only_spaces(line))
 		{
 			minishell->exit = 1;
 			free(line);
 			return ;
 		}
+		free(line);
 	}
 }

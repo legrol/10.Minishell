@@ -99,16 +99,17 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	ft_free_minishell(&minishell);
-	if (minishell.dirprompt)
-	{
-		free(minishell.dirprompt);
-		minishell.dirprompt = NULL;
-	}
-
 	if (g_signals.dupdirprompt)
 	{
+		//ft_printf("Liberando g_signals.dupdirprompt: %s\n", g_signals.dupdirprompt);
 		free(g_signals.dupdirprompt);
 		g_signals.dupdirprompt = NULL;
+	}
+	if (minishell.dirprompt)
+	{
+		//ft_printf("Liberando minishell->dirprompt: %s\n", minishell.dirprompt);
+		free(minishell.dirprompt);
+		minishell.dirprompt = NULL;
 	}
 	return (0);
 }

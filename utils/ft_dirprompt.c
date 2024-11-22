@@ -71,7 +71,7 @@ void	ft_dirprompt(t_minishell *minishell)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		temp = ft_strjoin("minishell: ", cwd);
-		printf("Asignando temp en ft_dirprompt: %s\n", temp); // Debug: Verificar temp
+		//printf("Asignando temp en ft_dirprompt: %s\n", temp); // Debug: //Verificar temp
 		if (!temp)
 		{
 			perror("Error allocating memory for temp");
@@ -86,9 +86,9 @@ void	ft_dirprompt(t_minishell *minishell)
 		}
 		if (minishell->dirprompt)
 		{
-			printf("Liberando dirprompt anterior: %s\n", minishell->dirprompt); // Debug: Antes de liberar dirprompt
+			//printf("Liberando dirprompt anterior: %s\n", minishell->dirprompt); // Debug: Antes de liberar dirprompt
 			free(minishell->dirprompt);
-			minishell->dirprompt = NULL;
+			//minishell->dirprompt = NULL;
 		}
 		minishell->dirprompt = new_prompt;
 	}

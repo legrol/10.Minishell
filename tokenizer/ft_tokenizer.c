@@ -133,31 +133,64 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	return (token_rd);
 }
 
+// static t_token	*ft_get_tokens(char *line)
+// {
+// 	int		i;
+// 	t_token	*token_gt;
+// 	t_token	*prev;
+
+// 	i = 0;
+// 	token_gt = NULL;
+// 	prev = NULL;
+// 	ft_skip_spaces(line, &i);
+// 	while (line[i])
+// 	{
+// 		token_gt = ft_read_tokens(line, &i);
+// 		if (!token_gt)
+// 			return (ft_free_tokens(prev), NULL);
+// 		ft_split_and_update_tokens(token_gt);
+// 		if (prev)
+// 			prev->next = token_gt;
+// 		token_gt->prev = prev;
+// 		prev = token_gt;
+// 		ft_update_type_tokens(token_gt);
+// 		ft_skip_spaces(line, &i);
+// 	}
+// 	while (token_gt && token_gt->prev)
+// 		token_gt = token_gt->prev;
+// 	return (token_gt);
+// }
+
 static t_token	*ft_get_tokens(char *line)
 {
 	int		i;
-	t_token	*token_gt;
-	t_token	*prev;
+	t_token	*current_token;
+	t_token	*prev_token;
+	t_token	*head;
 
 	i = 0;
-	prev = NULL;
+	head = NULL;
+	prev_token = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
-		token_gt = ft_read_tokens(line, &i);
-		if (!token_gt)
-			return (ft_free_tokens(prev), NULL);
-		ft_split_and_update_tokens(token_gt);
-		if (prev)
-			prev->next = token_gt;
-		token_gt->prev = prev;
-		prev = token_gt;
-		ft_update_type_tokens(token_gt);
+		current_token = ft_read_tokens(line, &i);
+		if (!current_token)
+		{
+			ft_free_tokens(head);
+			return (NULL);
+		}
+		if (prev_token)
+			prev_token->next = current_token;
+		current_token->prev = prev_token;
+		if (!head)
+			head = current_token;
+		prev_token = current_token;
+		ft_split_and_update_tokens(current_token);
+		ft_update_type_tokens(current_token);
 		ft_skip_spaces(line, &i);
 	}
-	while (token_gt && token_gt->prev)
-		token_gt = token_gt->prev;
-	return (token_gt);
+	return (head);
 }
 
 void	*ft_tokenizer(t_minishell *minishell)

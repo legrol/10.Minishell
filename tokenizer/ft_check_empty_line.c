@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_empty_line.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:13:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/07 22:21:15 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/23 23:38:03 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ void	ft_check_empty_line(t_minishell *minishell)
 
 	if (minishell->line)
 	{
-		line = ft_strdup(minishell->line);
-		if (!line || *line == '\0' || ft_only_spaces(line))
+		line = minishell->line;
+		if (!line || *line == '\0' || ft_only_spaces(line) == 0)
 		{
 			minishell->exit = 1;
-			free(line);
 			return ;
 		}
 	}

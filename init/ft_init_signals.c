@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init_signals .c                                 :+:      :+:    :+:   */
+/*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-06 06:55:30 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-06 06:55:30 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/11/06 06:55:30 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/23 23:38:54 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	ft_init_signals(t_minishell *minishell)
 	ft_dirprompt(minishell);
 	if (g_signals.dupdirprompt)
 		free(g_signals.dupdirprompt);
-	g_signals.dupdirprompt = ft_strdup(minishell->dirprompt);
+	g_signals.dupdirprompt = minishell->dirprompt;
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	ft_enable_print();

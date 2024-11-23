@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/22 19:36:57 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/23 19:23:31 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,10 @@ int *index, int i)
 static void	ft_fill_token(t_token *token, char *line, int *index)
 {
 	int		i;
-	//int		flag;
 	char	c;
 
 	i = 0;
 	c = 32;
-	//flag = 0;
-	//if (!ft_strchr(line, '$'))
-	//{
 	while (line[*index] && (line[*index] != 32 || c != 32))
 	{
 		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
@@ -108,11 +104,6 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
             	token->token_value[i++] = line[(*index)++]; // Incluimos la comilla de cierre
         	c = 32;
 		}
-		/*else if (line[*index] == c)
-		{
-			c = 32;
-			(*index)++;
-		}*/
 		else if (ft_strchr("<>|", line[*index]))
 		{
 			i = ft_handle_special_char(token, line, index, i);
@@ -122,35 +113,6 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 			token->token_value[i++] = line[(*index)++];
 	}
 	token->token_value[i] = '\0';
-	//}
-	/*else
-	{
-		while (line[*index] && (line[*index] != 32 || c != 32))
-		{
-			if ((line[*index] == '"' || line[*index] == '\'' ) && c == 32 && flag == 0)
-			{
-				c = line[(*index)];
-				flag = 1;
-			}
-			else if (line[*index] == c && flag == 0)
-			{
-				c = 32;
-				(*index)++;
-			}
-			if (ft_strchr("<>|", line[*index]))
-			{
-				i = ft_handle_special_char(token, line, index, i);
-				break ;
-			}
-			else
-			{
-				token->token_value[i] = line[(*index)];
-				i++;
-				(*index)++;
-			}
-		}
-		token->token_value[i] = '\0';
-	}*/
 }
 
 static t_token	*ft_read_tokens(char *line, int *index)

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/23 13:08:05 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:34:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,135 @@ static char *ft_split_expand(t_minishell *minishell, char *s)
 		free(temp3);
 		i++;
 	}
+	free(split);
 	ft_printf("split EXPAND EXIT\n");
 	return (temp);
 }
+
+static char *split_substrings(t_minishell *minishell, char *input)
+{
+    static char substrings[100][256]; // Arreglo fijo de substrings
+    static char *substring_ptrs[100];        // Punteros a cada substring
+    int size = 0;                                       // Número de substrings encontrados
+    char *start = input;                          // Puntero al inicio del string
+
+    while (*start) {
+        // Detectar inicio de una subcadena entre comillas simples o dobles
+        if (*start == '"' || *start == '\'') {
+            if (size >= 100) {
+                ft_printf("Error: Número máximo de substrings alcanzado.\n");
+                break;
+            }
+
+            char quote = *start;   // Tipo de comilla encontrada
+            char *end = ++start; // Avanzar después de la comilla inicial
+
+            // Buscar la comilla de cierre
+            while (*end && *end != quote) {
+                end++;
+            }
+
+            if (*end == quote) {
+                // Copiar incluyendo comillas
+                size_t len = end - start + 2; // Incluir ambas comillas
+                if (len >= 256) {
+                    ft_printf("Error: Longitud máxima de substring excedida.\n");
+                    break;
+                }
+
+                substrings[size][0] = quote;            // Agregar la comilla inicial
+                ft_strcpy(&substrings[size][1], start); // Copiar el contenido
+                substrings[size][len - 1] = quote;      // Agregar la comilla final
+                substrings[size][len] = '\0';           // Cerrar el string
+
+                substring_ptrs[size] = substrings[size];
+                size++;
+            }
+            start = end + 1; // Avanzar después de la comilla de cierre
+        } 
+        // Detectar texto no entrecomillado
+        else if (*start != ' ' && *start != '\t') {
+            if (size >= 100) {
+                ft_printf("Error: Número máximo de substrings alcanzado.\n");
+                break;
+            }
+
+            char *end = start;
+            while (*end && *end != '"' && *end != '\'' && *end != ' ' && *end != '\t') {
+                end++;
+            }
+
+            size_t len = end - start;
+            if (len >= 256) {
+                ft_printf("Error: Longitud máxima de substring excedida.\n");
+                break;
+            }
+
+            ft_strcpy(substrings[size], start);
+            substrings[size][len] = '\0';
+
+            substring_ptrs[size] = substrings[size];
+            size++;
+            start = end;
+        } 
+        else {
+            start++;
+        }
+    }
+	int i;
+	char *trim;
+	
+	i = 0;
+	while(substring_ptrs[i])
+	{
+		trim = ft_strtrim(substring_ptrs[i],"\"");
+		if (ft_strcmp(trim, substring_ptrs[i]) != 0)
+		{
+			if (ft_strchr(trim, '$'))
+				substring_ptrs[i] = ft_split_expand(minishell, trim);
+			else
+				substring_ptrs[i] = ft_strdup(trim);
+			free(trim);
+		}
+		else
+		{
+			free(trim);
+			trim = ft_strtrim(substring_ptrs[i],"\'");
+			if (ft_strcmp(trim, substring_ptrs[i]) != 0)
+				substring_ptrs[i] = ft_strdup(trim);
+			else
+			{
+				if (ft_strchr(trim, '$'))
+					substring_ptrs[i] = ft_split_expand(minishell, substring_ptrs[i]);
+				else
+					substring_ptrs[i] = ft_strdup(trim);
+			}
+			free(trim);
+		}
+		i++;
+	}
+	char *temp;
+	char *temp2;
+	char *temp3;
+
+	temp = ft_strdup(substring_ptrs[0]);
+	free (substring_ptrs[0]);
+	i = 1;
+	while(substring_ptrs[i])
+	{
+		ft_printf("%s\n" , substring_ptrs[i]);
+		temp2 = ft_strjoin(temp, substring_ptrs[i]);
+		temp3 = ft_strdup(temp2);
+		free(temp);
+		free(temp2);
+		free(substring_ptrs[i]);
+		temp = ft_strdup(temp3);
+		free(temp3);
+		i++;
+	}
+	return (temp);
+}
+
 
 void	ft_expander(t_minishell *minishell)
 {
@@ -191,10 +317,16 @@ void	ft_expander(t_minishell *minishell)
 				minishell->tokens->token_value = ft_strdup(t);
 				free(t);
 			}
-			else if (ft_strchr(minishell->tokens->token_value, '$') && (ft_strchr(minishell->tokens->token_value, '\"') || ft_strchr(minishell->tokens->token_value, '\'')))
-				ft_printf("Token %i: %s NECESITA GESTIONAR COMILLAS Y EXPANSION\n", i, minishell->tokens->token_value);
+			/*else if (ft_strchr(minishell->tokens->token_value, '$') && (ft_strchr(minishell->tokens->token_value, '\"') || ft_strchr(minishell->tokens->token_value, '\'')))
+				ft_printf("Token %i: %s NECESITA GESTIONAR COMILLAS Y EXPANSION\n", i, minishell->tokens->token_value);*/
 			else
+			{
 				ft_printf("Token %i: %s NECESITA SOLO GESTIONAR COMILLAS\n", i, minishell->tokens->token_value);
+				t = split_substrings(minishell, minishell->tokens->token_value);
+				free(minishell->tokens->token_value);
+				minishell->tokens->token_value = ft_strdup(t);
+				free(t);
+			}
 		}
 		i++;
 		minishell->tokens = minishell->tokens->next; 

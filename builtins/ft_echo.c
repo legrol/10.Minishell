@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/22 15:35:48 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:20:12 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * FALTA liberar el split
 */
 
-static char ft_find_special_char(char *s)
+/*static char ft_find_special_char(char *s)
 {
 	int i;
 
@@ -29,7 +29,7 @@ static char ft_find_special_char(char *s)
 		i++;
 	}
 	return ('\0');
-}
+}*/
 
 /*int ft_count_dollar(char *s)
 {
@@ -46,7 +46,7 @@ static char ft_find_special_char(char *s)
 	}
 }*/
 
-static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
+/*static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 {
 	char	**split;
 	int		i;
@@ -85,7 +85,7 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 	ft_printf(" ");
 	free(split);
 	free(trim);
-}
+}*/
 
 static char *ft_trim_ast(t_ast *ast)
 {
@@ -131,7 +131,7 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 {
 	t_ast *temp;
 	int f;
-	char	*trim;
+	//char	*trim;
 
 	f = 0;
 	temp = ast;
@@ -144,12 +144,12 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 		ast = ast->left;
 	while(ast)
 	{
-		trim = ft_strtrim(ast->value, "'");
+		/*trim = ft_strtrim(ast->value, "'");
 		if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
 			ft_expand_echo(minishell, ast);
-		else
-			ft_printf("%s ", trim);
-		free(trim);
+		else*/
+		ft_printf("%s ", ast->value);
+		//free(trim);
 		ast = ast->left;
 	}
 	if (f == 0)

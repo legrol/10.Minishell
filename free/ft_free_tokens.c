@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:45:06 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 15:10:32 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:25:12 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,9 @@
 
 void	ft_free_tokens(t_token *token)
 {
-	/*t_token	*current;
-	t_token	*next;
-
-	current = token;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->token_value);
-		free(current);
-		current = next;
-	}*/
-	if(!token)
-		return ;
-	ft_free_tokens(token->prev);
-	ft_free_tokens(token->next);
-	free(token->token_value);
+	if (!token)
+		return;
+	if (token->token_value)
+		free(token->token_value);
 	free(token);
 }

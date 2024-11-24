@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:23:05 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 20:12:27 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:12:53 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	ft_free_minishell(t_minishell *minishell)
 	}
 	free(minishell->dirprompt);
 	ft_free_envp_list(minishell->list_envp);
-	ft_free_tokens(minishell->tokens);
+	//ft_free_tokens(minishell->tokens);
 	free(minishell->line);
 }

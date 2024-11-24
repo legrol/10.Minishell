@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:24:31 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 13:24:45 by rdel-olm         ###   ########.fr       */
+/*   Created: Invalid Date        by                   #+#    #+#             */
+/*   Updated: 2024/11/24 17:25:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,14 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 	while (line[*index] && (line[*index] != 32 || c != 32))
 	{
 		if ((line[*index] == '"' || line[*index] == '\'') && c == 32)
-			c = line[(*index)++];
-		else if (line[*index] == c)
 		{
-			c = 32;
-			(*index)++;
+			c = line[(*index)++];
+			token->token_value[i++] = c;
+			while (line[*index] && line[*index] != c)
+           	 	token->token_value[i++] = line[(*index)++];
+        	if (line[*index] == c)
+            	token->token_value[i++] = line[(*index)++];
+        	c = 32;
 		}
 		else if (ft_strchr("<>|", line[*index]))
 		{
@@ -133,64 +136,31 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	return (token_rd);
 }
 
-// static t_token	*ft_get_tokens(char *line)
-// {
-// 	int		i;
-// 	t_token	*token_gt;
-// 	t_token	*prev;
-
-// 	i = 0;
-// 	token_gt = NULL;
-// 	prev = NULL;
-// 	ft_skip_spaces(line, &i);
-// 	while (line[i])
-// 	{
-// 		token_gt = ft_read_tokens(line, &i);
-// 		if (!token_gt)
-// 			return (ft_free_tokens(prev), NULL);
-// 		ft_split_and_update_tokens(token_gt);
-// 		if (prev)
-// 			prev->next = token_gt;
-// 		token_gt->prev = prev;
-// 		prev = token_gt;
-// 		ft_update_type_tokens(token_gt);
-// 		ft_skip_spaces(line, &i);
-// 	}
-// 	while (token_gt && token_gt->prev)
-// 		token_gt = token_gt->prev;
-// 	return (token_gt);
-// }
-
-static t_token	*ft_get_tokens(char *line)
+static t_token	*ft_get_tokens(char *line, t_minishell *minishell)
 {
 	int		i;
-	t_token	*current_token;
-	t_token	*prev_token;
-	t_token	*head;
+	t_token	*token_gt;
+	t_token	*prev;
 
 	i = 0;
-	head = NULL;
-	prev_token = NULL;
+	prev = NULL;
 	ft_skip_spaces(line, &i);
 	while (line[i])
 	{
-		current_token = ft_read_tokens(line, &i);
-		if (!current_token)
-		{
-			ft_free_tokens(head);
-			return (NULL);
-		}
-		if (prev_token)
-			prev_token->next = current_token;
-		current_token->prev = prev_token;
-		if (!head)
-			head = current_token;
-		prev_token = current_token;
-		ft_split_and_update_tokens(current_token);
-		ft_update_type_tokens(current_token);
+		token_gt = ft_read_tokens(line, &i);
+		if (!token_gt)
+			return (ft_free_tokens(prev), NULL);
+		ft_split_and_update_tokens(token_gt, minishell);
+		if (prev)
+			prev->next = token_gt;
+		token_gt->prev = prev;
+		prev = token_gt;
+		ft_update_type_tokens(token_gt);
 		ft_skip_spaces(line, &i);
 	}
-	return (head);
+	while (token_gt && token_gt->prev)
+		token_gt = token_gt->prev;
+	return (token_gt);
 }
 
 void	*ft_tokenizer(t_minishell *minishell)
@@ -208,7 +178,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 	if (ft_checker_quotes_unclosed(minishell))
 		return (NULL);
 	ft_free_tokens(minishell->tokens);
-	minishell->tokens = ft_get_tokens(minishell->line);
+	minishell->tokens = ft_get_tokens(minishell->line, minishell);
 	if (!minishell->tokens)
 	{
 		free(minishell->line);

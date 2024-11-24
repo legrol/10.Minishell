@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/06 10:09:50 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:20:12 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * FALTA liberar el split
 */
 
-static char ft_find_special_char(char *s)
+/*static char ft_find_special_char(char *s)
 {
 	int i;
 
@@ -29,18 +29,39 @@ static char ft_find_special_char(char *s)
 		i++;
 	}
 	return ('\0');
-}
+}*/
 
-static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
+/*int ft_count_dollar(char *s)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while(s[i])
+	{
+		if (s[i] == '$')
+			j++;
+		
+	}
+}*/
+
+/*static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 {
 	char	**split;
 	int		i;
 	char	a;
 	char	*b;
+	char	*trim;
 
-	i = 0;
-	split = ft_split_m(ast->value, '$');
+	//i = 0;
+	//ft_printf("%s\n", ast->value);
+	trim = ft_strtrim(ast->value, "\"");
+	//ft_printf("%s\n", trim);
+	//ft_printf("%s\n", minishell->line);
+	split = ft_split_m(trim, '$');
 	b = NULL;
+	i = 0;
 	while(split[i])
 	{
 		a = ft_find_special_char(split[i]);
@@ -54,14 +75,17 @@ static void	ft_expand_echo(t_minishell *minishell, t_ast *ast)
 		}
 		else if (ft_find_dir(minishell, split[i]))
 			ft_printf("%s", ft_find_dir(minishell, split[i]));
-		else 
+		else if (!ft_find_dir(minishell, split[i]))
+			ft_printf("");
+		else
 			ft_printf("%s", split[i]);
 		free(split[i]);
 		i++;
 	}
 	ft_printf(" ");
 	free(split);
-}
+	free(trim);
+}*/
 
 static char *ft_trim_ast(t_ast *ast)
 {
@@ -107,7 +131,7 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 {
 	t_ast *temp;
 	int f;
-	char	*trim;
+	//char	*trim;
 
 	f = 0;
 	temp = ast;
@@ -120,16 +144,18 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 		ast = ast->left;
 	while(ast)
 	{
-		trim = ft_strtrim(ast->value, "'");
+		/*trim = ft_strtrim(ast->value, "'");
 		if (ft_strchr(ast->value, '$') && ft_strlen(ast->value) == ft_strlen(trim))
 			ft_expand_echo(minishell, ast);
-		else
-			ft_printf("%s ", trim);
-		free(trim);
+		else*/
+		ft_printf("%s ", ast->value);
+		//free(trim);
 		ast = ast->left;
 	}
 	if (f == 0)
 		ft_printf("\n");
 	minishell->exit = 0;
 	ast = temp;
+	ft_free_ast(ast);
+	ft_free_tokens(minishell->tokens);
 }

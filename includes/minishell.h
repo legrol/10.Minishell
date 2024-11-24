@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 19:44:22 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:08:15 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_split(char **sub_tokens);
 void		ft_free_tokens(t_token *token);
-void		ft_free_tokens_simple(t_token *token);
 void		ft_free_ast(t_ast *ast);
 
 // ============================================================================
@@ -159,7 +158,7 @@ int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
-void		ft_split_and_update_tokens(t_token *token);
+void		ft_split_and_update_tokens(t_token *token, t_minishell *minishell);
 int			ft_token_size(char *line, int *index);
 void		*ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);
@@ -189,10 +188,6 @@ void		ft_free_ast(t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
-void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
-void		ft_free_ast(t_ast *ast);
-void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
+void		ft_expander(t_minishell *minishell);
 
 #endif

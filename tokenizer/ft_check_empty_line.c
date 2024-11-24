@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:13:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/07 22:21:15 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:17:19 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,11 @@ void	ft_check_empty_line(t_minishell *minishell)
 
 	if (minishell->line)
 	{
-		line = ft_strdup(minishell->line);
-		if (!line)
-			return ;
-		if (!line || *line == '\0' || ft_only_spaces(line))
+		line = minishell->line;
+		if (!line || *line == '\0' || ft_only_spaces(line) == 0)
 		{
 			minishell->exit = 1;
-			free(line);
 			return ;
 		}
-		free(line);
 	}
 }

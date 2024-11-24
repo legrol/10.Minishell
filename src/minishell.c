@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 22:08:50 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:14:44 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,20 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		ft_tokenizer(&minishell);
+		ft_expander(&minishell);
 		if (ft_syntax_error(&minishell) != -1)
 		{
 			ast = ft_ast(&minishell);
 			ft_exec_ast(&minishell, ast);
 			free(minishell.line);
 			minishell.line = NULL;
-			ft_free_tokens(minishell.tokens);
-			minishell.tokens = NULL;
+			//ft_free_tokens(minishell.tokens);
+			//minishell.tokens = NULL;
 			if (i == 1)
 				break ;
 		}
 	}
 	rl_clear_history();
-	ft_free_minishell(&minishell);
-	if (g_signals.dupdirprompt)
-	{
-		//ft_printf("Liberando g_signals.dupdirprompt: %s\n", g_signals.dupdirprompt);
-		free(g_signals.dupdirprompt);
-		g_signals.dupdirprompt = NULL;
-	}
-	if (minishell.dirprompt)
-	{
-		//ft_printf("Liberando minishell->dirprompt: %s\n", minishell.dirprompt);
-		free(minishell.dirprompt);
-		minishell.dirprompt = NULL;
-	}
+	ft_free_minishell(&minishell);	
 	return (0);
 }

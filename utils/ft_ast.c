@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/18 14:32:55 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:46:07 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_ast	*ft_ast_left(t_minishell *minishell)
 	t_ast	*temp_tree;
 
 	temp = minishell->tokens;
-	if(temp->token_type != 5)
+	if(temp->token_type != 5 && temp->token_type != 7)
 	{
 		printf("Not valid input\n");
 		return NULL;
@@ -53,11 +53,14 @@ t_ast	*ft_ast_left(t_minishell *minishell)
 	tree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	temp_tree = tree;
 	minishell->tokens = minishell->tokens->next;
+	ft_free_tokens(temp);
 	while (minishell->tokens && (minishell->tokens->token_type == 6 || minishell->tokens->token_type == 7))
 	{
 		tree->left = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 		tree = tree->left;
+		temp = minishell->tokens;
 		minishell->tokens = minishell->tokens->next;
+		ft_free_tokens(temp);
 	}
 	tree = temp_tree;
 	return (tree);
@@ -67,14 +70,17 @@ t_ast *ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 {
 	t_ast 	*pipe_node;
 	t_ast	*rtree;
+	t_token *temp;
 
 	if(!ltree && minishell->tokens->token_type != 8)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
+	temp = minishell->tokens;
 	pipe_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	minishell->tokens = minishell->tokens->next;
+	ft_free_tokens(temp);
 	if(!minishell->tokens || minishell->tokens->token_type != 5)
 	{
 		printf("Not valid input 2\n");
@@ -90,20 +96,23 @@ t_ast *ft_ast_redir_in(t_ast *ltree, t_minishell *minishell)
 {
 	t_ast 	*redir_in_node;
 	t_ast	*rtree;
+	t_token *temp;
 
 	if(minishell->tokens->token_type != 1)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
+	temp = minishell->tokens;
 	redir_in_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	minishell->tokens = minishell->tokens->next;
+	ft_free_tokens(temp);
 	if(!minishell->tokens || minishell->tokens->token_type != 7)
 	{
 		printf("Not valid input 2\n");
 		return NULL;
 	}
-	rtree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+	rtree = ft_ast_left(minishell);
 	redir_in_node->left = ltree;
 	redir_in_node->right = rtree;
 	return redir_in_node;
@@ -113,20 +122,23 @@ t_ast *ft_ast_redir_out(t_ast *ltree, t_minishell *minishell)
 {
 	t_ast 	*redir_out_node;
 	t_ast	*rtree;
+	t_token *temp;
 
 	if(minishell->tokens->token_type != 2)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
+	temp = minishell->tokens;
 	redir_out_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	minishell->tokens = minishell->tokens->next;
+	ft_free_tokens(temp);
 	if(!minishell->tokens || minishell->tokens->token_type != 7)
 	{
 		printf("Not valid input 2\n");
 		return NULL;
 	}
-	rtree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+	rtree = ft_ast_left(minishell);
 	redir_out_node->left = ltree;
 	redir_out_node->right = rtree;
 	return redir_out_node;
@@ -136,20 +148,23 @@ t_ast *ft_ast_redir_append(t_ast *ltree, t_minishell *minishell)
 {
 	t_ast 	*redir_append_node;
 	t_ast	*rtree;
+	t_token *temp;
 
 	if(minishell->tokens->token_type != 3)
 	{
 		printf("Not valid input\n");
 		return NULL;
 	}
+	temp = minishell->tokens;
 	redir_append_node = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
 	minishell->tokens = minishell->tokens->next;
+	ft_free_tokens(temp);
 	if(!minishell->tokens || minishell->tokens->token_type != 7)
 	{
 		printf("Not valid input 2\n");
 		return NULL;
 	}
-	rtree = ft_ast_node(minishell->tokens->token_type, minishell->tokens->token_value);
+	rtree = ft_ast_left(minishell);
 	redir_append_node->left = ltree;
 	redir_append_node->right = rtree;
 	return redir_append_node;

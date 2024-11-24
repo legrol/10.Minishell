@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 06:55:30 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 22:35:49 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:13:01 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->sigquit = 0;
 	signals->exit = 0;
 	signals->start = 1;
-	g_signals.dupdirprompt = NULL;
 }
 
 static void	sig_int(int status)
@@ -160,17 +159,8 @@ void	ft_init_signals(t_minishell *minishell)
 {
 	ft_dirprompt(minishell);
 	if (g_signals.dupdirprompt)
-	{
-		//ft_printf("Liberando dupdirprompt: %s\n",	g_signals.dupdirprompt); // Debug: Antes de liberar dupdirprompt
 		free(g_signals.dupdirprompt);
-		g_signals.dupdirprompt = NULL;
-	}
-	g_signals.dupdirprompt = ft_strdup(minishell->dirprompt);
-	if (!g_signals.dupdirprompt)
-	{
-		perror("Error allocating memory for dupdirprompt");
-		return ;
-	}
+	g_signals.dupdirprompt = minishell->dirprompt;
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
 	ft_enable_print();

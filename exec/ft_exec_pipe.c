@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/18 16:43:47 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/24 12:59:48 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 	ft_free_ast(ast);
+	//ft_free_tokens(minishell->tokens);
 }
 
 

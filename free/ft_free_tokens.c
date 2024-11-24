@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:45:06 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/29 17:11:24 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:04:40 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,9 @@
 
 void	ft_free_tokens(t_token *token)
 {
-	t_token	*current;
-	t_token	*temp;
-
 	if (!token)
-		return ;
-	current = token;
-	while (current != NULL)
-	{
-		temp = current->next;
-		free(current->token_value);
-		free(current);
-		current = temp;
-	}
+		return;
+	if (token->token_value)
+		free(token->token_value);
+	free(token);
 }

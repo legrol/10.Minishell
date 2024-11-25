@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:06:37 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 19:48:14 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:15:27 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	ft_init_minishell(t_minishell *minishell)
 	minishell->line = NULL;
 	minishell->tokens = NULL;
 	minishell->exit = 0;
+	minishell->terminal_status = 1;
 	ft_dirprompt(minishell);
 }

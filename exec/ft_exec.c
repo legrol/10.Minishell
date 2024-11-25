@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 18:00:27 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:06:37 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 	else if (ft_strcmp(ast->value, "unset") == 0)
 		ft_unset(minishell, ast);
 	else if (ft_strcmp(ast->value, "exit") == 0)
-		return 1;
+		// return 1;
+		ft_exit(minishell, ast);
 	else
 		ft_cmdexe(minishell, ast);
 	return 0;

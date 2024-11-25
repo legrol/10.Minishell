@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/24 21:58:30 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:15:20 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
 # include <string.h>			// for strchr, strcpy, etc.
 # include <termios.h>			// for terminal I/O interfaces.
+# include <limits.h>			// for LLONG_MAX, LLONG_MIN.
 
 // ============================================================================
 // Define ECHOCTL (if it's not already defined)
@@ -106,6 +107,7 @@ typedef struct s_minishell
 	t_token			*tokens;
 	int				exit;
 	char			*dirprompt;
+	int				terminal_status;
 }					t_minishell;
 
 // ============================================================================
@@ -145,6 +147,7 @@ void		ft_init_envp(t_minishell *minishell, char **envp);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
+int			ft_exit(t_minishell *minishell, t_ast *ast);
 void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(void);
 void		ft_unset(t_minishell *minishell, t_ast *ast);

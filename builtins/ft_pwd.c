@@ -12,9 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * The function "ft_pwd" xxx
+ * 
+ * 
+ */
+
 void	ft_pwd(void)
 {
 	char	cwd[1024];
-	
+
 	ft_printf("%s\n", getcwd(cwd, sizeof(cwd)));
 }

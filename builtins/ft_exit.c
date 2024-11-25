@@ -13,9 +13,15 @@
 #include "../includes/minishell.h"
 
 /**
- * The function "" xxx
+ * The function "ft_exit" xxx
  * 
  * @param 		xxx
  * 
  * 
  */
+
+void	ft_exit(t_minishell *minishell, t_ast *ast)
+{
+
+
+}

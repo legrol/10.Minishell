@@ -148,6 +148,7 @@ void		ft_env(t_minishell *minishell);
 void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(void);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
+void		ft_exit(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================
 // Tokenizer functions

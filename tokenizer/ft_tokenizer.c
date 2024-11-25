@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Updated: 2024/11/24 17:25:26 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/24 17:25:26 by rdel-olm         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/25 17:05:49 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	return (token_rd);
 }
 
-static t_token	*ft_get_tokens(char *line, t_minishell *minishell)
+static t_token	*ft_get_tokens(char *line)
 {
 	int		i;
 	t_token	*token_gt;
@@ -150,7 +150,7 @@ static t_token	*ft_get_tokens(char *line, t_minishell *minishell)
 		token_gt = ft_read_tokens(line, &i);
 		if (!token_gt)
 			return (ft_free_tokens(prev), NULL);
-		ft_split_and_update_tokens(token_gt, minishell);
+		ft_update_tokens(token_gt);
 		if (prev)
 			prev->next = token_gt;
 		token_gt->prev = prev;
@@ -178,7 +178,7 @@ void	*ft_tokenizer(t_minishell *minishell)
 	if (ft_checker_quotes_unclosed(minishell))
 		return (NULL);
 	ft_free_tokens(minishell->tokens);
-	minishell->tokens = ft_get_tokens(minishell->line, minishell);
+	minishell->tokens = ft_get_tokens(minishell->line);
 	if (!minishell->tokens)
 	{
 		free(minishell->line);

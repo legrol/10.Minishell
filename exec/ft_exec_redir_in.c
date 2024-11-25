@@ -15,16 +15,18 @@
 /**
  * This file will be one of the executor files:
  * 
- * void ft_exec_redir_out(t_minishell *minishell, t_ast *ast) we create a fork to execute the command in the child and with fd we copy the std_out in the file, > should create a new file if not exist
- * or trunc the existing one a fill with the new information.
+ * void ft_exec_redir_out(t_minishell *minishell, t_ast *ast) we create a fork 
+ * to execute the command in the child and with fd we copy the std_out in the 
+ * file, > should create a new file if not exist or trunc the existing one a 
+ * fill with the new information.
  * 
  */
 
 
-void ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
+void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 {
-	int fd;
-	pid_t pid;
+	int		fd;
+	pid_t	pid;
 
 	fd = open(ast->right->value, O_RDONLY);
 	if (fd < 0)

@@ -102,7 +102,7 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
 						${UTILS_DIR}/ft_change_env.c \
-						${UTILS_DIR}/ft_ast.c \
+						${UTILS_DIR}/ft_ast.c
 
 FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 						${FREE_DIR}/ft_free_minishell.c \
@@ -118,7 +118,8 @@ EXE					= ${EXEC_DIR}/ft_cmdexe.c \
 						${EXEC_DIR}/ft_exec_pipe.c \
 						${EXEC_DIR}/ft_exec_redir_in.c \
 						${EXEC_DIR}/ft_exec_redir_out.c \
-						${EXEC_DIR}/ft_exec_redir_append.c
+						${EXEC_DIR}/ft_exec_redir_append.c \
+						${EXEC_DIR}/ft_exec_redir_heredoc.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_echo.c \

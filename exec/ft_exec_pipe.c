@@ -16,12 +16,16 @@
  * This file will be one of the executor files:
  * 
  * 
- * void ft_exec_pipe(t_minishell *minishell, t_ast *ast) execute the pipes executing the left command in the pid1 y the right command in pid2.
+ * void ft_exec_pipe(t_minishell *minishell, t_ast *ast) execute the pipes 
+ * executing the left command in the pid1 y the right command in pid2.
  * 
- * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) duplicate the output to the writting file descriptor fd[1] and call ft_exec_ast for the left command in recursive mode.
+ * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) 
+ * duplicate the output to the writting file descriptor fd[1] and call 
+ * ft_exec_ast for the left command in recursive mode.
  *  
- * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) duplicate the output to the reading file descriptor fd[0] and call ft_exec_ast for the right command in recursive mode.
- * 
+ * static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd) 
+ * duplicate the output to the reading file descriptor fd[0] and call 
+ * ft_exec_ast for the right command in recursive mode. * 
  * 
  */
 
@@ -40,10 +44,10 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 	else if (pid == 0)
 	{
 		if (fd[1] < 0)
-        {
-            ft_printf("Error opening file prueba");
-            exit(EXIT_FAILURE);
-        }
+		{
+			ft_printf("Error opening file prueba");
+			exit(EXIT_FAILURE);
+		}
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
@@ -80,13 +84,13 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 
 void ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 {
-	int fd[2];
-	int status;
-	pid_t pid1;
-	pid_t pid2;
+	int		fd[2];
+	int		status;
+	pid_t	pid1;
+	pid_t	pid2;
 
 	pid1 = 0;
-	if(pipe(fd) == -1)
+	if (pipe(fd) == -1)
 	{
 		ft_printf("Error making pipe");
 		return ;

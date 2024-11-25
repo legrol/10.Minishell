@@ -178,7 +178,7 @@ t_ast		*ft_ast(t_minishell *minishell);
 // ============================================================================
 char		**ft_path(t_minishell *minishell);
 void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
-int 		ft_exec(t_minishell *minishell, t_ast *ast);
+int			ft_exec(t_minishell *minishell, t_ast *ast);
 void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
 char		*ft_cmd_action(char **path, char *arg);
 char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
@@ -188,6 +188,7 @@ void		ft_free_ast(t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast);
 void		ft_expander(t_minishell *minishell);
 
 #endif

@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid Date        by                   #+#    #+#             */
+/*   Updated: 2024/11/24 17:25:26 by rdel-olm          #+#    #+#             */
 /*   Updated: 2024/11/24 17:25:26 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -99,10 +99,10 @@ static void	ft_fill_token(t_token *token, char *line, int *index)
 			c = line[(*index)++];
 			token->token_value[i++] = c;
 			while (line[*index] && line[*index] != c)
-           	 	token->token_value[i++] = line[(*index)++];
-        	if (line[*index] == c)
-            	token->token_value[i++] = line[(*index)++];
-        	c = 32;
+				token->token_value[i++] = line[(*index)++];
+			if (line[*index] == c)
+				token->token_value[i++] = line[(*index)++];
+			c = 32;
 		}
 		else if (ft_strchr("<>|", line[*index]))
 		{

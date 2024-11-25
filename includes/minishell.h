@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/22 19:46:58 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:40:42 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
-void		ft_split_and_update_tokens(t_token *token, t_minishell *minishell);
+void		ft_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
 void		*ft_tokenizer(t_minishell *minishell);
 // t_ast		*ft_tokenizer(t_minishell *minishell);
@@ -193,5 +193,8 @@ void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
 
 
 void	ft_expander(t_minishell *minishell);
+char *ft_split_expand(t_minishell *minishell, char *s);
+char *ft_split_expand_join(char **split);
+char	*split_substrings(t_minishell *minishell, char *input);
 
 #endif

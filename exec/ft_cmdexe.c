@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/24 12:59:39 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:56:04 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ uso de rutas relativas o absolutas). FALTA EL USO DE VARIABLES RELATIVAS O ABSOL
 */
 
 #include "../includes/minishell.h"
+
+static void free_path(char **path)
+{
+	int	i;
+
+	i = 0;
+	while(path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+}
 
 char	*ft_cmd_action(char **path, char *arg)
 {
@@ -40,7 +53,8 @@ char	*ft_cmd_action(char **path, char *arg)
 	}
 	free(temp);
 	if (access(arg, X_OK) == 0)
-		return(ft_strdup(arg));
+		return (free_path(path), ft_strdup(arg));
+	free_path(path);
 	return (NULL);
 }
 
@@ -90,7 +104,6 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 	pid_t	pid;
 	int		status;
 
-	//ft_printf("Estoy ejecutando %s ------- \n", ast->value);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -103,14 +116,12 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 		cmd = ft_cmd_maker(minishell, ast);
 		execve(cmd, arg, minishell->envp);
 		perror("execve cmd2:");
-		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		waitpid(pid ,&status, 0);
-		ft_free_ast(ast);
-		//ft_free_tokens(minishell->tokens);
+		//ft_free_ast(ast);
 		minishell->exit = WEXITSTATUS(status);
 	}
 }

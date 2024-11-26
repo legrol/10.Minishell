@@ -24,18 +24,18 @@ static t_envp	*new_node_envp(char *key, char *value)
 		new_node->value = NULL;
 	else
 		new_node->value = ft_strdup(value);
-	new_node->next = NULL;	
+	new_node->next = (NULL);
 	return (new_node);
 }
 
-static int ft_count_lines(t_minishell *minishell)
+static int	ft_count_lines(t_minishell *minishell)
 {
-	t_envp *temp;
+	t_envp	*temp;
 	int		i;
 
 	i = 0;
 	temp = minishell->list_envp;
-	while(minishell->list_envp)
+	while (minishell->list_envp)
 	{
 		i++;
 		minishell->list_envp = minishell->list_envp->next;
@@ -44,17 +44,17 @@ static int ft_count_lines(t_minishell *minishell)
 	return (i);
 }
 
-static char **ft_copy_env(t_minishell *minishell)
+static char	**ft_copy_env(t_minishell *minishell)
 {
-	t_envp *temp;
+	t_envp	*temp;
 	char	**cpy;
-	int i;
-	cpy = (char **)ft_calloc((ft_count_lines(minishell)+1),sizeof(char*));
+	int		i;
+	cpy = (char **)ft_calloc((ft_count_lines(minishell) + 1), sizeof(char *));
 	if (!cpy)
 		return (NULL);
 	temp = minishell->list_envp;
 	i = 0;
-	while(minishell->list_envp->next)
+	while (minishell->list_envp->next)
 	{
 		cpy[i] = ft_strdup(minishell->list_envp->key);
 		i++;
@@ -64,7 +64,7 @@ static char **ft_copy_env(t_minishell *minishell)
 	minishell->list_envp = temp;
 	return (cpy);
 }
-static char **ft_sort_print(t_minishell *minishell)
+static char	**ft_sort_print(t_minishell *minishell)
 {
 	char	**cpy;
 	int		i;
@@ -72,12 +72,12 @@ static char **ft_sort_print(t_minishell *minishell)
 
 	cpy = ft_copy_env(minishell);
 	i = 0;
-	while(cpy[i+1])
+	while (cpy[i + 1])
 	{
 		if (ft_strcmp(cpy[i], cpy[i+1]) > 0)
 		{
-			temp = cpy[i+1];
-			cpy[i+1] = cpy[i];
+			temp = cpy[i + 1];
+			cpy[i + 1] = cpy[i];
 			cpy[i] = temp;
 			i = -1;
 		}
@@ -85,16 +85,16 @@ static char **ft_sort_print(t_minishell *minishell)
 	}
 	return (cpy);
 }
-static void ft_export_only(t_minishell *minishell)
+static void	ft_export_only(t_minishell *minishell)
 {
 	char	**cpy;
 	int		i;
 	t_envp	*temp;
-	
+
 	cpy = ft_sort_print(minishell);
 	temp = minishell->list_envp;
 	i = 0;
-	while(cpy[i])
+	while (cpy[i])
 	{
 		while (ft_strcmp(cpy[i], minishell->list_envp->key) != 0)
 			minishell->list_envp = minishell->list_envp->next;
@@ -126,15 +126,15 @@ static void ft_trim_key(char **key_value)
 
 static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 {
-	t_envp *temp;
-	char *temp_value;
-	
+	t_envp	*temp;
+	char	*temp_value;
+
 	temp = minishell->list_envp;
 	if (check == 2)
 		 ft_trim_key(key_value);
-	while(minishell->list_envp)
+	while (minishell->list_envp)
 	{
-		if(ft_strcmp(key_value[0], minishell->list_envp->key) == 0)
+		if (ft_strcmp(key_value[0], minishell->list_envp->key) == 0)
 		{
 			if (minishell->list_envp->value && check == 2 && key_value[1])
 			{
@@ -145,7 +145,7 @@ static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 			}
 			else if ((minishell->list_envp->value || key_value[1]) && check != 2)
 			{
-				if(minishell->list_envp->value)
+				if (minishell->list_envp->value)
 					free(minishell->list_envp->value);
 				if (!key_value[1])
 					minishell->list_envp->value = NULL;
@@ -161,14 +161,14 @@ static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 	return (-1);
 }
 
-static int ft_find_only_key(t_minishell *minishell, char *key)
+static int	ft_find_only_key(t_minishell *minishell, char *key)
 {
-	t_envp *temp;
+	t_envp	*temp;
 
 	temp = minishell->list_envp;
-	while(minishell->list_envp)
+	while (minishell->list_envp)
 	{
-		if(ft_strcmp(key, minishell->list_envp->key) == 0)
+		if (ft_strcmp(key, minishell->list_envp->key) == 0)
 		{
 			minishell->list_envp = temp;
 			return (0);
@@ -181,9 +181,9 @@ static int ft_find_only_key(t_minishell *minishell, char *key)
 
 static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 {
-	int i;
-	t_ast *temp2;
-	int f;
+	int		i;
+	t_ast	*temp2;
+	int		f;
 
 	i = 0;
 	f = 0;
@@ -206,23 +206,24 @@ static int ft_arg_checker(t_ast *ast, t_minishell *minishell)
 	return (i);
 }
 
-static char **ft_init_keyvalue(void)
+static char	**ft_init_keyvalue(void)
 {
 	char	**key_value;
 
-	key_value = (char **)malloc(2*sizeof(char*));
+	key_value = (char **)malloc(2 * sizeof(char *));
 	if (!key_value)
-		return NULL;
+		return (NULL);
 	key_value[0] = NULL;
 	key_value[1] = NULL;
 	return (key_value);
 }
 
-static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
+static void	ft_fill_keyvalue(char	**key_value, t_ast *ast)
 {
 	if (ft_strchr(ast->value, '='))
 	{
-		key_value[0] = ft_substr(ast->value,0,ft_strlen(ast->value)-ft_strlen(ft_strchr(ast->value, '=')));
+		key_value[0] = ft_substr(ast->value, 0, \
+		ft_strlen(ast->value) - ft_strlen(ft_strchr(ast->value, '=')));
 		key_value[1] = ft_strdup(ft_strchr_exp(ast->value, '='));
 	}
 	else
@@ -232,11 +233,11 @@ static void ft_fill_keyvalue(char	**key_value, t_ast *ast)
 	}
 }
 
-static int ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
+static int	ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
 {
-	int i;
-	int j;
-	int l;
+	int	i;
+	int	j;
+	int	l;
 
 	i = 0;
 	j = 0;
@@ -246,11 +247,11 @@ static int ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
 	while (j < l)
 	{
 		if (ft_isalpha(key[j]) == 0 && key[j] != '_')
-				i = -1;
+			i = -1;
 		j++;
 	}
 	if (ft_isalpha(key[j]) == 0 && key[j] != '_' && key[j] != '+')
-				i = -1;
+		i = -1;
 	if (i == -1)
 	{
 		minishell->exit = 0;
@@ -276,10 +277,11 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 		if (check == -1)
 		{
 			if (!ast->left)
-				return;
+				return ;
 			ast = ast->left;
 		}
-		if (!ft_strchr(ast->value, '=') && ft_find_only_key(minishell, key_value[0]) == 0)
+		if (!ft_strchr(ast->value, '=') && ft_find_only_key(minishell, \
+		key_value[0]) == 0)
 			ast = ast->left;
 		else 
 		{
@@ -288,7 +290,8 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 				new_node = new_node_envp(key_value[0], key_value[1]);
 				temp = minishell->list_envp;
 				while (ft_strcmp(minishell->list_envp->key, \
-				"XDG_GREETER_DATA_DIR") != 0 && minishell->list_envp->next->next)
+				"XDG_GREETER_DATA_DIR") != 0 && \
+				minishell->list_envp->next->next)
 					minishell->list_envp = minishell->list_envp->next;
 				new_node->next = minishell->list_envp->next;
 				minishell->list_envp->next = new_node;

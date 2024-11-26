@@ -28,6 +28,7 @@
 # include <sys/wait.h> 			// for wait, waitpid, WIFSIGNALED(status)...
 # include <string.h>			// for strchr, strcpy, etc.
 # include <termios.h>			// for terminal I/O interfaces.
+# include <limits.h>			// for LLONG_MAX, LLONG_MIN.
 
 // ============================================================================
 // Define ECHOCTL (if it's not already defined)
@@ -106,6 +107,7 @@ typedef struct s_minishell
 	t_token			*tokens;
 	int				exit;
 	char			*dirprompt;
+	int				terminal_status;
 }					t_minishell;
 
 // ============================================================================
@@ -145,10 +147,10 @@ void		ft_init_envp(t_minishell *minishell, char **envp);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
+int			ft_exit(t_minishell *minishell, t_ast *ast);
 void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(void);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
-void		ft_exit(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================
 // Tokenizer functions
@@ -167,34 +169,31 @@ void		ft_update_type_tokens(t_token *token);
 // ============================================================================
 // Utils functions
 // ============================================================================
+t_ast		*ft_ast(t_minishell *minishell);
 void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
 void		ft_dirprompt(t_minishell	*minishell);
 char		*ft_find_dir(t_minishell *minishell, const char *str);
 void		ft_print_init(void);
-t_ast		*ft_ast(t_minishell *minishell);
 
 // ============================================================================
 // Exec functions
 // ============================================================================
-char		**ft_path(t_minishell *minishell);
+char		**ft_arg_maker(t_ast *ast);
+char		*ft_cmd_action(char **path, char *arg);
+char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
 void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
 int			ft_exec(t_minishell *minishell, t_ast *ast);
 void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
-char		*ft_cmd_action(char **path, char *arg);
-char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
-char		**ft_arg_maker(t_ast *ast);
 void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
-void		ft_free_ast(t_ast *ast);
+void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
-
-
-
-void	ft_expander(t_minishell *minishell);
-char *ft_split_expand(t_minishell *minishell, char *s);
-char *ft_split_expand_join(char **split);
-char	*split_substrings(t_minishell *minishell, char *input);
+void		ft_expander(t_minishell *minishell);
+void		ft_free_ast(t_ast *ast);
+char		**ft_path(t_minishell *minishell);
+char		*ft_split_expand(t_minishell *minishell, char *s);
+char		*ft_split_expand_join(char **split);
+char		*split_substrings(t_minishell *minishell, char *input);
 
 #endif

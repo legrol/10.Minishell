@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:04:17 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/25 15:04:17 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:54:46 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,9 +349,9 @@ static void	ft_expander_action(t_minishell *minishell)
 void	ft_expander(t_minishell *minishell)
 {
 	t_token	*temp;
-	int		i;
+	// int		i;
 
-	i = 1;
+	// i = 1;
 	temp = minishell->tokens;
 	while (minishell->tokens)
 	{
@@ -359,7 +359,7 @@ void	ft_expander(t_minishell *minishell)
 		|| ft_strchr(minishell->tokens->token_value, '\"') \
 		|| ft_strchr(minishell->tokens->token_value, '\''))
 			ft_expander_action(minishell);
-		i++;
+		// i++;
 		minishell->tokens = minishell->tokens->next;
 	}
 	minishell->tokens = temp;

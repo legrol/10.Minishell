@@ -135,7 +135,7 @@ TOK					= ${TOKENIZER_DIR}/ft_check_empty_line.c \
 						${TOKENIZER_DIR}/ft_expander.c \
 						${TOKENIZER_DIR}/ft_token_size.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
-						${TOKENIZER_DIR}/ft_tools_token.c \						
+						${TOKENIZER_DIR}/ft_tools_token.c \
 						${TOKENIZER_DIR}/ft_update_tokens.c
 
 OBJ_SRC				= $(patsubst ${SRC_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})

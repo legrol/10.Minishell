@@ -6,7 +6,7 @@
 /*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:39:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 23:26:10 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:21:10 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,42 @@ static int	ft_isspace(int c)
 	return (0);
 }
 
-static long long	ft_atol(char *str)
+// static long long	ft_atol(char *str)
+// {
+// 	long long	result;
+// 	int			sign;
+// 	int			i;
+
+// 	result = 0;
+// 	sign = 1;
+// 	i = 0;
+// 	while (ft_isspace(str[i]))
+// 		i++;
+// 	if (str[i] == '-' || str[i] == '+')
+// 	{
+// 		if (str[i] == '-')
+// 			sign *= -1;
+// 		i++;
+// 	}
+// 	while (str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		result = result * 10 + (str[i] - '0');
+// 		i++;
+// 	}
+// 	return (result * sign);
+// }
+
+static long long ft_atol(char *str, int *error)
 {
-	long long	result;
-	int			sign;
-	int			i;
+	long long result;
+	int sign;
+	int i;
 
 	result = 0;
 	sign = 1;
 	i = 0;
+	*error = 0;
+	printf("Entro en atol\n");
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -97,10 +124,24 @@ static long long	ft_atol(char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if ((result > (LLONG_MAX / 10)) || (result == (LLONG_MAX / 10) && (str[i] - '0') > (LLONG_MAX % 10)))
+		{
+			*error = 1;
+			printf("Estoy aqui\n");
+			return (0);
+		}
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	return (result * sign);
+	result *= sign;
+	if ((sign == 1 && result < 0) || (sign == -1 && result > 0))
+	{
+		*error = 1;
+		printf("estoy aca\n");
+		return (0);
+	}
+	printf("Me salgo sin error\n");
+	return (result);
 }
 
 static int	ft_checker_number(char *str)
@@ -119,9 +160,42 @@ static int	ft_checker_number(char *str)
 	return (0);
 }
 
-int	ft_exit(t_minishell *minishell, t_ast *ast)
+// int	ft_exit(t_minishell *minishell, t_ast *ast)
+// {
+// 	long long	exit_value;
+
+// 	exit_value = 0;
+// 	if (ast->left == NULL)
+// 	{
+// 		ft_putstr_fd("Successfully exit minishell!\n", STDOUT_FILENO);
+// 		exit_value = 0;
+// 		minishell->terminal_status = exit_value;
+// 		exit (minishell->terminal_status);
+// 	}
+// 	if (ft_checker_number(ast->left->value) == -1)
+// 	{
+// 		ft_printf("%s\n", ast->left->value);
+// 		ft_putstr_fd("exit: ", STDERR_FILENO);
+// 		ft_putstr_fd(ast->left->value, STDERR_FILENO);
+// 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);	
+// 		return (minishell->terminal_status = 255, minishell->terminal_status);
+// 	}
+// 	exit_value = ft_atol(ast->left->value);
+// 	printf("%lld\n", exit_value);
+// 	if (exit_value > LLONG_MAX || exit_value < LLONG_MIN)
+// 	{
+// 		ft_putendl_fd("exit: numeric argument required", STDERR_FILENO);		
+// 		return (minishell->terminal_status = 255, minishell->terminal_status);
+// 	}
+// 	minishell->terminal_status = exit_value % 256;
+// 	ft_putendl_fd("exit", STDOUT_FILENO);
+// 	exit(minishell->terminal_status);
+// }
+
+int ft_exit(t_minishell *minishell, t_ast *ast)
 {
-	long long	exit_value;
+	long long exit_value;
+	int error;
 
 	exit_value = 0;
 	if (ast->left == NULL)
@@ -129,20 +203,35 @@ int	ft_exit(t_minishell *minishell, t_ast *ast)
 		ft_putstr_fd("Successfully exit minishell!\n", STDOUT_FILENO);
 		exit_value = 0;
 		minishell->terminal_status = exit_value;
-		exit (minishell->terminal_status);
+		exit(minishell->terminal_status);
 	}
 	if (ft_checker_number(ast->left->value) == -1)
 	{
-		ft_putendl_fd("exit: insert a numeric argument", STDERR_FILENO);		
+		ft_printf("exit\n");
+		ft_putstr_fd("exit: ", STDERR_FILENO);
+		ft_putstr_fd(ast->left->value, STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		return (minishell->terminal_status = 255, minishell->terminal_status);
 	}
-	exit_value = ft_atol(ast->left->value);
-	if (exit_value > LLONG_MAX || exit_value < LLONG_MIN)
+	if (ast->left->left != NULL)
 	{
-		ft_putendl_fd("exit: value out of range", STDERR_FILENO);		
+		ft_printf("exit\n");
+		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
+		return (minishell->terminal_status = 1, minishell->terminal_status);
+	}
+	exit_value = ft_atol(ast->left->value, &error);
+	if (error)
+	{
+		printf("Estoy en error\n");
+		ft_printf("exit\n");
+		ft_putstr_fd("exit: ", STDERR_FILENO);
+		ft_putstr_fd(ast->left->value, STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		return (minishell->terminal_status = 255, minishell->terminal_status);
 	}
+	printf("%lld\n", exit_value);
 	minishell->terminal_status = exit_value % 256;
+	printf("%d", minishell->terminal_status);
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(minishell->terminal_status);
 }

@@ -13,7 +13,25 @@
 #include "../includes/minishell.h"
 
 /**
- * The "main" function of minishell program.
+ * The main entry point for the `minishell` program. It initializes the shell's 
+ * environment, processes user input in an infinite loop, and handles shell 
+ * commands while managing memory and errors.
+ * 
+ * - Validates the arguments and ensures the program is started with no extra 
+ *   parameters (`argc == 1` and no `argv[1]`).
+ * - Initializes the shell's environment variables and prints the shell's 
+ *   startup message.
+ * - Enters an infinite loop to handle user input:
+ *   - Initializes signal handling and shell structures if the shell is not 
+ *     already started.
+ *   - Reads input from the user (`readline`) and handles the EOF signal.
+ *   - Skips empty lines or lines with unclosed quotes.
+ *   - Tokenizes and expands the user input for further processing.
+ *   - Checks for syntax errors before building and executing the Abstract 
+ *     Syntax Tree (AST).
+ *   - Executes the AST and cleans up resources after execution.
+ * - Exits the loop and cleans up all allocated resources when the shell 
+ *   session ends.
  * 
  * @param int argc 			Number of arguments the program receives from the 
  * 							command line. This is expected to be 1 (just the 
@@ -27,27 +45,11 @@
  * 							variables. These are needed for initializing the 
  * 							`t_minishell` structure and managing the shell 
  * 							environment.
+ * @return int				Returns `0` to indicate successful program 
+ * 							termination.
  * 
  * NOTE: g_signals.start 	Integer what indicates the minishell was 
  * 							initialized.
- * 
- * The function "ft_init_envp" initializes the envp inside the minishell 
- * structure. This function takes an array of environment variables (`envp`)
- * and duplicates each entry into the `minishell->envp` array within the 
- * `t_minishell` structure. The function calculates the number of entries
- * in `envp`, allocates memory for each variable, and duplicates them 
- * individually, adding a NULL pointer at the end. 
- * 
- * @param t_minishell *minishell	Pointer to the main minishell structure
- *                                  where the environment variables will 
- *                                  be stored.
- * @param char **envp				Array of environment variables passed
- *                                  to the program by the operating system.
- *  
- * NOTE: t_signal g_signals			Is a global variable that handles input 
- * 									signals. It must be accessible from any 
- * 									area of ​​the minishell program, hence its
- * 									global nature.
  * 
  */
 
@@ -75,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		ft_handle_eof(minishell.line);		
+		ft_handle_eof(minishell.line);
 		ft_check_empty_line(&minishell);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
 		|| *minishell.line == '\0')
@@ -99,6 +101,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	rl_clear_history();
-	ft_free_minishell(&minishell);	
+	ft_free_minishell(&minishell);
 	return (0);
 }

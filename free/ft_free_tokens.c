@@ -26,7 +26,7 @@
 void	ft_free_tokens(t_token *token)
 {
 	if (!token)
-		return;
+		return ;
 	if (token->token_value)
 		free(token->token_value);
 	free(token);

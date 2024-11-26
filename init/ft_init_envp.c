@@ -13,13 +13,52 @@
 #include "../includes/minishell.h"
 
 /**
+ * The function "ft_init_envp" duplicates the environment variables (`envp`) 
+ * into the `minishell->envp` array, ensuring that each string is copied 
+ * dynamically and can be independently freed.
  * 
- * ft_init_envp(t_minishell *minishell, char **envp) before to init minishell 
- * we want to init the env that works in case we want to open a new minishell
- * in minishell.
+ * - Calls "ft_start_init_envp" to allocate memory for the environment array.
+ * - Iterates through the input `envp`, duplicating each string using 
+ *   `ft_strdup`.
+ * - Handles memory allocation failures by freeing already-allocated memory 
+ *   and returning an error message.
+ * - Sets the `dirprompt` field of the `t_minishell` structure to `NULL` for 
+ *   further initialization.
  * 
- * static int	ft_start_init_envp(t_minishell *minishell, char **envp) to 
- * reserve the memory for the env.
+ * @param t_minishell *minishell	A pointer to the shell's state structure, 
+ *									where the copied environment array will be 
+ *									stored.
+ * 
+ * @param char **envp				A pointer to the original environment 
+ *									variables array.
+ * 
+ * @return void						This function does not return a value, but 
+ *									it updates the `t_minishell` structure or 
+ *									prints an error message if a failure 
+ *									occurs.
+ * 
+ * The function "ft_start_init_envp" initializes the environment variables 
+ * (`envp`) array in the `t_minishell` structure by allocating memory for a 
+ * copy of the given `envp`.
+ * 
+ * - It counts the number of strings in the input `envp` array.
+ * - Allocates enough memory to store a copy of the input array, including 
+ *   space for a `NULL` terminator.
+ * - Returns `-1` if memory allocation fails or if `envp` is `NULL`.
+ * 
+ * This function is a preparatory step for duplicating the environment 
+ * variables in the `ft_init_envp` function.
+ * 
+ * @param t_minishell *minishell	A pointer to the shell's state structure, 
+ *									where the copied environment array will be
+ *									stored.
+ * 
+ * @param char **envp				A pointer to the original environment 
+ *									variables array.
+ * 
+ * @return int						Returns `0` on success, or `-1` if the 
+ *									input `envp` is `NULL` or memory allocation
+ *									fails.
  * 
  */
 

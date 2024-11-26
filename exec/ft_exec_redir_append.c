@@ -22,10 +22,43 @@
  * 
  */
 
+/**
+ * The function "ft_exec_redir_append" handles the redirection of output to a 
+ * file in append mode for a shell command. It opens the specified file, 
+ * forks a child process, and redirects the output of the command to the file.
+ * 
+ * - The file is opened with the following flags:
+ *   - `O_WRONLY`: Open the file for writing only.
+ *   - `O_APPEND`: Append data to the end of the file without overwriting.
+ *   - `O_CREAT`:  Create the file if it does not exist, with permissions 
+ * 				   `0644`.
+ * 
+ * - In case of errors during file opening or process forking, the function 
+ *   prints an error message and handles cleanup.
+ * 
+ * - In the child process:
+ *   - Redirects `STDOUT` to the file descriptor.
+ *   - Executes the left subtree of the AST (the actual command).
+ *   - Exits with an error code if execution fails.
+ * 
+ * - The parent process waits for the child to finish execution and frees 
+ *   memory resources.
+ * 
+ * @param t_minishell *minishell	A pointer to the shell's state structure, 
+ *									used for managing execution and state.
+ * 
+ * @param t_ast *ast				A pointer to the AST structure representing 
+ *									the redirection operation and the command 
+ *									to be executed.
+ * 
+ * @return void						This function does not return a value. 
+ * 
+ */
+
 void	ft_exec_redir_append(t_minishell *minishell, t_ast *ast)
 {
-	int fd;
-	pid_t pid;
+	int		fd;
+	pid_t	pid;
 
 	fd = open(ast->right->value, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
@@ -53,10 +86,3 @@ void	ft_exec_redir_append(t_minishell *minishell, t_ast *ast)
 	//ft_free_tokens(minishell->tokens);
 	close(fd);
 }
-
-
-
-
-
-
-

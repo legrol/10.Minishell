@@ -13,47 +13,35 @@
 #include "../includes/minishell.h"
 
 /**
- * The function "ft_minishell" initializes all the fields of the `t_minishell` 
- * structure, including setting up file descriptors, environment variables, and
- * other necessary fields for the shell to operate.
- *  
- * @param char **envp				An array of strings representing the 
- * 									system's environment variables. This is 
- * 									used to initialize the linked list of
- * 									environment variables within the 
- * 									`minishell` structure.
+ * The function "ft_init_minishell" initializes the fields of the `t_minishell` 
+ * structure, setting up the shell's state for execution. It ensures that all 
+ * fields are properly initialized with default values or dynamically allocated 
+ * resources.
  * 
- * The function "ft_init_envp" initializes the `minishell.env` field with a 
- * NULL-terminated array of strings, where each element is initialized to NULL. 
- * It counts the number of elements in the linked list `minishell.list_envp`, 
- * then allocates memory for an array of strings of that size.
+ * - Initializes the environment variable linked list (`list_envp`) using 
+ *   the `ft_init_list_envp` function.
+ * - Sets the `dirprompt` field to `NULL`. This will be updated later by 
+ *   `ft_dirprompt` to reflect the current working directory.
+ * - Creates copies of the standard input and output file descriptors 
+ *   (`stdin` and `stdout`) using `dup`, ensuring the shell can restore them 
+ *   if necessary.
+ * - Sets other fields (`line`, `tokens`) to `NULL` to indicate they are empty 
+ *   or uninitialized at startup.
+ * - Sets the `exit` field to `0`, representing a successful execution state.
+ * - Initializes the `terminal_status` field to `1`, which may indicate that 
+ *   the shell is ready for terminal interaction.
+ * - Calls `ft_dirprompt` to set up the prompt string based on the current 
+ *   working directory.
  * 
- * @param t_minishell minishell		A structure containing a linked list of 
- * 									environment variables (`list_envp`). This 
- * 									is used to determine how many elements are 
- * 									needed for the `envp` array
+ * This function ensures the `t_minishell` structure is fully prepared for use 
+ * in the shell's main loop.
+ * 
+ * @param t_minishell *minishell	A pointer to the `t_minishell` structure 
+ *									to be initialized.
+ * 
+ * @return void						This function does not return a value.
  * 
  */
-/*static void	ft_init_envp(t_minishell *minishell, char **envp)
-{
-	int		i;
-
-	i = 0;
-	if (!envp)
-		return ;
-	while (envp[i])
-		i++;
-	minishell->envp = (char **)malloc((i + 1) * sizeof(char *));
-	if (!minishell->envp)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		minishell->envp[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	minishell->envp[i] = NULL;
-}*/
 
 void	ft_init_minishell(t_minishell *minishell)
 {

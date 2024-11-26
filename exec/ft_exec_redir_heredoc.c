@@ -61,10 +61,3 @@ void	ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast)
 	ft_free_ast(ast);
 	close(fd);
 }
-
-
-
-
-
-
-

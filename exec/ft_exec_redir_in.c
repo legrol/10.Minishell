@@ -22,6 +22,37 @@
  * 
  */
 
+/**
+ * The function "ft_exec_redir_in" handles input redirection for a shell 
+ * command. It opens the specified file for reading, forks a child process, 
+ * and redirects the input of the command from the file.
+ * 
+ * - The file is opened with the following flag:
+ *   - `O_RDONLY`: Open the file in read-only mode.
+ * 
+ * - In case of errors during file opening or process forking, the function 
+ *   prints an error message and performs necessary cleanup.
+ * 
+ * - In the child process:
+ *   - Redirects `STDIN` to the file descriptor, so the command reads input 
+ *     from the file.
+ *   - Closes the file descriptor.
+ *   - Executes the left subtree of the AST (the actual command).
+ *   - Exits with success status if execution is successful.
+ * 
+ * - The parent process waits for the child process to complete execution 
+ *   and frees memory resources.
+ * 
+ * @param t_minishell *minishell	A pointer to the shell's state structure, 
+ *									used for managing execution and state.
+ * 
+ * @param t_ast *ast				A pointer to the AST structure representing 
+ *									the redirection operation and the command 
+ *									to be executed.
+ * 
+ * @return void						This function does not return a value. 
+ * 
+ */
 
 void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 {
@@ -54,10 +85,3 @@ void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 	//ft_free_tokens(minishell->tokens);
 	close(fd);
 }
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/14 18:00:27 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:58:00 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int ft_exec(t_minishell *minishell, t_ast *ast)
 		return 1;
 	else
 		ft_cmdexe(minishell, ast);
+	ft_free_ast(ast);
 	return 0;
 }
 

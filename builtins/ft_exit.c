@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:39:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 23:26:10 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:14:48 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static long long	ft_atol(char *str)
 	return (result * sign);
 }
 
-static int	ft_check_number(char *str)
+static int	ft_checker_number(char *str)
 {
 	int	i;
 
@@ -131,7 +131,7 @@ int	ft_exit(t_minishell *minishell, t_ast *ast)
 		minishell->terminal_status = exit_value;
 		exit (minishell->terminal_status);
 	}
-	if (ft_checker_num(ast->left->value) == -1)
+	if (ft_checker_number(ast->left->value) == -1)
 	{
 		ft_putendl_fd("exit: insert a numeric argument", STDERR_FILENO);		
 		return (minishell->terminal_status = 255, minishell->terminal_status);

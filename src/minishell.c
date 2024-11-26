@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/24 17:14:44 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:32:37 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_init_minishell(&minishell);
 		}
 		minishell.line = readline(minishell.dirprompt);
-		ft_handle_eof(minishell.line);		
+		ft_handle_eof(minishell.line);	
 		ft_check_empty_line(&minishell);
 		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
 		|| *minishell.line == '\0')

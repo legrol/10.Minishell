@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/25 15:01:15 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:15:16 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void process_substrings(t_minishell *minishell, char *substring_ptrs[100])
 		{ 
 			//free(substring_ptrs[i]);
             substring_ptrs[i] = ft_strchr(trim, '$') ?
-                                ft_split_expand(minishell, trim) : trim;
+                                ft_split_expand(minishell, trim) : ft_strdup(trim);
         } 
 		else 
 			process_substrings_else(minishell, substring_ptrs, i , trim);

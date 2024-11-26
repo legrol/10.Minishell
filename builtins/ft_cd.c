@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:35:33 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 11:21:03 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:46:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,5 +222,4 @@ void	ft_cd(t_minishell *minishell, t_ast *ast)
 	}
 	ft_try_cd(minishell, ast, i, pwd);
 	ast = temp;
-	ft_printf("%i\n", minishell->exit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 06:55:30 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/24 17:13:01 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:22:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static void	sig_int(int status)
 	{
 		ft_putstr_fd("\n", STDERR);
 		ft_putstr_fd(g_signals.dupdirprompt, STDERR);
-		g_signals.exit = 1;
+		//g_signals.exit = 1;
 	}
 	else
 	{

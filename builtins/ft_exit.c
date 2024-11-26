@@ -71,14 +71,14 @@
  * 
  */
 
-static int  ft_isspace(int c)
+static int	ft_isspace(int c)
 {
 	if (c == 32 || (c >= 9 && c >= 13))
 		return (1);
 	return (0);
 }
 
-static long long ft_atol(char *str)
+static long long	ft_atol(char *str)
 {
 	long long	result;
 	int			sign;
@@ -103,9 +103,9 @@ static long long ft_atol(char *str)
 	return (result * sign);
 }
 
-static int  ft_check_number(char *str)
+static int	ft_check_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
@@ -119,9 +119,9 @@ static int  ft_check_number(char *str)
 	return (0);
 }
 
-int ft_exit(t_minishell *minishell, t_ast *ast)
+int	ft_exit(t_minishell *minishell, t_ast *ast)
 {
-	long long exit_value;
+	long long	exit_value;
 
 	exit_value = 0;
 	if (ast->left == NULL)

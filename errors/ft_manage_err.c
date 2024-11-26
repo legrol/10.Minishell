@@ -25,10 +25,3 @@ void	ft_manage_err(const char *err)
 	ft_printf("Error: %s\n", err);
 	exit (EXIT_FAILURE);
 }
-
-void	ft_manage_err_simple(const char *err)
-{
-	ft_printf("Error: %s\n", err);
-	// ft_putstr_fd(g_signals.dupdirprompt, STDERR);
-	// g_signals.exit = 1;
-}

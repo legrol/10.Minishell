@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 10:44:50 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:55:04 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_minishell
 // ============================================================================
 // Global variable
 // ============================================================================
-extern	t_signal g_signals;
+extern t_signal	g_signals;
 
 // ============================================================================
 // Management errors
@@ -197,6 +197,6 @@ char		*ft_split_expand_join(char **split);
 char		*split_substrings(t_minishell *minishell, char *input);
 
 
-
-void ft_free_ast_left(t_ast *ast);
+void		ft_error_make_fork(int fd);
+void		ft_free_ast_left(t_ast *ast);
 #endif

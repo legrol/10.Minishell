@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/24 12:59:48 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:57:11 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ static pid_t	ft_cmdexe_pid1(t_minishell *minishell, t_ast *ast, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 		ft_exec_ast(minishell, ast->left);
-		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -149,7 +148,6 @@ static pid_t	ft_cmdexe_pid2(t_minishell *minishell, t_ast *ast, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 		ft_exec_ast(minishell, ast->right);
-		//ft_free_ast(ast);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -175,5 +173,4 @@ void	ft_exec_pipe(t_minishell *minishell, t_ast *ast)
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 	ft_free_ast(ast);
-	//ft_free_tokens(minishell->tokens);
 }

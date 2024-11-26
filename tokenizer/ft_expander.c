@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:04:17 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 14:56:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:39:56 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ static char	ft_find_special_char(char *s)
 
 	if (!s)
 		return ('\0');
-	i=0;
+	i = 0;
 	while (s[i])
 	{
 		if (ft_isalnum(s[i]) == 0 && s[i] != '_')
@@ -249,13 +249,13 @@ static int	ft_count_dollar(char *s)
 	return (i + c + 1);
 }
 
-static char *ft_prepare_split(char *s)
+static char	*ft_prepare_split(char *s)
 {
 	int		c;
 	int		i;
 	char	*temp;
 
-	temp = malloc(ft_count_dollar(s)*sizeof(char));
+	temp = malloc(ft_count_dollar(s) * sizeof(char));
 	i = 0;
 	c = 0;
 	while (s[i])

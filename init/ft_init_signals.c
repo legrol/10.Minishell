@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 06:55:30 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 10:22:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:51:27 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,11 @@ void	ft_init_struc_sig(t_signal *signals)
 static void	sig_int(int status)
 {
 	(void) status;
-
 	if (g_signals.pid == 0)
 	{
 		ft_putstr_fd("\n", STDERR);
 		ft_putstr_fd(g_signals.dupdirprompt, STDERR);
-		//g_signals.exit = 1;
+		g_signals.exit = 1;
 	}
 	else
 	{
@@ -146,7 +145,6 @@ static void	sig_int(int status)
 static void	sig_quit(int status)
 {
 	(void) status;
-
 	if (g_signals.pid != 0)
 	{
 		ft_putstr_fd("\n", STDERR);

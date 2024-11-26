@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/26 14:56:32 by pabromer         ###   ########.fr       */
+/*   Created: 2024/11/26 16:40:17 by pabromer          #+#    #+#             */
+/*   Updated: 2024/11/26 16:49:18 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,18 +142,15 @@ char	*extract_unquoted(char **start, int *size, char substrings[100][256])
 void	process_substrings_else(t_minishell *minishell, \
 char *substring_ptrs[100], int i, char *trim)
 {
-	char	*expanded;
-
-	//free(trim);
+	free(trim);
 	trim = ft_strtrim(substring_ptrs[i], "\'");
 	if (ft_strcmp(trim, substring_ptrs[i]) != 0)
-		substring_ptrs[i] = trim;
-	else if (ft_strchr(substring_ptrs[i], '$'))
+		substring_ptrs[i] = ft_strdup(trim);
+	else
 	{
-		expanded = ft_split_expand(minishell, substring_ptrs[i]);
-		substring_ptrs[i] = expanded;
+		if (ft_strchr(substring_ptrs[i], '$'))
+			substring_ptrs[i] = ft_split_expand(minishell, substring_ptrs[i]);
 	}
-	free(trim);
 }
 
 void	process_substrings(t_minishell *minishell, char *substring_ptrs[100])
@@ -167,9 +164,10 @@ void	process_substrings(t_minishell *minishell, char *substring_ptrs[100])
 		trim = ft_strtrim(substring_ptrs[i], "\"");
 		if (ft_strcmp(trim, substring_ptrs[i]) != 0)
 		{
-			//free(substring_ptrs[i]);
-			substring_ptrs[i] = ft_strchr(trim, '$') ?
-				ft_split_expand(minishell, trim) : trim;
+			if (ft_strchr(trim, '$'))
+				substring_ptrs[i] = ft_split_expand(minishell, trim);
+			else
+				substring_ptrs[i] = trim;
 		}
 		else
 			process_substrings_else(minishell, substring_ptrs, i, trim);
@@ -179,28 +177,25 @@ void	process_substrings(t_minishell *minishell, char *substring_ptrs[100])
 	}
 }
 
-/*char *join_substrings(char *substring_ptrs[100]) 
+static void	ft_cpy_substr(char substrings[100][256], \
+char *substring_ptrs[100], int size)
 {
-	char *result;
-	char *temp;
+	int	i;
 
-	result = substring_ptrs[0];
-	for (int i = 1; substring_ptrs[i]; i++) {
-		temp = ft_strjoin(result, substring_ptrs[i]);
-		free(result);
-		result = temp;
-		//free(substring_ptrs[i]);
+	i = 0;
+	while (i < size)
+	{
+		substring_ptrs[i] = substrings[i];
+		i++;
 	}
-	return result;
-}*/
+}
 
-char *split_substrings(t_minishell *minishell, char *input)
+char	*split_substrings(t_minishell *minishell, char *input)
 {
-	static char	substrings[100][256];
-	static char	*substring_ptrs[100];
-	int			size;
-	char		*start;
-	int			i;
+	char	substrings[100][256];
+	char	*substring_ptrs[100];
+	int		size;
+	char	*start;
 
 	size = 0;
 	start = input;
@@ -215,12 +210,7 @@ char *split_substrings(t_minishell *minishell, char *input)
 		else
 			start++;
 	}
-	i = 0;
-	while (i < size)
-	{
-		substring_ptrs[i] = substrings[i];
-		i++;
-	}
+	ft_cpy_substr(substrings, substring_ptrs, size);
 	process_substrings(minishell, substring_ptrs);
 	return (ft_split_expand_join(substring_ptrs));
 }

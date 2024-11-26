@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:39:16 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 10:14:48 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:59:48 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,13 @@ int	ft_exit(t_minishell *minishell, t_ast *ast)
 	}
 	if (ft_checker_number(ast->left->value) == -1)
 	{
-		ft_putendl_fd("exit: insert a numeric argument", STDERR_FILENO);		
+		ft_putendl_fd("exit: insert a numeric argument", STDERR_FILENO);
 		return (minishell->terminal_status = 255, minishell->terminal_status);
 	}
 	exit_value = ft_atol(ast->left->value);
 	if (exit_value > LLONG_MAX || exit_value < LLONG_MIN)
 	{
-		ft_putendl_fd("exit: value out of range", STDERR_FILENO);		
+		ft_putendl_fd("exit: value out of range", STDERR_FILENO);
 		return (minishell->terminal_status = 255, minishell->terminal_status);
 	}
 	minishell->terminal_status = exit_value % 256;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dirprompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:27:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/21 22:34:02 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:37:06 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	ft_dirprompt(t_minishell *minishell)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		temp = ft_strjoin("minishell: ", cwd);
-		//printf("Asignando temp en ft_dirprompt: %s\n", temp); // Debug: //Verificar temp
 		if (!temp)
 		{
 			perror("Error allocating memory for temp");
@@ -85,11 +84,7 @@ void	ft_dirprompt(t_minishell *minishell)
 			return ;
 		}
 		if (minishell->dirprompt)
-		{
-			//printf("Liberando dirprompt anterior: %s\n", minishell->dirprompt); // Debug: Antes de liberar dirprompt
 			free(minishell->dirprompt);
-			//minishell->dirprompt = NULL;
-		}
 		minishell->dirprompt = new_prompt;
 	}
 	else

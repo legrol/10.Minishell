@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 10:49:12 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:59:13 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@
  * FALTA liberar el split
 */
 
-
 static char	*ft_trim_ast(t_ast *ast)
 {
 	char	*trim;
@@ -97,7 +96,7 @@ static int	ft_echo_init(t_ast *ast)
 		trim = ft_trim_ast(ast);
 		if (i >= 1 && ft_strcmp(trim, "-") == 0 && f == 0)
 			f = 1;
-		if (i >=1 && ft_strcmp(trim, "-") == 0)
+		if (i >= 1 && ft_strcmp(trim, "-") == 0)
 			f = 2;
 		i++;
 		ast = ast->left;
@@ -122,7 +121,6 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 	if (f == -1)
 		return ;
 	ast = ast->left;
-	if (f == 2)
 	while (ast && ft_strcmp(ast->value, "-n") == 0)
 		ast = ast->left;
 	while (ast)

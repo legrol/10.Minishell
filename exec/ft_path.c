@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:41:46 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/08 10:32:51 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:56:42 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	**ft_path(t_minishell *minishell)
 		i++;
 	}
 	split_path[i] = ft_find_dir(minishell, "PWD");
-	split_path[i+1] = NULL;
+	split_path[i + 1] = NULL;
 	free(cp_split_path);
 	return (split_path);
 }

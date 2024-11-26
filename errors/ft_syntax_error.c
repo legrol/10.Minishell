@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 10:23:31 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:58:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static int	ft_check_token_value(t_token *token)
 	|| token->prev->token_type == 4 || token->prev->token_type == 8))
 		return (1);
 	return (0);
-
 }
 
 int	ft_syntax_error(t_minishell *minishell)

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:33:21 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 14:56:14 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:50:24 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
  * 
  */
 
-t_signal g_signals;
+t_signal	g_signals;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -94,8 +94,6 @@ int	main(int argc, char **argv, char **envp)
 			ft_exec_ast(&minishell, ast);
 			free(minishell.line);
 			minishell.line = NULL;
-			//ft_free_tokens(minishell.tokens);
-			//minishell.tokens = NULL;
 			if (i == 1)
 				break ;
 		}

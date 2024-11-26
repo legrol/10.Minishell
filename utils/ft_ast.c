@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/25 10:43:40 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:36:40 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ static t_ast	*ft_ast_pipe(t_ast *ltree, t_minishell *minishell)
 	pipe_node->right = rtree;
 	pipe_node->left = ltree;
 	return (pipe_node);
-
 }
 
 static t_ast	*ft_ast_redir_in(t_ast *ltree, t_minishell *minishell)
@@ -338,7 +337,7 @@ static t_ast	*ft_ast_redir_heredoc(t_ast *ltree, t_minishell *minishell)
 	return (redir_heredoc_node);
 }
 
-t_ast *ft_ast(t_minishell *minishell)
+t_ast	*ft_ast(t_minishell *minishell)
 {
 	t_ast	*tree;
 
@@ -366,4 +365,3 @@ t_ast *ft_ast(t_minishell *minishell)
 	}
 	return (tree);
 }
-

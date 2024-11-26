@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_redir_append.c                             :+:      :+:    :+:   */
+/*   ft_exec_redir_heredoc.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/24 12:59:59 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:55:54 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast)
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_printf("Error making fork");
-		close(fd);
+		ft_error_make_fork(fd);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 10:46:29 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:56:59 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,6 @@ void	ft_cmdexe(t_minishell *minishell, t_ast *ast)
 	else
 	{
 		waitpid(pid, &status, 0);
-		//ft_free_ast(ast);
 		minishell->exit = WEXITSTATUS(status);
 	}
 }

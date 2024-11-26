@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 17:04:57 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:44:50 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,7 @@ char		*ft_split_expand(t_minishell *minishell, char *s);
 char		*ft_split_expand_join(char **split);
 char		*split_substrings(t_minishell *minishell, char *input);
 
+
+
+void ft_free_ast_left(t_ast *ast);
 #endif

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:04:17 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/25 15:04:17 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:56:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,12 +288,6 @@ char	*ft_split_expand_join(char **split)
 		i++;
 	}
 	i = 0;
-	/*while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	//free(split);*/
 	return (temp);
 }
 

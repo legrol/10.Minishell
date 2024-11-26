@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 16:55:18 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:03:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,32 @@ static void ft_trim_key(char **key_value)
 	free(temp);
 }
 
+static void ft_find_key_2(t_minishell *minishell, char **key_value, int check)
+{
+	char	*temp_value;
+
+	if (minishell->list_envp->value && check == 2 && key_value[1])
+	{
+		temp_value = ft_strdup(minishell->list_envp->value);
+		free(minishell->list_envp->value);
+		minishell->list_envp->value = ft_strjoin(temp_value, key_value[1]);
+		free(temp_value);
+	}
+	else if ((minishell->list_envp->value || key_value[1]) && check != 2)
+	{
+		if (minishell->list_envp->value)
+			free(minishell->list_envp->value);
+		if (!key_value[1])
+			minishell->list_envp->value = NULL;
+		else
+			minishell->list_envp->value = ft_strdup(key_value[1]);
+	}
+}
+
 static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 {
 	t_envp	*temp;
-	char	*temp_value;
+	//char	*temp_value;
 
 	temp = minishell->list_envp;
 	if (check == 2)
@@ -136,7 +158,8 @@ static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 	{
 		if (ft_strcmp(key_value[0], minishell->list_envp->key) == 0)
 		{
-			if (minishell->list_envp->value && check == 2 && key_value[1])
+			ft_find_key_2(minishell, key_value, check);
+			/*if (minishell->list_envp->value && check == 2 && key_value[1])
 			{
 				temp_value = ft_strdup(minishell->list_envp->value);
 				free(minishell->list_envp->value);
@@ -151,7 +174,7 @@ static int ft_find_key(t_minishell *minishell, char **key_value, int check)
 					minishell->list_envp->value = NULL;
 				else
 					minishell->list_envp->value = ft_strdup(key_value[1]);
-			}
+			}*/
 			minishell->list_envp = temp;
 			return (0);
 		}
@@ -274,11 +297,14 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 	{
 		ft_fill_keyvalue(key_value, ast);
 		check = ft_ast_checker(key_value[0], ast, minishell);
-		if (check == -1)
+		while (check == -1 && ast->left)
 		{
-			if (!ast->left)
-				return ;
+			free(key_value[0]);
+			if (key_value[1])
+				free(key_value[1]);
 			ast = ast->left;
+			ft_fill_keyvalue(key_value, ast);
+			check = ft_ast_checker(key_value[0], ast, minishell);
 		}
 		if (!ft_strchr(ast->value, '=') && ft_find_only_key(minishell, \
 		key_value[0]) == 0)

@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/27 16:24:49 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:38:26 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
  * 
  */
 
-static void ft_try_dup2_out(t_minishell *minishell, int fd)
+static void	ft_try_dup2_out(t_minishell *minishell, int fd)
 {
 	if (minishell->redout == -1)
 	{

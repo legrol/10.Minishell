@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:40:17 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 16:49:18 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:15:19 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,6 @@ void	process_substrings(t_minishell *minishell, char *substring_ptrs[100])
 		}
 		else
 			process_substrings_else(minishell, substring_ptrs, i, trim);
-		if (trim)
-			free(trim);
 		i++;
 	}
 }

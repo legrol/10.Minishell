@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 17:03:22 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:42:58 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	**ft_copy_env(t_minishell *minishell)
 	t_envp	*temp;
 	char	**cpy;
 	int		i;
-	
+
 	cpy = (char **)ft_calloc((ft_count_lines(minishell) + 1), sizeof(char *));
 	if (!cpy)
 		return (NULL);
@@ -271,11 +271,33 @@ static int	ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
 	return (i);
 }
 
+static void	ft_prueba(t_minishell *minishell, t_ast *ast, \
+char **key_value, int check)
+{
+	t_envp	*temp;
+	t_envp	*new_node;
+
+	if (ft_strchr(ast->value, '=') || ft_find_only_key(minishell, \
+	key_value[0]) != 0)
+	{
+		if (ft_find_key(minishell, key_value, check) == -1)
+		{
+			new_node = new_node_envp(key_value[0], key_value[1]);
+			temp = minishell->list_envp;
+			while (ft_strcmp(minishell->list_envp->key, \
+			"XDG_GREETER_DATA_DIR") != 0 && \
+			minishell->list_envp->next->next)
+				minishell->list_envp = minishell->list_envp->next;
+			new_node->next = minishell->list_envp->next;
+			minishell->list_envp->next = new_node;
+			minishell->list_envp = temp;
+		}
+	}
+}
+
 static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 {
 	char	**key_value;
-	t_envp	*temp;
-	t_envp	*new_node;
 	int		check;
 
 	key_value = ft_init_keyvalue();
@@ -292,25 +314,8 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 			ft_fill_keyvalue(key_value, ast);
 			check = ft_ast_checker(key_value[0], ast, minishell);
 		}
-		if (!ft_strchr(ast->value, '=') && ft_find_only_key(minishell, \
-		key_value[0]) == 0)
-			ast = ast->left;
-		else
-		{
-			if (ft_find_key(minishell, key_value, check) == -1)
-			{
-				new_node = new_node_envp(key_value[0], key_value[1]);
-				temp = minishell->list_envp;
-				while (ft_strcmp(minishell->list_envp->key, \
-				"XDG_GREETER_DATA_DIR") != 0 && \
-				minishell->list_envp->next->next)
-					minishell->list_envp = minishell->list_envp->next;
-				new_node->next = minishell->list_envp->next;
-				minishell->list_envp->next = new_node;
-				minishell->list_envp = temp;
-			}
-			ast = ast->left;
-		}
+		ft_prueba(minishell, ast, key_value, check);
+		ast = ast->left;
 		free(key_value[0]);
 		if (key_value[1])
 			free(key_value[1]);

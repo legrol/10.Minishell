@@ -24,5 +24,9 @@
 # define STDERR					3
 # define EX_SIGINT				130
 # define EX_SIGQUIT				131
+# define MAX_DIGITS				19
+# define MAX_NEG				20
+# define LLONGMAX				"9223372036854775807"
+# define LLONGMIN				"-9223372036854775808"
 
 #endif

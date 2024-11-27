@@ -58,64 +58,18 @@
  *
  * @param char *str   				The string to be converted.
  * @return      					The converted long long integer.
- * 
- * The function "ft_isspace" checks if the given character is a whitespace 
- * character.
- * It returns 1 if the character is a space or a tab/newline character, 
- * otherwise 0.
- *
- * @param int c   					The character to be checked.
- * @return    1 					if the character is whitespace, 
- * 									otherwise 0.
- * 
- * 
+ *  
  */
 
-static int	ft_isspace(int c)
+static long long	ft_atol(char *str)
 {
-	if (c == 32 || (c >= 9 && c >= 13))
-		return (1);
-	return (0);
-}
-
-// static long long	ft_atol(char *str)
-// {
-// 	long long	result;
-// 	int			sign;
-// 	int			i;
-
-// 	result = 0;
-// 	sign = 1;
-// 	i = 0;
-// 	while (ft_isspace(str[i]))
-// 		i++;
-// 	if (str[i] == '-' || str[i] == '+')
-// 	{
-// 		if (str[i] == '-')
-// 			sign *= -1;
-// 		i++;
-// 	}
-// 	while (str[i] >= '0' && str[i] <= '9')
-// 	{
-// 		result = result * 10 + (str[i] - '0');
-// 		i++;
-// 	}
-// 	return (result * sign);
-// }
-
-static long long ft_atol(char *str, int *error)
-{
-	long long result;
-	int sign;
-	int i;
+	long long	result;
+	int			sign;
+	int			i;
 
 	result = 0;
 	sign = 1;
 	i = 0;
-	*error = 0;
-	printf("Entro en atol\n");
-	while (ft_isspace(str[i]))
-		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -124,24 +78,10 @@ static long long ft_atol(char *str, int *error)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if ((result > (LLONG_MAX / 10)) || (result == (LLONG_MAX / 10) && (str[i] - '0') > (LLONG_MAX % 10)))
-		{
-			*error = 1;
-			printf("Estoy aqui\n");
-			return (0);
-		}
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	result *= sign;
-	if ((sign == 1 && result < 0) || (sign == -1 && result > 0))
-	{
-		*error = 1;
-		printf("estoy aca\n");
-		return (0);
-	}
-	printf("Me salgo sin error\n");
-	return (result);
+	return (result * sign);
 }
 
 static int	ft_checker_number(char *str)
@@ -160,42 +100,38 @@ static int	ft_checker_number(char *str)
 	return (0);
 }
 
-// int	ft_exit(t_minishell *minishell, t_ast *ast)
-// {
-// 	long long	exit_value;
-
-// 	exit_value = 0;
-// 	if (ast->left == NULL)
-// 	{
-// 		ft_putstr_fd("Successfully exit minishell!\n", STDOUT_FILENO);
-// 		exit_value = 0;
-// 		minishell->terminal_status = exit_value;
-// 		exit (minishell->terminal_status);
-// 	}
-// 	if (ft_checker_number(ast->left->value) == -1)
-// 	{
-// 		ft_printf("%s\n", ast->left->value);
-// 		ft_putstr_fd("exit: ", STDERR_FILENO);
-// 		ft_putstr_fd(ast->left->value, STDERR_FILENO);
-// 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);	
-// 		return (minishell->terminal_status = 255, minishell->terminal_status);
-// 	}
-// 	exit_value = ft_atol(ast->left->value);
-// 	printf("%lld\n", exit_value);
-// 	if (exit_value > LLONG_MAX || exit_value < LLONG_MIN)
-// 	{
-// 		ft_putendl_fd("exit: numeric argument required", STDERR_FILENO);		
-// 		return (minishell->terminal_status = 255, minishell->terminal_status);
-// 	}
-// 	minishell->terminal_status = exit_value % 256;
-// 	ft_putendl_fd("exit", STDOUT_FILENO);
-// 	exit(minishell->terminal_status);
-// }
-
-int ft_exit(t_minishell *minishell, t_ast *ast)
+static int	ft_str_longcheck(char *str)
 {
-	long long exit_value;
-	int error;
+	int	s;
+	int	i;
+
+	s = 0;
+	if (str[0] == '-')
+		s = -1;
+	if (s == -1)
+		i = ft_strcmp(LLONGMIN, str);
+	else
+		i = ft_strcmp(LLONGMAX, str);
+	if (i < 0)
+		return (-1);
+	return (0);
+}
+
+static int	ft_compare_to_limits(char *str)
+{
+	int	len;
+
+	len = strlen(str);
+	if ((len > MAX_NEG && str[0] == '-') || (len > MAX_DIGITS && str[0] != '-'))
+		return (-1);
+	if (ft_str_longcheck(str) == -1)
+		return (-1);
+	return (0);
+}
+
+int	ft_exit(t_minishell *minishell, t_ast *ast)
+{
+	long long	exit_value;
 
 	exit_value = 0;
 	if (ast->left == NULL)
@@ -219,19 +155,16 @@ int ft_exit(t_minishell *minishell, t_ast *ast)
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return (minishell->terminal_status = 1, minishell->terminal_status);
 	}
-	exit_value = ft_atol(ast->left->value, &error);
-	if (error)
+	if (ft_compare_to_limits(ast->left->value) == -1)
 	{
-		printf("Estoy en error\n");
 		ft_printf("exit\n");
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		ft_putstr_fd(ast->left->value, STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		return (minishell->terminal_status = 255, minishell->terminal_status);
 	}
-	printf("%lld\n", exit_value);
+	exit_value = ft_atol(ast->left->value);
 	minishell->terminal_status = exit_value % 256;
-	printf("%d", minishell->terminal_status);
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(minishell->terminal_status);
 }

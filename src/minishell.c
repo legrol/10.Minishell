@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 			minishell.line = NULL;
 			continue ;
 		}
-		if (ft_tokenizer(&minishell))
+		if (ft_tokenizer(&minishell) == 0)
 		{
 			ft_expander(&minishell);
 			if (ft_syntax_error(&minishell) != -1)
@@ -102,7 +102,9 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 	}
+	i = 0;
+	i = minishell.terminal_status;
 	rl_clear_history();
 	ft_free_minishell(&minishell);
-	return (0);
+	return (i);
 }

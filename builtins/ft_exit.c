@@ -147,7 +147,8 @@ int	ft_exit(t_minishell *minishell, t_ast *ast)
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		ft_putstr_fd(ast->left->value, STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		return (minishell->terminal_status = 255, minishell->terminal_status);
+		minishell->terminal_status = 255;
+		exit(minishell->terminal_status);
 	}
 	if (ast->left->left != NULL)
 	{
@@ -161,7 +162,8 @@ int	ft_exit(t_minishell *minishell, t_ast *ast)
 		ft_putstr_fd("exit: ", STDERR_FILENO);
 		ft_putstr_fd(ast->left->value, STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		return (minishell->terminal_status = 255, minishell->terminal_status);
+		minishell->terminal_status = 255;
+		exit(minishell->terminal_status);
 	}
 	exit_value = ft_atol(ast->left->value);
 	minishell->terminal_status = exit_value % 256;

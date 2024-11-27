@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:38:31 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 16:38:33 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:52:35 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ static t_token	*ft_get_tokens(char *line)
 	return (token_gt);
 }
 
-void	*ft_tokenizer(t_minishell *minishell)
+int	ft_tokenizer(t_minishell *minishell)
 {
 	if (!minishell->line)
 	{
@@ -201,20 +201,20 @@ void	*ft_tokenizer(t_minishell *minishell)
 		ft_putendl_fd(WHITOUT_COMMAND_ERR, STDERR_FILENO);
 		free(minishell->line);
 		minishell->line = NULL;
-		return (NULL);
+		return (-1);
 	}
 	if (*minishell->line)
 		add_history(minishell->line);
 	if (ft_checker_quotes_unclosed(minishell))
-		return (NULL);
+		return (-1);
 	ft_free_tokens(minishell->tokens);
 	minishell->tokens = ft_get_tokens(minishell->line);
 	if (!minishell->tokens)
 	{
 		free(minishell->line);
 		minishell->line = NULL;
-		return (NULL);
+		return (-1);
 	}
 	ft_print_tokens(minishell->tokens);
-	return (NULL);
+	return (0);
 }

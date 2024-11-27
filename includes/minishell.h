@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 16:55:04 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:50:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
 void		ft_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
-void		*ft_tokenizer(t_minishell *minishell);
+int			ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);
 
 // ============================================================================

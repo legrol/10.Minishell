@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:38:31 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 16:38:33 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:52:35 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ static t_token	*ft_get_tokens(char *line)
 	return (token_gt);
 }
 
-int ft_tokenizer(t_minishell *minishell)
+int	ft_tokenizer(t_minishell *minishell)
 {
 	if (!minishell->line)
 	{

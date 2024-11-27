@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 16:55:25 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:26:51 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,15 @@ void	ft_error_make_fork(int fd)
 	close(fd);
 }
 
+static void ft_try_dup2_in(t_minishell *minishell, int fd)
+{
+	if (minishell->redin == -1)
+	{
+		dup2(fd, STDIN_FILENO);
+		minishell->redin = 1;
+	}
+}
+
 void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 {
 	int		fd;
@@ -79,7 +88,7 @@ void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 	}
 	else if (pid == 0)
 	{
-		dup2(fd, STDIN_FILENO);
+		ft_try_dup2_in(minishell, fd);
 		close(fd);
 		ft_exec_ast(minishell, ast->left);
 		exit(EXIT_SUCCESS);

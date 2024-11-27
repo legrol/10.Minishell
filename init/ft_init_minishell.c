@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:06:37 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/25 22:15:27 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:17:47 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ void	ft_init_minishell(t_minishell *minishell)
 	minishell->tokens = NULL;
 	minishell->exit = 0;
 	minishell->terminal_status = 1;
+	minishell->redin = -1;
+	minishell->redout = -1;
 	ft_dirprompt(minishell);
 }

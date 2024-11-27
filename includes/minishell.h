@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/27 09:50:45 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:16:52 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_minishell
 	t_token			*tokens;
 	int				exit;
 	char			*dirprompt;
+	int				redin;
+	int				redout;
 	int				terminal_status;
 }					t_minishell;
 

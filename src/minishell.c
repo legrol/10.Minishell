@@ -86,16 +86,20 @@ int	main(int argc, char **argv, char **envp)
 			minishell.line = NULL;
 			continue ;
 		}
-		ft_tokenizer(&minishell);
-		ft_expander(&minishell);
-		if (ft_syntax_error(&minishell) != -1)
+		if (ft_tokenizer(&minishell))
 		{
-			ast = ft_ast(&minishell);
-			ft_exec_ast(&minishell, ast);
-			free(minishell.line);
-			minishell.line = NULL;
-			if (i == 1)
-				break ;
+			ft_expander(&minishell);
+			if (ft_syntax_error(&minishell) != -1)
+			{
+				ast = ft_ast(&minishell);
+				ft_exec_ast(&minishell, ast);
+				free(minishell.line);
+				minishell.line = NULL;
+				//ft_free_tokens(minishell.tokens);
+				//minishell.tokens = NULL;
+				if (i == 1)
+					break ;
+			}
 		}
 	}
 	rl_clear_history();

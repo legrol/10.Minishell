@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:27:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 16:37:06 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:25:29 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,70 +23,37 @@
  * 
  */
 
-// void	ft_dirprompt(t_minishell	*minishell)
-// {
-// 	char	cwd[1024];
-// 	char	*temp;
+static char	*ft_dirprompt_if(t_minishell *minishell, char cwd[1024])
+{
+	char	*new_prompt;
+	char	*temp;
 
-// 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-// 	{
-// 		temp = ft_strjoin("minishell: ", cwd);
-// 		if (!temp)
-// 		{
-// 			perror("Error allocating memory for temp");
-// 			return ;
-// 		}
-// 		if (minishell->dirprompt)
-// 		{
-// 			free(minishell->dirprompt);
-// 			minishell->dirprompt = NULL;
-// 		}
-// 		minishell->dirprompt = ft_strjoin(temp, "$ ");
-// 		free(temp);
-// 		if (!minishell->dirprompt)
-// 		{
-// 			perror("Error allocating memory for dirprompt");
-// 			return ;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		perror("getcwd() error");
-// 		if (minishell->dirprompt)
-// 		{
-// 			free(minishell->dirprompt);
-// 			minishell->dirprompt = NULL;
-// 		}
-// 	}
-// }
+	temp = NULL;
+	new_prompt = NULL;
+	temp = ft_strjoin("minishell: ", cwd);
+	if (!temp)
+	{
+		perror("Error allocating memory for temp");
+		return (NULL);
+	}
+	new_prompt = ft_strjoin(temp, "$ ");
+	free(temp);
+	if (!new_prompt)
+	{
+		perror("Error allocating memory for new_prompt");
+		return (NULL);
+	}
+	if (minishell->dirprompt)
+		free(minishell->dirprompt);
+	return (new_prompt);
+}
 
 void	ft_dirprompt(t_minishell *minishell)
 {
 	char	cwd[1024];
-	char	*temp;
-	char	*new_prompt;
 
-	temp = NULL;
-	new_prompt = NULL;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		temp = ft_strjoin("minishell: ", cwd);
-		if (!temp)
-		{
-			perror("Error allocating memory for temp");
-			return ;
-		}
-		new_prompt = ft_strjoin(temp, "$ ");
-		free(temp);
-		if (!new_prompt)
-		{
-			perror("Error allocating memory for new_prompt");
-			return ;
-		}
-		if (minishell->dirprompt)
-			free(minishell->dirprompt);
-		minishell->dirprompt = new_prompt;
-	}
+		minishell->dirprompt = ft_dirprompt_if(minishell, cwd);
 	else
 	{
 		perror("getcwd() error");

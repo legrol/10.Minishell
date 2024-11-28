@@ -124,13 +124,31 @@ void		ft_manage_err(const char *err);
 int			ft_syntax_error(t_minishell *minishell);
 
 // ============================================================================
+// Exec functions
+// ============================================================================
+char		**ft_arg_maker(t_ast *ast);
+char		*ft_cmd_action(char **path, char *arg);
+char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
+void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
+void		ft_error_make_fork(int fd);
+int			ft_exec(t_minishell *minishell, t_ast *ast);
+void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
+void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
+char		**ft_path(t_minishell *minishell);
+char		*split_substrings(t_minishell *minishell, char *input);
+
+// ============================================================================
 // Release funtions
 // ============================================================================
+void		ft_free_ast(t_ast *ast);
+void		ft_free_ast_left(t_ast *ast);
 void		ft_free_envp_list(t_envp *head);
 void		ft_free_minishell(t_minishell *minishell);
 void		ft_free_split(char **sub_tokens);
 void		ft_free_tokens(t_token *token);
-void		ft_free_ast(t_ast *ast);
 
 // ============================================================================
 // Initialization functions
@@ -146,8 +164,11 @@ void		ft_init_envp(t_minishell *minishell, char **envp);
 // ============================================================================
 // Builtins functions
 // ============================================================================
+int			ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell);
 void		ft_cd(t_minishell *minishell, t_ast *ast);
 int			ft_compare_to_limits(char *str);
+char		**ft_copy_env(t_minishell *minishell);
+int			ft_count_lines(t_minishell *minishell);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
 int			ft_exit(t_minishell *minishell, t_ast *ast);
@@ -156,19 +177,38 @@ void		ft_exit_invalid_argument(char *arg, t_minishell *minishell);
 void		ft_exit_no_arguments(t_minishell *minishell);
 int			ft_exit_too_many_arguments(t_minishell *minishell);
 void		ft_export(t_minishell *minishell, t_ast *ast);
+void		ft_fill_keyvalue(char	**key_value, t_ast *ast);
+int			ft_find_key(t_minishell *minishell, char **key_value, int check);
+int			ft_find_only_key(t_minishell *minishell, char *key);
+void		ft_prueba(t_minishell *minishell, t_ast *ast, char **key_value, \
+			int check);
 void		ft_pwd(void);
 int			ft_str_longcheck(char *str);
+char		**ft_sort_print(t_minishell *minishell);
+void		ft_swap_pwd(t_minishell *minishell, char *pwd);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
+char		*ft_change_token(char *temp, char *sp);
 void		ft_check_empty_line(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
+int			ft_count_dollar(char *s);
+void		ft_expander(t_minishell *minishell);
+char		*extract_quoted(char **start, int *size, \
+			char substrings[100][256]);
+void		ft_fill_token(t_token *token, char *line, int *index);
+char		ft_find_special_char(char *s);
+int			ft_handle_special_char(t_token *token, char *line, \
+			int *index, int i);
+char		*ft_only_expand_join(t_minishell *minishell, char *join, int f);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
+char		*ft_split_expand_join(char **split);
+char		*ft_split_expand(t_minishell *minishell, char *s);
 void		ft_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
 int			ft_tokenizer(t_minishell *minishell);
@@ -178,33 +218,14 @@ void		ft_update_type_tokens(t_token *token);
 // Utils functions
 // ============================================================================
 t_ast		*ft_ast(t_minishell *minishell);
+t_ast		*ft_ast_node(t_tok_typ_enum type, char *value);
+t_ast		*ft_ast_left(t_minishell *minishell);
+t_ast		*ft_ast_pipe(t_ast *ltree, t_minishell *minishell);
+t_ast		*ft_ast_redir_in(t_ast *ltree, t_minishell *minishell);
 void		ft_change_env(t_minishell *minishell, const char *str1, \
 			const char *str2);
 void		ft_dirprompt(t_minishell	*minishell);
 char		*ft_find_dir(t_minishell *minishell, const char *str);
 void		ft_print_init(void);
 
-// ============================================================================
-// Exec functions
-// ============================================================================
-char		**ft_arg_maker(t_ast *ast);
-char		*ft_cmd_action(char **path, char *arg);
-char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
-void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
-int			ft_exec(t_minishell *minishell, t_ast *ast);
-void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
-void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
-void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
-void		ft_expander(t_minishell *minishell);
-void		ft_free_ast(t_ast *ast);
-char		**ft_path(t_minishell *minishell);
-char		*ft_split_expand(t_minishell *minishell, char *s);
-char		*ft_split_expand_join(char **split);
-char		*split_substrings(t_minishell *minishell, char *input);
-
-
-void		ft_error_make_fork(int fd);
-void		ft_free_ast_left(t_ast *ast);
 #endif

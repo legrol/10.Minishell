@@ -102,7 +102,8 @@ UTL					= ${UTILS_DIR}/ft_print_init.c \
 						${UTILS_DIR}/ft_dirprompt.c \
 						${UTILS_DIR}/ft_find_dir.c \
 						${UTILS_DIR}/ft_change_env.c \
-						${UTILS_DIR}/ft_ast.c
+						${UTILS_DIR}/ft_ast.c \
+						${UTILS_DIR}/ft_ast_tools.c
 
 FRE					= ${FREE_DIR}/ft_free_envp_list.c \
 						${FREE_DIR}/ft_free_minishell.c \
@@ -122,20 +123,27 @@ EXE					= ${EXEC_DIR}/ft_cmdexe.c \
 						${EXEC_DIR}/ft_exec_redir_heredoc.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
+						${BUILTINS_DIR}/ft_cd_tools.c \
 						${BUILTINS_DIR}/ft_echo.c \
 						${BUILTINS_DIR}/ft_env.c \
 						${BUILTINS_DIR}/ft_exit.c \
 						${BUILTINS_DIR}/ft_exit_tools.c \
 						${BUILTINS_DIR}/ft_export.c \
+						${BUILTINS_DIR}/ft_export_tools.c \
+						${BUILTINS_DIR}/ft_export_tools_2.c \
+						${BUILTINS_DIR}/ft_export_tools_3.c \
 						${BUILTINS_DIR}/ft_pwd.c \
 						${BUILTINS_DIR}/ft_unset.c
 
 TOK					= ${TOKENIZER_DIR}/ft_check_empty_line.c \
 						${TOKENIZER_DIR}/ft_check_quotes.c \
 						${TOKENIZER_DIR}/ft_expander_split.c \
+						${TOKENIZER_DIR}/ft_expander_split_tools.c \
 						${TOKENIZER_DIR}/ft_expander.c \
+						${TOKENIZER_DIR}/ft_expander_tools.c \
 						${TOKENIZER_DIR}/ft_token_size.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
+						${TOKENIZER_DIR}/ft_tokenizer_tools.c \
 						${TOKENIZER_DIR}/ft_tools_token.c \
 						${TOKENIZER_DIR}/ft_update_tokens.c
 

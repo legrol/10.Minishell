@@ -65,11 +65,6 @@
  * 
  */
 
-/**
- * 
- * FALTA liberar el split
-*/
-
 static char	*ft_trim_ast(t_ast *ast)
 {
 	char	*trim;

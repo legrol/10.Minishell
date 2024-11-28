@@ -137,7 +137,7 @@ static void	sig_int(int status)
 	}
 	else
 		g_signals.exit = EX_SIGINT;
-	g_signals.sigint = 1;	
+	g_signals.sigint = 1;
 }
 
 static void	sig_quit(int status)

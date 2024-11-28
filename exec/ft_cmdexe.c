@@ -81,15 +81,6 @@
  * 
  */
 
-/**
- * Buscar y ejecutar el ejecutable correcto (basado en la variable PATH o 
- * mediante el uso de rutas relativas o absolutas). FALTA EL USO DE VARIABLES
- * RELATIVAS O ABSOLUTAS
- * 
-*/
-
-#include "../includes/minishell.h"
-
 static void	free_path(char **path)
 {
 	int	i;

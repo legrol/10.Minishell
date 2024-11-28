@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-28 11:01:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-28 11:01:24 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/11/28 11:01:24 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/28 17:34:15 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ int	ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
 		ft_printf("minishell: export: \'%s\': not a valid identifier\n", \
 		ast->value);
 	}
-	ft_printf("i: %i\n", i);
 	return (i);
 }
 

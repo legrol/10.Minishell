@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-28 12:00:30 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-28 12:00:30 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/11/28 12:00:30 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/28 17:00:02 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@
  * 
  */
 
-int	ft_count_dollar(char *s)
+/*int	ft_count_dollar(char *s)
 {
 	int	c;
 	int	i;
@@ -162,4 +162,4 @@ char	ft_find_special_char(char *s)
 		i++;
 	}
 	return ('\0');
-}
+}*/

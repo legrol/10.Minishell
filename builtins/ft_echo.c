@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:36:47 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/26 16:59:13 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:35:48 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ void	ft_echo(t_minishell *minishell, t_ast *ast)
 		ast = ast->left;
 	while (ast)
 	{
-		ft_printf("%s ", ast->value);
+		ft_printf("%s", ast->value);
+		if (ast->left)
+			ft_printf(" ", ast->value);
 		ast = ast->left;
 	}
 	if (f == 0)

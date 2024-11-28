@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expander_split_tools.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   #+#  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-28 11:54:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024-11-28 11:54:55 by rdel-olm         ###   ########.fr       */
+/*   Created: 2024/11/28 11:54:55 by rdel-olm          #+#    #+#             */
+/*   Updated: 2024/11/28 17:00:24 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
  * 
  */
 
-char	*extract_quoted(char **start, int *size, char substrings[100][256])
+/*char	*extract_quoted(char **start, int *size, char substrings[100][256])
 {
 	char	quote;
 	char	*end;
@@ -57,4 +57,4 @@ char	*extract_quoted(char **start, int *size, char substrings[100][256])
 	substrings[*size][len] = '\0';
 	*start = end + 1;
 	return (substrings[(*size)++]);
-}
+}*/

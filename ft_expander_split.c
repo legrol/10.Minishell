@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:40:17 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/27 17:15:19 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:00:16 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@
  * 
  */
 
-static char	*extract_unquoted(char **start, int *size, \
+/*static char	*extract_unquoted(char **start, int *size, \
 char substrings[100][256])
 {
 	char	*end;
@@ -169,4 +169,4 @@ char	*split_substrings(t_minishell *minishell, char *input)
 	ft_cpy_substr(substrings, substring_ptrs, size);
 	process_substrings(minishell, substring_ptrs);
 	return (ft_split_expand_join(substring_ptrs));
-}
+}*/

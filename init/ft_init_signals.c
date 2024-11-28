@@ -39,11 +39,11 @@
  * @param status Signal status code (unused).
  * 
  * The function "sig_int" is SIGINT signal handler (Ctrl+C).
- * 		- 	If `g_signals.pid` is 0, this indicates that `minishell` is in 
- * 			prompt mode, so it outputs a newline, the custom prompt from 
- * 			`dupdirprompt`, and sets `exit` to 1.
- * 		- 	If `g_signals.pid` is non-zero, indicating an external process, it 
- * 			sets `exit` to EX_SIGINT and outputs a newline.
+ *      - 	If `g_signals.pid` is 0, this indicates that `minishell` is in
+ *        	prompt mode, so it outputs a newline, clears the current input line,
+ *        	and redisplays the prompt using readline functions.
+ *      - 	If `g_signals.pid` is non-zero, indicating an external process,
+ *        	it sets `exit` to EX_SIGINT and outputs a newline.
  * 
  * @param status Signal status code (unused).
  * 
@@ -128,18 +128,16 @@ void	ft_init_struc_sig(t_signal *signals)
 static void	sig_int(int status)
 {
 	(void) status;
+	ft_putstr_fd("\n", STDERR);
 	if (g_signals.pid == 0)
 	{
-		ft_putstr_fd("\n", STDERR);
-		ft_putstr_fd(g_signals.dupdirprompt, STDERR);
-		g_signals.exit = 1;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	else
-	{
-		ft_putstr_fd("\n", STDERR);
 		g_signals.exit = EX_SIGINT;
-	}
-	g_signals.sigint = 1;
+	g_signals.sigint = 1;	
 }
 
 static void	sig_quit(int status)

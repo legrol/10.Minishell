@@ -136,33 +136,6 @@ static t_token	*ft_read_tokens(char *line, int *index)
 	return (token_rd);
 }
 
-// static t_token	*ft_get_tokens(char *line)
-// {
-// 	int		i;
-// 	t_token	*token_gt;
-// 	t_token	*prev;
-
-// 	i = 0;
-// 	prev = NULL;
-// 	ft_skip_spaces(line, &i);
-// 	while (line[i])
-// 	{
-// 		token_gt = ft_read_tokens(line, &i);
-// 		if (!token_gt)
-// 			return (ft_free_tokens(prev), NULL);
-// 		ft_update_tokens(token_gt);
-// 		if (prev)
-// 			prev->next = token_gt;
-// 		token_gt->prev = prev;
-// 		prev = token_gt;
-// 		ft_update_type_tokens(token_gt);
-// 		ft_skip_spaces(line, &i);
-// 	}
-// 	while (token_gt && token_gt->prev)
-// 		token_gt = token_gt->prev;
-// 	return (token_gt);
-// }
-
 static t_token	*ft_get_tokens(char *line)
 {
 	int		i;

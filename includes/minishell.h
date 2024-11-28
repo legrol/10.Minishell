@@ -147,11 +147,17 @@ void		ft_init_envp(t_minishell *minishell, char **envp);
 // Builtins functions
 // ============================================================================
 void		ft_cd(t_minishell *minishell, t_ast *ast);
+int			ft_compare_to_limits(char *str);
 void		ft_echo(t_minishell *minishell, t_ast *ast);
 void		ft_env(t_minishell *minishell);
 int			ft_exit(t_minishell *minishell, t_ast *ast);
+void		ft_exit_check_limits(char *arg, t_minishell *minishell);
+void		ft_exit_invalid_argument(char *arg, t_minishell *minishell);
+void		ft_exit_no_arguments(t_minishell *minishell);
+int			ft_exit_too_many_arguments(t_minishell *minishell);
 void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_pwd(void);
+int			ft_str_longcheck(char *str);
 void		ft_unset(t_minishell *minishell, t_ast *ast);
 
 // ============================================================================

@@ -42,15 +42,22 @@
  *									  redirection.
  * @return            				Returns the terminal status if an error 
  * 									occurs; otherwise, the program terminates.
+ * 
+ * The function "ft_str_longcheck" compares the input string to LLONG_MAX
+ * or LLONG_MIN based on its sign, ensuring it is within the valid range
+ * of a long long integer.
  *
+ * @param char *str					The string to be compared.
+ * @return int						0 if the string is within limits, -1 if it
+ * 									exceeds the range.
+ * 
  * The function "ft_check_number" verifies if the provided string contains
  * a valid numeric representation. It checks for optional signs and ensures
  * that each subsequent character is a digit.
  *
  * @param char *str   				The string to be checked. * 
  * @return      0 					if the string is a valid number, -1 if 
- * 									it is not.
- * 
+ * 									it is not. * 
  * 
  * The function "ft_atol" converts a string to a long long integer.
  * It handles optional leading whitespace, optional sign (+/-),
@@ -100,7 +107,7 @@ static int	ft_checker_number(char *str)
 	return (0);
 }
 
-static int	ft_str_longcheck(char *str)
+int	ft_str_longcheck(char *str)
 {
 	int	s;
 	int	i;
@@ -117,54 +124,17 @@ static int	ft_str_longcheck(char *str)
 	return (0);
 }
 
-static int	ft_compare_to_limits(char *str)
-{
-	int	len;
-
-	len = strlen(str);
-	if ((len > MAX_NEG && str[0] == '-') || (len > MAX_DIGITS && str[0] != '-'))
-		return (-1);
-	if (ft_str_longcheck(str) == -1)
-		return (-1);
-	return (0);
-}
-
 int	ft_exit(t_minishell *minishell, t_ast *ast)
 {
 	long long	exit_value;
 
-	exit_value = 0;
 	if (ast->left == NULL)
-	{
-		ft_putstr_fd("Successfully exit minishell!\n", STDOUT_FILENO);
-		exit_value = 0;
-		minishell->terminal_status = exit_value;
-		exit(minishell->terminal_status);
-	}
+		ft_exit_no_arguments(minishell);
 	if (ft_checker_number(ast->left->value) == -1)
-	{
-		ft_printf("exit\n");
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		ft_putstr_fd(ast->left->value, STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		minishell->terminal_status = 255;
-		exit(minishell->terminal_status);
-	}
+		ft_exit_invalid_argument(ast->left->value, minishell);
 	if (ast->left->left != NULL)
-	{
-		ft_printf("exit\n");
-		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		return (minishell->terminal_status = 1, minishell->terminal_status);
-	}
-	if (ft_compare_to_limits(ast->left->value) == -1)
-	{
-		ft_printf("exit\n");
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		ft_putstr_fd(ast->left->value, STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		minishell->terminal_status = 255;
-		exit(minishell->terminal_status);
-	}
+		return (ft_exit_too_many_arguments(minishell));
+	ft_exit_check_limits(ast->left->value, minishell);
 	exit_value = ft_atol(ast->left->value);
 	minishell->terminal_status = exit_value % 256;
 	ft_putendl_fd("exit", STDOUT_FILENO);

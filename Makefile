@@ -125,6 +125,7 @@ BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_echo.c \
 						${BUILTINS_DIR}/ft_env.c \
 						${BUILTINS_DIR}/ft_exit.c \
+						${BUILTINS_DIR}/ft_exit_tools.c \
 						${BUILTINS_DIR}/ft_export.c \
 						${BUILTINS_DIR}/ft_pwd.c \
 						${BUILTINS_DIR}/ft_unset.c

@@ -137,10 +137,7 @@ BUI					= ${BUILTINS_DIR}/ft_cd.c \
 
 TOK					= ${TOKENIZER_DIR}/ft_check_empty_line.c \
 						${TOKENIZER_DIR}/ft_check_quotes.c \
-						${TOKENIZER_DIR}/ft_expander_split.c \
-						${TOKENIZER_DIR}/ft_expander_split_tools.c \
 						${TOKENIZER_DIR}/ft_expander.c \
-						${TOKENIZER_DIR}/ft_expander_tools.c \
 						${TOKENIZER_DIR}/ft_token_size.c \
 						${TOKENIZER_DIR}/ft_tokenizer.c \
 						${TOKENIZER_DIR}/ft_tokenizer_tools.c \

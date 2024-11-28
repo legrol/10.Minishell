@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 10:46:38 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:07:22 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,6 @@ void	ft_exec_ast(t_minishell *minishell, t_ast *ast)
 		ft_exec_redir_out(minishell, ast);
 	else if (ast->type == TOKEN_REDIR_APPEND)
 		ft_exec_redir_append(minishell, ast);
+	else if (ast->type == TOKEN_REDIR_HEREDOC)
+		ft_exec_redir_heredoc(minishell, ast);
 }

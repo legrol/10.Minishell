@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/27 16:16:52 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:49:07 by rdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ int			ft_exec(t_minishell *minishell, t_ast *ast);
 void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
 void		ft_exec_ast(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_append(t_minishell *minishell, t_ast *ast);
+void		ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
 char		**ft_path(t_minishell *minishell);
-char		*split_substrings(t_minishell *minishell, char *input);
 
 // ============================================================================
 // Release funtions
@@ -191,24 +191,16 @@ void		ft_unset(t_minishell *minishell, t_ast *ast);
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
-char		*ft_change_token(char *temp, char *sp);
 void		ft_check_empty_line(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
-int			ft_count_dollar(char *s);
 void		ft_expander(t_minishell *minishell);
-char		*extract_quoted(char **start, int *size, \
-			char substrings[100][256]);
 void		ft_fill_token(t_token *token, char *line, int *index);
-char		ft_find_special_char(char *s);
 int			ft_handle_special_char(t_token *token, char *line, \
 			int *index, int i);
-char		*ft_only_expand_join(t_minishell *minishell, char *join, int f);
 void		ft_print_tokens(t_token *tokens);
 void		ft_skip_spaces(char *line, int *index);
-char		*ft_split_expand_join(char **split);
-char		*ft_split_expand(t_minishell *minishell, char *s);
 void		ft_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
 int			ft_tokenizer(t_minishell *minishell);

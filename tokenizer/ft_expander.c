@@ -49,6 +49,9 @@
  * @return void                     This function does not return a value, but
  *                                  modifies `new_value` and `new_size`.
  * 
+ * 
+ * Note: At the end of ft_expander for debugging and after minishell->tokens \
+ * 		 = temp -->  ft_print_tokens(minishell->tokens);
  */
 
 static void	ft_handle_single_quotes(const char *token_value, int *i, \
@@ -114,5 +117,4 @@ void	ft_expander(t_minishell *minishell)
 		minishell->tokens = minishell->tokens->next;
 	}
 	minishell->tokens = temp;
-	ft_print_tokens(minishell->tokens);
 }

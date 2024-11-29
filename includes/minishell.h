@@ -130,6 +130,7 @@ char		**ft_arg_maker(t_ast *ast);
 char		*ft_cmd_action(char **path, char *arg);
 char		*ft_cmd_maker(t_minishell *minishell, t_ast *ast);
 void		ft_cmdexe(t_minishell *minishell, t_ast *ast);
+int			ft_contains_invalid_chars(const char *line);
 void		ft_error_make_fork(int fd);
 int			ft_exec(t_minishell *minishell, t_ast *ast);
 void		ft_exec_pipe(t_minishell *minishell, t_ast *ast);
@@ -139,6 +140,7 @@ void		ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
 char		**ft_path(t_minishell *minishell);
+void		ft_try_dup2_out(t_minishell *minishell, int fd);
 
 // ============================================================================
 // Release funtions

@@ -13,65 +13,48 @@
 #include "../includes/minishell.h"
 
 /**
- * This file will be one of the executor files:
+ * The function "ft_exec_redir_out" handles output redirection for commands
+ * represented in the AST. It manages heredoc input redirections or writes
+ * directly to a file. For non-heredoc commands, it forks a child process to 
+ * execute the command with redirected output.
  * 
- * void ft_exec_redir_out(t_minishell *minishell, t_ast *ast) we create a fork
- * to execute the command in the child and with fd we copy the std_out in the 
- * file, > should create a new file if not exist or trunc the existing one a 
- * fill with the new information.
+ * @param t_minishell *minishell	A pointer to the minishell structure that
+ * 									manages state and execution.
+ * @param t_ast *ast				A pointer to the AST node representing the
+ * 									redirection command.
+ * @return void
+ * 
+ * The function "ft_fork_and_execute" forks a child process to execute the 
+ * left subtree of the AST. The output is redirected to the provided file 
+ * descriptor. The parent process waits for the child process to finish.
+ * 
+ * @param t_minishell *minishell	A pointer to the minishell structure 
+ * 									containing state information.
+ * @param t_ast *ast				A pointer to the AST representing the 
+ * 									command to be executed.
+ * @param int fd					The file descriptor to which output is 
+ * 									redirected.
+ * @return void
+ * 
+ * The function "ft_open_redir_out" opens or creates a file for writing, 
+ * truncating its content if it already exists. It returns the file 
+ * descriptor or prints an error message if the operation fails.
+ * 
+ * @param const char *filename		The name of the file to be opened.
+ * @return int						Returns the file descriptor if successful,
+ * 									or -1 if an error occurs.
+ * 
+ * The function "ft_process_heredoc_and_filter" processes a heredoc input, 
+ * allowing the user to input multiple lines until the specified delimiter 
+ * is encountered. Lines containing invalid characters are filtered out, 
+ * and valid input is written to the specified output file.
+ * 
+ * @param t_ast *heredoc_ast		A pointer to the AST node representing the
+ * 									heredoc command and its delimiter.
+ * @param char *outfile				The name of the file where heredoc content 
+ * 									will be written.
  * 
  */
-
-/**
- * The function "ft_exec_redir_out" handles output redirection for a shell 
- * command. It opens the specified file for writing, forks a child process, 
- * and redirects the output of the command to the file.
- * 
- * - The file is opened with the following flags:
- *   - `O_WRONLY`: Open the file in write-only mode.
- *   - `O_CREAT`: Create the file if it does not exist.
- *   - `O_TRUNC`: Truncate the file to zero length if it already exists.
- *   - The file permissions are set to `0644` for newly created files.
- * 
- * - In case of errors during file opening or process forking, the function 
- *   prints an error message and performs necessary cleanup.
- * 
- * - In the child process:
- *   - Redirects `STDOUT` to the file descriptor, so the command writes its 
- *     output to the file.
- *   - Closes the file descriptor.
- *   - Executes the left subtree of the AST (the actual command).
- *   - Exits with an error code if execution fails.
- * 
- * - The parent process waits for the child process to complete execution 
- *   and frees memory resources.
- * 
- * @param t_minishell *minishell	A pointer to the shell's state structure, 
- *									used for managing execution and state.
- * 
- * @param t_ast *ast				A pointer to the AST structure representing 
- *									the redirection operation and the command 
- *									to be executed.
- * 
- * @return void						This function does not return a value. 
- * 
- */
-
-
-static void	ft_try_dup2_out(t_minishell *minishell, int fd)
-{
-	if (minishell->redout == -1)
-	{
-		dup2(fd, STDOUT_FILENO);
-		minishell->redout = 1;
-	}
-}
-
-static int	ft_contains_invalid_chars(const char *line)
-{
-	return (ft_strnstr(line, "\033[?2004h",ft_strlen(line)) != NULL || ft_strnstr(line, "\033[?2004h",ft_strlen(line)) != NULL);
-}
-
 
 static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 {
@@ -82,7 +65,7 @@ static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 	if (out_fd < 0)
 	{
 		perror("Error abriendo archivo de salida");
-		return;
+		return ;
 	}
 	while (1)
 	{
@@ -90,7 +73,7 @@ static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 		if (!input || ft_strcmp(input, heredoc_ast->right->value) == 0)
 		{
 			free(input);
-			break;
+			break ;
 		}
 		if (!ft_contains_invalid_chars(input))
 		{
@@ -102,23 +85,20 @@ static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 	close(out_fd);
 }
 
-
-void	ft_exec_redir_out(t_minishell *minishell, t_ast *ast)
+static int	ft_open_redir_out(const char *filename)
 {
-	int		fd;
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		ft_printf("Error: Open file\n");
+	return (fd);
+}
+
+static void	ft_fork_and_execute(t_minishell *minishell, t_ast *ast, int fd)
+{
 	pid_t	pid;
 
-	if (ast->left && ast->left->type == TOKEN_REDIR_HEREDOC)
-	{
-		ft_process_heredoc_and_filter(ast->left, ast->right->value);
-		return;
-	}
-	fd = open(ast->right->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		ft_printf("Error: Open file");
-		return;
-	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -133,7 +113,21 @@ void	ft_exec_redir_out(t_minishell *minishell, t_ast *ast)
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
+}
+
+void	ft_exec_redir_out(t_minishell *minishell, t_ast *ast)
+{
+	int	fd;
+
+	if (ast->left && ast->left->type == TOKEN_REDIR_HEREDOC)
+	{
+		ft_process_heredoc_and_filter(ast->left, ast->right->value);
+		return ;
+	}
+	fd = ft_open_redir_out(ast->right->value);
+	if (fd < 0)
+		return ;
+	ft_fork_and_execute(minishell, ast, fd);
 	ft_free_ast(ast);
 	close(fd);
 }
-

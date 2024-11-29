@@ -13,40 +13,48 @@
 #include "../includes/minishell.h"
 
 /**
- * The main entry point for the `minishell` program. It initializes the shell's 
- * environment, processes user input in an infinite loop, and handles shell 
- * commands while managing memory and errors.
+ * The "main" function is the entry point of the program. It initializes the
+ * `minishell` environment, processes user input in a loop, and manages
+ * cleanup upon termination.
  * 
- * - Validates the arguments and ensures the program is started with no extra 
- *   parameters (`argc == 1` and no `argv[1]`).
- * - Initializes the shell's environment variables and prints the shell's 
- *   startup message.
- * - Enters an infinite loop to handle user input:
- *   - Initializes signal handling and shell structures if the shell is not 
- *     already started.
- *   - Reads input from the user (`readline`) and handles the EOF signal.
- *   - Skips empty lines or lines with unclosed quotes.
- *   - Tokenizes and expands the user input for further processing.
- *   - Checks for syntax errors before building and executing the Abstract 
- *     Syntax Tree (AST).
- *   - Executes the AST and cleans up resources after execution.
- * - Exits the loop and cleans up all allocated resources when the shell 
- *   session ends.
+ * @param int argc					The argument count passed to the program.
+ * @param char **argv				The argument vector containing command-line 
+ * 									arguments.
+ * @param char **envp				An array of strings representing the 
+ * 									environment variables.
+ * @return int						Returns the terminal status upon exit.
  * 
- * @param int argc 			Number of arguments the program receives from the 
- * 							command line. This is expected to be 1 (just the 
- * 							program name), otherwise an error message is 
- * 							displayed.
- * @param char **argv		String array containing the arguments passed to the 
- * 							program. This program does not take any additional 
- * 							arguments beyond the program name, and passing more
- * 							than that results in an error.
- * @param char **envp		String array containing the system environment 
- * 							variables. These are needed for initializing the 
- * 							`t_minishell` structure and managing the shell 
- * 							environment.
- * @return int				Returns `0` to indicate successful program 
- * 							termination.
+ * The function "ft_process_line" processes the input line from the `minishell`
+ * structure. It handles EOF, checks for empty lines, expands variables, and
+ * executes commands using the Abstract Syntax Tree (AST) if there are no 
+ * syntax errors.
+ * 
+ * @param t_minishell *minishell	A pointer to the minishell structure that
+ * 									contains the input line, tokens, and 
+ * 									other state variables.
+ * @param t_ast **ast				A pointer to the AST structure to be
+ * 									generated and executed.
+ * @return int						Returns 0 if the line is empty or invalid,
+ * 									1 otherwise.
+ * 
+ * The function "ft_handle_signals_and_structs" initializes the signal handling
+ * and other necessary structures in the `minishell` environment. This is only
+ * executed if signals are not already initialized.
+ * 
+ * @param t_minishell *minishell	A pointer to the minishell structure used
+ * 									to manage the current state.
+ * @return void
+ * 
+ * The function "ft_initialize_minishell" initializes the `minishell` structure
+ * by printing the startup banner and setting up the environment variables.
+ * 
+ * @param t_minishell *minishell	A pointer to the minishell structure to be 
+ * 									initialized.
+ * @param char **envp				An array of strings representing the 
+ * 									environment variables passed to the program.
+ * @return void
+ * 
+ * 
  * 
  * NOTE: g_signals.start 	Integer what indicates the minishell was 
  * 							initialized.
@@ -55,54 +63,65 @@
 
 t_signal	g_signals;
 
+static void	ft_initialize_minishell(t_minishell *minishell, char **envp)
+{
+	ft_print_init();
+	ft_init_envp(minishell, envp);
+}
+
+static void	ft_handle_signals_and_structs(t_minishell *minishell)
+{
+	if (g_signals.start != 1)
+	{
+		ft_init_struc_sig(&g_signals);
+		ft_init_signals(minishell);
+		ft_init_minishell(minishell);
+	}
+}
+
+static int	ft_process_line(t_minishell *minishell, t_ast **ast)
+{
+	ft_handle_eof(minishell->line);
+	ft_check_empty_line(minishell);
+	if (!minishell->line || ft_checker_quotes_unclosed(minishell) \
+	|| *minishell->line == '\0')
+	{
+		free(minishell->line);
+		minishell->line = NULL;
+		return (0);
+	}
+	if (ft_tokenizer(minishell) == 0)
+	{
+		ft_expander(minishell);
+		if (ft_syntax_error(minishell) != -1)
+		{
+			*ast = ft_ast(minishell);
+			ft_exec_ast(minishell, *ast);
+		}
+		free(minishell->line);
+		minishell->line = NULL;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
-	int			i;
 	t_ast		*ast;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
 	if (argc != 1 || argv[1])
 		ft_manage_err(YELLOW NUM_ARGV_ERR RESET);
-	ft_print_init();
-	ft_init_envp(&minishell, envp);
+	ft_initialize_minishell(&minishell, envp);
 	while (1)
 	{
-		if (g_signals.start != 1)
-		{
-			ft_init_struc_sig(&g_signals);
-			ft_init_signals(&minishell);
-			ft_init_minishell(&minishell);
-		}
+		ft_handle_signals_and_structs(&minishell);
 		minishell.line = readline(minishell.dirprompt);
-		ft_handle_eof(minishell.line);
-		ft_check_empty_line(&minishell);
-		if (!minishell.line || ft_checker_quotes_unclosed(&minishell) \
-		|| *minishell.line == '\0')
-		{
-			free(minishell.line);
-			minishell.line = NULL;
+		if (!ft_process_line(&minishell, &ast))
 			continue ;
-		}
-		if (ft_tokenizer(&minishell) == 0)
-		{
-			ft_expander(&minishell);
-			if (ft_syntax_error(&minishell) != -1)
-			{
-				ast = ft_ast(&minishell);
-				ft_exec_ast(&minishell, ast);
-				free(minishell.line);
-				minishell.line = NULL;
-				if (i == 1)
-					break ;
-			}
-		}
 	}
-	i = 0;
-	i = minishell.terminal_status;
-	rl_clear_history();
 	ft_free_minishell(&minishell);
-	return (i);
+	rl_clear_history();
+	return (minishell.terminal_status);
 }

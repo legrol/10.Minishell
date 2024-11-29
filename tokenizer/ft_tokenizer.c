@@ -45,6 +45,11 @@
  * @return t_token*					A pointer to the created token structure, 
  *									or NULL if memory allocation fails.
  *  
+ * 
+ * 
+ * 
+ * Antes de return (0) de salida de ft_tokenizer esta funcion para depurar 
+ * siempre tokens. ---> ft_print_tokens(minishell->tokens);
  */
 
 static t_token	*ft_read_tokens(char *line, int *index)
@@ -119,6 +124,6 @@ int	ft_tokenizer(t_minishell *minishell)
 		minishell->line = NULL;
 		return (-1);
 	}
-	ft_print_tokens(minishell->tokens);
+	//ft_print_tokens(minishell->tokens);
 	return (0);
 }

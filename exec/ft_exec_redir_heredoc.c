@@ -35,88 +35,87 @@
  * 
  */
 
-
 static int	ft_try_dup2_in(t_minishell *minishell, int fd)
 {
 	if (minishell->redin == -1)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 		minishell->redin = 1;
-        return (0);
+		return (0);
 	}
-    return (-1);
+	return (-1);
 }
 
 void	ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast)
 {
-    char *input;
-    int fd[2];
-    pid_t pid;
-    int stdin_copy;
+	char *input;
+	int fd[2];
+	pid_t pid;
+	int stdin_copy;
 
-    if (!ast || !ast->right || !ast->right->value)
-    {
-        ft_printf("Error: Heredoc not valid\n");
-        return;
-    }
-    if (pipe(fd) == -1)
-    {
-        perror("Error: Cant create pipe for heredoc");
-        return;
-    }
-    stdin_copy = dup(STDIN_FILENO);
-    if (stdin_copy == -1)
-    {
-        perror("Error saving STDIN");
-        close(fd[0]);
-        close(fd[1]);
-        return;
-    }
-    pid = fork();
-    if (pid == -1)
-    {
-        perror("Error: Fork fail in heredoc");
-        close(fd[0]);
-        close(fd[1]);
-        close(stdin_copy);
-        return;
-    }
-    if (pid == 0)
-    {
-        close(fd[0]);
-        while (1)
-        {
-            input = readline("> ");
-            if (!input || ft_strcmp(input, ast->right->value) == 0)
-            {
-                free(input);
-                break;
-            }
-            if (*input != '\0')
-            {
-                write(fd[1], input, ft_strlen(input));
-                write(fd[1], "\n", 1);
-            }
-            free(input);
-        }
-        close(fd[1]);
-        _exit(EXIT_SUCCESS);
-    }
-    close(fd[1]);
-    if (ft_try_dup2_in(minishell,fd[0]) == -1)
-    {
-        perror("Error duplicating fd in heredoc");
-        close(fd[0]);
-        close(stdin_copy);
-        return;
-    }
-    close(fd[0]);
-    waitpid(pid, NULL, 0);
-    ft_exec_ast(minishell, ast->left);
-    if (ft_try_dup2_in(minishell, stdin_copy) == -1)
-    {
-        perror("Error restoring STDIN");
-    }
-    close(stdin_copy);
+	if (!ast || !ast->right || !ast->right->value)
+	{
+		ft_printf("Error: Heredoc not valid\n");
+		return;
+	}
+	if (pipe(fd) == -1)
+	{
+		perror("Error: Cant create pipe for heredoc");
+		return;
+	}
+	stdin_copy = dup(STDIN_FILENO);
+	if (stdin_copy == -1)
+	{
+		perror("Error saving STDIN");
+		close(fd[0]);
+		close(fd[1]);
+		return;
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error: Fork fail in heredoc");
+		close(fd[0]);
+		close(fd[1]);
+		close(stdin_copy);
+		return;
+	}
+	if (pid == 0)
+	{
+		close(fd[0]);
+		while (1)
+		{
+			input = readline("> ");
+			if (!input || ft_strcmp(input, ast->right->value) == 0)
+			{
+				free(input);
+				break;
+			}
+			if (*input != '\0')
+			{
+				write(fd[1], input, ft_strlen(input));
+				write(fd[1], "\n", 1);
+			}
+			free(input);
+		}
+		close(fd[1]);
+		_exit(EXIT_SUCCESS);
+	}
+	close(fd[1]);
+	if (ft_try_dup2_in(minishell,fd[0]) == -1)
+	{
+		perror("Error duplicating fd in heredoc");
+		close(fd[0]);
+		close(stdin_copy);
+		return;
+	}
+	close(fd[0]);
+	waitpid(pid, NULL, 0);
+	ft_exec_ast(minishell, ast->left);
+	if (ft_try_dup2_in(minishell, stdin_copy) == -1)
+	{
+		perror("Error restoring STDIN");
+	}
+	close(stdin_copy);
 }
 

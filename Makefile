@@ -120,7 +120,8 @@ EXE					= ${EXEC_DIR}/ft_cmdexe.c \
 						${EXEC_DIR}/ft_exec_redir_in.c \
 						${EXEC_DIR}/ft_exec_redir_out.c \
 						${EXEC_DIR}/ft_exec_redir_append.c \
-						${EXEC_DIR}/ft_exec_redir_heredoc.c
+						${EXEC_DIR}/ft_exec_redir_heredoc.c \
+						${EXEC_DIR}/ft_exec_redir_utils.c
 
 BUI					= ${BUILTINS_DIR}/ft_cd.c \
 						${BUILTINS_DIR}/ft_cd_tools.c \

@@ -77,6 +77,7 @@ typedef struct s_signal
 	pid_t			pid;
 	int				sigint;
 	int				sigquit;
+	int				in_heredoc;
 	int				exit;
 	int				start;
 	char			*dupdirprompt;
@@ -140,6 +141,7 @@ void		ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_in(t_minishell *minishell, t_ast *ast);
 void		ft_exec_redir_out(t_minishell *minishell, t_ast *ast);
 char		**ft_path(t_minishell *minishell);
+int			ft_try_dup2_in(t_minishell *minishell, int fd);
 void		ft_try_dup2_out(t_minishell *minishell, int fd);
 
 // ============================================================================

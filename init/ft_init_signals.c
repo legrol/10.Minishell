@@ -123,20 +123,32 @@ void	ft_init_struc_sig(t_signal *signals)
 	signals->sigquit = 0;
 	signals->exit = 0;
 	signals->start = 1;
+	signals->in_heredoc = 0;
 }
 
 static void	sig_int(int status)
 {
-	(void) status;
-	ft_putstr_fd("\n", STDERR);
-	if (g_signals.pid == 0)
+	(void)status;
+	if (g_signals.in_heredoc)
 	{
+		ft_putstr_fd("^C\n", STDERR_FILENO);
+		g_signals.exit = EX_SIGINT;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+	else if (g_signals.pid == 0)
+	{
+		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_signals.exit = EX_SIGINT;
 	}
 	else
-		g_signals.exit = EX_SIGINT;
+	{
+		ft_putstr_fd("\n", STDERR_FILENO);
+		kill(g_signals.pid, SIGINT);
+	}
 	g_signals.sigint = 1;
 }
 

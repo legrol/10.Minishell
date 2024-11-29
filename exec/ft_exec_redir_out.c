@@ -54,7 +54,25 @@
  * @param char *outfile				The name of the file where heredoc content 
  * 									will be written.
  * 
+ * The function "ft_write" writes a given string to a specified file descriptor
+ * and appends a newline character at the end. It is designed to simplify
+ * output operations by combining the write operation and newline addition
+ * into a single function.
+ * 
+ * @param int out_fd               	The file descriptor where the string will 
+ *                                 	be written (e.g., STDOUT_FILENO, 
+ * 								   	STDERR_FILENO).
+ * @param char *input             	The string to write to the file descriptor. 
+ *                                 	Must be null-terminated.
+ * @return 							void
+ * 
  */
+
+static void	ft_write(int out_fd, char *input)
+{
+	write(out_fd, input, ft_strlen(input));
+	write(out_fd, "\n", 1);
+}
 
 static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 {
@@ -67,6 +85,7 @@ static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 		perror("Error abriendo archivo de salida");
 		return ;
 	}
+	g_signals.in_heredoc = 1;
 	while (1)
 	{
 		input = readline("> ");
@@ -76,12 +95,10 @@ static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
 			break ;
 		}
 		if (!ft_contains_invalid_chars(input))
-		{
-			write(out_fd, input, ft_strlen(input));
-			write(out_fd, "\n", 1);
-		}
+			ft_write(out_fd, input);
 		free(input);
 	}
+	g_signals.in_heredoc = 0;
 	close(out_fd);
 }
 

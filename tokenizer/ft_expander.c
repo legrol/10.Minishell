@@ -69,8 +69,10 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 			if (env_value)
 // 			{
 // 				new_size += ft_strlen(env_value);
-// 				expanded = ft_realloc(expanded, new_size - ft_strlen(env_value) - 1, new_size);
-// 				ft_memmove(expanded + ft_strlen(expanded), env_value, ft_strlen(env_value));
+// 				expanded = ft_realloc(expanded, new_size - \
+//				ft_strlen(env_value) - 1, new_size);
+// 				ft_memmove(expanded + ft_strlen(expanded), env_value, \
+//				ft_strlen(env_value));
 // 			}
 // 		}
 // 		else
@@ -80,8 +82,10 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 				i++;
 // 			char *literal = ft_substr(segment, start, i - start);
 // 			new_size += ft_strlen(literal);
-// 			expanded = ft_realloc(expanded, new_size - ft_strlen(literal) - 1, new_size);
-// 			ft_memmove(expanded + ft_strlen(expanded), literal, ft_strlen(literal));
+// 			expanded = ft_realloc(expanded, new_size - ft_strlen(literal) \
+//			- 1, new_size);
+// 			ft_memmove(expanded + ft_strlen(expanded), literal, \
+//			ft_strlen(literal));
 // 			free(literal);
 // 		}
 // 	}
@@ -110,8 +114,10 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 				i++;
 // 			char *segment = ft_substr(token->token_value, start, i - start);
 // 			new_size += ft_strlen(segment);
-// 			new_value = ft_realloc(new_value, new_size - ft_strlen(segment) - 1, new_size);
-// 			ft_memmove(new_value + ft_strlen(new_value), segment, ft_strlen(segment));
+// 			new_value = ft_realloc(new_value, new_size - ft_strlen(segment) \
+//			- 1, new_size);
+// 			ft_memmove(new_value + ft_strlen(new_value), segment, \
+//			ft_strlen(segment));
 // 			free(segment);
 // 			if (token->token_value[i] == '\'')
 // 				i++;
@@ -129,34 +135,45 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 						i++;
 // 						char *status_str = ft_itoa(minishell->exit);
 // 						new_size += ft_strlen(status_str);
-// 						new_value = ft_realloc(new_value, new_size - ft_strlen(status_str) - 1, new_size);
-// 						ft_memmove(new_value + ft_strlen(new_value), status_str, ft_strlen(status_str));
+// 						new_value = ft_realloc(new_value, new_size - \
+//						ft_strlen(status_str) - 1, new_size);
+// 						ft_memmove(new_value + ft_strlen(new_value), \
+//						status_str, ft_strlen(status_str));
 // 						free(status_str);
 // 					}
 // 					else
 // 					{
-// 						while (token->token_value[i] && (ft_isalnum(token->token_value[i]) || token->token_value[i] == '_'))
+// 						while (token->token_value[i] && \
+//						(ft_isalnum(token->token_value[i]) || \
+//						token->token_value[i] == '_'))
 // 							i++;
-// 						expanded_part = ft_substr(token->token_value, start, i - start);
+// 						expanded_part = ft_substr(token->token_value, start, \
+//						i - start);
 // 						env_value = ft_find_dir(minishell, expanded_part);
 // 						free(expanded_part);
 // 						if (env_value)
 // 						{
 // 							new_size += ft_strlen(env_value);
-// 							new_value = ft_realloc(new_value, new_size - ft_strlen(env_value) - 1, new_size);
-// 							ft_memmove(new_value + ft_strlen(new_value), env_value, ft_strlen(env_value));
+// 							new_value = ft_realloc(new_value, new_size - \
+//							ft_strlen(env_value) - 1, new_size);
+// 							ft_memmove(new_value + ft_strlen(new_value), \
+//							env_value, ft_strlen(env_value));
 // 						}
 // 					}
 // 				}
 // 				else
 // 				{
 // 					start = i;
-// 					while (token->token_value[i] && token->token_value[i] != '$' && token->token_value[i] != '\"')
+// 					while (token->token_value[i] && token->token_value[i] != \
+//					'$' && token->token_value[i] != '\"')
 // 						i++;
-// 					char *literal = ft_substr(token->token_value, start, i - start);
+// 					char *literal = ft_substr(token->token_value, start, i - \
+//					start);
 // 					new_size += ft_strlen(literal);
-// 					new_value = ft_realloc(new_value, new_size - ft_strlen(literal) - 1, new_size);
-// 					ft_memmove(new_value + ft_strlen(new_value), literal, ft_strlen(literal));
+// 					new_value = ft_realloc(new_value, new_size - \
+//					ft_strlen(literal) - 1, new_size);
+// 					ft_memmove(new_value + ft_strlen(new_value), literal, \
+//					ft_strlen(literal));
 // 					free(literal);
 // 				}
 // 			}
@@ -171,13 +188,17 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 				i++;
 // 				char *status_str = ft_itoa(minishell->exit);
 // 				new_size += ft_strlen(status_str);
-// 				new_value = ft_realloc(new_value, new_size - ft_strlen(status_str) - 1, new_size);
-// 				ft_memmove(new_value + ft_strlen(new_value), status_str, ft_strlen(status_str));
+// 				new_value = ft_realloc(new_value, new_size - \
+//				ft_strlen(status_str) - 1, new_size);
+// 				ft_memmove(new_value + ft_strlen(new_value), status_str, \
+//				(status_str));
 // 				free(status_str);
 // 			}
 // 			else
 // 			{
-// 				while (token->token_value[i] && (ft_isalnum(token->token_value[i]) || token->token_value[i] == '_'))
+// 				while (token->token_value[i] && \
+//				(ft_isalnum(token->token_value[i]) || token->token_value[i] \
+//				== '_'))
 // 					i++;
 // 				expanded_part = ft_substr(token->token_value, start, i - start);
 // 				env_value = ft_find_dir(minishell, expanded_part);
@@ -185,8 +206,10 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 				if (env_value)
 // 				{
 // 					new_size += ft_strlen(env_value);
-// 					new_value = ft_realloc(new_value, new_size - ft_strlen(env_value) - 1, new_size);
-// 					ft_memmove(new_value + ft_strlen(new_value), env_value, ft_strlen(env_value));
+// 					new_value = ft_realloc(new_value, new_size - \
+//					(env_value) - 1, new_size);
+// 					ft_memmove(new_value + ft_strlen(new_value), env_value, \
+//					ft_strlen(env_value));
 // 				}
 // 			}
 // 		}
@@ -194,12 +217,14 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 		{
 // 			start = i;
 // 			while (token->token_value[i] && token->token_value[i] != '$' \
-// 					&& token->token_value[i] != '\'' && token->token_value[i] != '\"')
+// 					&& token->token_value[i] != '\'' && token->token_value[i] \
+//					!= '\"')
 // 				i++;
 // 			char *segment = ft_substr(token->token_value, start, i - start);
 // 			new_size += ft_strlen(segment);
-// 			new_value = ft_realloc(new_value, new_size - ft_strlen(segment) - 1, new_size);
-// 			ft_memmove(new_value + ft_strlen(new_value), segment, ft_strlen(segment));
+//			- 1, new_size);
+// 			ft_memmove(new_value + ft_strlen(new_value), segment, \
+//			ft_strlen(segment));
 // 			free(segment);
 // 		}
 // 	}
@@ -207,66 +232,90 @@ void	*ft_realloc(void *p, int old_size, int new_size)
 // 	token->token_value = new_value;
 // }
 
-static void ft_handle_single_quotes(const char *token_value, int *i, char **new_value, int *new_size)
+static void	ft_handle_single_quotes(const char *token_value, int *i, \
+char **new_value, int *new_size)
 {
-	int start = ++(*i);
+	int		start;
+	char	*segment;
+
+	start = ++(*i);
 	while (token_value[*i] && token_value[*i] != '\'')
 		(*i)++;
-	char *segment = ft_substr(token_value, start, *i - start);
+	segment = ft_substr(token_value, start, *i - start);
 	*new_size += ft_strlen(segment);
-	*new_value = ft_realloc(*new_value, *new_size - ft_strlen(segment) - 1, *new_size);
-	ft_memmove(*new_value + ft_strlen(*new_value), segment, ft_strlen(segment));
+	*new_value = ft_realloc(*new_value, *new_size - ft_strlen(segment) - 1, \
+	*new_size);
+	ft_memmove(*new_value + ft_strlen(*new_value), segment, \
+	ft_strlen(segment));
 	free(segment);
 	if (token_value[*i] == '\'')
 		(*i)++;
 }
 
-static void ft_handle_dollar_sign(t_minishell *minishell, const char *token_value, int *i, char **new_value, int *new_size)
+static void	ft_handle_dollar_sign(t_minishell *minishell, const char \
+*token_value, int *i, char **new_value, int *new_size)
 {
-	int start = ++(*i);
+	int		start;
+	char	*status_str;
+	char	*expanded_part;
+	char	*env_value;
+
+	start = ++(*i);
 	if (token_value[start] == '?')
 	{
 		(*i)++;
-		char *status_str = ft_itoa(minishell->exit);
+		status_str = ft_itoa(minishell->exit);
 		*new_size += ft_strlen(status_str);
-		*new_value = ft_realloc(*new_value, *new_size - ft_strlen(status_str) - 1, *new_size);
-		ft_memmove(*new_value + ft_strlen(*new_value), status_str, ft_strlen(status_str));
+		*new_value = ft_realloc(*new_value, *new_size - ft_strlen(status_str) \
+		- 1, *new_size);
+		ft_memmove(*new_value + ft_strlen(*new_value), status_str, \
+		ft_strlen(status_str));
 		free(status_str);
 	}
 	else
 	{
-		while (token_value[*i] && (ft_isalnum(token_value[*i]) || token_value[*i] == '_'))
+		while (token_value[*i] && (ft_isalnum(token_value[*i]) \
+		|| token_value[*i] == '_'))
 			(*i)++;
-		char *expanded_part = ft_substr(token_value, start, *i - start);
-		char *env_value = ft_find_dir(minishell, expanded_part);
+		expanded_part = ft_substr(token_value, start, *i - start);
+		env_value = ft_find_dir(minishell, expanded_part);
 		free(expanded_part);
 		if (env_value)
 		{
 			*new_size += ft_strlen(env_value);
-			*new_value = ft_realloc(*new_value, *new_size - ft_strlen(env_value) - 1, *new_size);
-			ft_memmove(*new_value + ft_strlen(*new_value), env_value, ft_strlen(env_value));
+			*new_value = ft_realloc(*new_value, *new_size - \
+			ft_strlen(env_value) - 1, *new_size);
+			ft_memmove(*new_value + ft_strlen(*new_value), env_value, \
+			ft_strlen(env_value));
 		}
 	}
 }
 
 static void ft_handle_double_quotes(t_minishell *minishell, const char *token_value, int *i, char **new_value, int *new_size)
 {
-	int start = ++(*i);
-	while (token_value[*i] && token_value[*i] != '"')
+	int		start;
+	char	*literal;
+
+	start = ++(*i);
+	while (token_value[*i] && token_value[*i] != '\"')
 	{
 		if (token_value[*i] == '$')
 		{
-			ft_handle_dollar_sign(minishell, token_value, i, new_value, new_size);
+			ft_handle_dollar_sign(minishell, token_value, i, new_value, \
+			new_size);
 		}
 		else
 		{
 			start = *i;
-			while (token_value[*i] && token_value[*i] != '$' && token_value[*i] != '"')
+			while (token_value[*i] && token_value[*i] != '$' && \
+			token_value[*i] != '\"')
 				(*i)++;
-			char *literal = ft_substr(token_value, start, *i - start);
+			literal = ft_substr(token_value, start, *i - start);
 			*new_size += ft_strlen(literal);
-			*new_value = ft_realloc(*new_value, *new_size - ft_strlen(literal) - 1, *new_size);
-			ft_memmove(*new_value + ft_strlen(*new_value), literal, ft_strlen(literal));
+			*new_value = ft_realloc(*new_value, *new_size - \
+			ft_strlen(literal) - 1, *new_size);
+			ft_memmove(*new_value + ft_strlen(*new_value), literal, \
+			ft_strlen(literal));
 			free(literal);
 		}
 	}
@@ -276,32 +325,44 @@ static void ft_handle_double_quotes(t_minishell *minishell, const char *token_va
 
 static void ft_handle_literal_segment(const char *token_value, int *i, char **new_value, int *new_size)
 {
-	int start = *i;
-	while (token_value[*i] && token_value[*i] != '$' && token_value[*i] != '\'' && token_value[*i] != '\"')
+	int		start;
+	char	*segment;
+
+	start = *i;
+	while (token_value[*i] && token_value[*i] != '$' && token_value[*i] \
+	!= '\'' && token_value[*i] != '\"')
 		(*i)++;
-	char *segment = ft_substr(token_value, start, *i - start);
+	segment = ft_substr(token_value, start, *i - start);
 	*new_size += ft_strlen(segment);
-	*new_value = ft_realloc(*new_value, *new_size - ft_strlen(segment) - 1, *new_size);
+	*new_value = ft_realloc(*new_value, *new_size - ft_strlen(segment) - 1, \
+	*new_size);
 	ft_memmove(*new_value + ft_strlen(*new_value), segment, ft_strlen(segment));
 	free(segment);
 }
 
 static void ft_expander_action(t_minishell *minishell, t_token *token)
 {
-	char *new_value = ft_calloc(1, 1);
-	int new_size = 1;
-	int i = 0;
+	char	*new_value;
+	int		new_size;
+	int		i;
 
+	new_value = ft_calloc(1, 1);
+	new_size = 1;
+	i = 0;
 	while (token->token_value[i])
 	{
 		if (token->token_value[i] == '\'')
-			ft_handle_single_quotes(token->token_value, &i, &new_value, &new_size);
-		else if (token->token_value[i] == '"')
-			ft_handle_double_quotes(minishell, token->token_value, &i, &new_value, &new_size);
+			ft_handle_single_quotes(token->token_value, &i, &new_value, \
+			&new_size);
+		else if (token->token_value[i] == '\"')
+			ft_handle_double_quotes(minishell, token->token_value, &i, \
+			&new_value, &new_size);
 		else if (token->token_value[i] == '$')
-			ft_handle_dollar_sign(minishell, token->token_value, &i, &new_value, &new_size);
+			ft_handle_dollar_sign(minishell, token->token_value, &i, \
+			&new_value, &new_size);
 		else
-			ft_handle_literal_segment(token->token_value, &i, &new_value, &new_size);
+			ft_handle_literal_segment(token->token_value, &i, &new_value, \
+			&new_size);
 	}
 	free(token->token_value);
 	token->token_value = new_value;

@@ -60,7 +60,7 @@ void	ft_error_make_fork(int fd)
 	close(fd);
 }
 
-static void	ft_try_dup2_in(t_minishell *minishell, int fd)
+static void	ft_try_dup2_in_2(t_minishell *minishell, int fd)
 {
 	if (minishell->redin == -1)
 	{
@@ -88,7 +88,7 @@ void	ft_exec_redir_in(t_minishell *minishell, t_ast *ast)
 	}
 	else if (pid == 0)
 	{
-		ft_try_dup2_in(minishell, fd);
+		ft_try_dup2_in_2(minishell, fd);
 		close(fd);
 		ft_exec_ast(minishell, ast->left);
 		exit(EXIT_SUCCESS);

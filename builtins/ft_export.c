@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:37:36 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/27 17:42:58 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:20:59 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ static void	ft_insert_node(t_minishell *minishell, t_ast *ast)
 			ft_fill_keyvalue(key_value, ast);
 			check = ft_ast_checker(key_value[0], ast, minishell);
 		}
-		ft_prueba(minishell, ast, key_value, check);
+		ft_insert_node_in_env(minishell, ast, key_value, check);
 		ast = ast->left;
 		free(key_value[0]);
 		if (key_value[1])

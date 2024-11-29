@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:01:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/28 17:34:15 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:21:01 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	**ft_sort_print(t_minishell *minishell)
 	return (cpy);
 }
 
-void	ft_prueba(t_minishell *minishell, t_ast *ast, \
+void	ft_insert_node_in_env(t_minishell *minishell, t_ast *ast, \
 char **key_value, int check)
 {
 	t_envp	*temp;

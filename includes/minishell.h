@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdel-olm <rdel-olm@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:35:55 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/28 22:49:07 by rdel-olm         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:22:14 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,8 @@ void		ft_export(t_minishell *minishell, t_ast *ast);
 void		ft_fill_keyvalue(char	**key_value, t_ast *ast);
 int			ft_find_key(t_minishell *minishell, char **key_value, int check);
 int			ft_find_only_key(t_minishell *minishell, char *key);
-void		ft_prueba(t_minishell *minishell, t_ast *ast, char **key_value, \
-			int check);
+void		ft_insert_node_in_env(t_minishell *minishell, t_ast *ast, \
+			char **key_value, int check);
 void		ft_pwd(void);
 int			ft_str_longcheck(char *str);
 char		**ft_sort_print(t_minishell *minishell);

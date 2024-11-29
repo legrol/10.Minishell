@@ -191,20 +191,29 @@ void		ft_unset(t_minishell *minishell, t_ast *ast);
 // ============================================================================
 // Tokenizer functions
 // ============================================================================
+void		ft_append_to_new_value(char **new_value, const char *to_append);
 void		ft_check_empty_line(t_minishell *minishell);
 int			ft_checker_quotes_unclosed(t_minishell *minishell);
 int			ft_checker_quotes(char *line, int lenght);
 int			ft_check_operators(char *line, int index);
 void		ft_expander(t_minishell *minishell);
 void		ft_fill_token(t_token *token, char *line, int *index);
+void		ft_handle_dollar_sign(t_minishell *minishell, \
+			const char *token_value, int *i, char **new_value);
+void		ft_handle_double_quotes(t_minishell *minishell, const char \
+			*token_value, int *i, char **new_value);
+void		ft_handle_literal_segment(const char *token_value, int *i, \
+			char **new_value);
 int			ft_handle_special_char(t_token *token, char *line, \
 			int *index, int i);
 void		ft_print_tokens(t_token *tokens);
+void		*ft_realloc(void *p, int old_size, int new_size);
 void		ft_skip_spaces(char *line, int *index);
 void		ft_update_tokens(t_token *token);
 int			ft_token_size(char *line, int *index);
 int			ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);
+
 
 // ============================================================================
 // Utils functions

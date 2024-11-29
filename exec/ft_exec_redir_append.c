@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:50:37 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/27 16:38:19 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:17:45 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,57 @@ static void	ft_try_dup2_out(t_minishell *minishell, int fd)
 	}
 }
 
+static int	ft_contains_invalid_chars(const char *line)
+{
+	return (ft_strnstr(line, "\033[?2004h",ft_strlen(line)) != NULL || ft_strnstr(line, "\033[?2004h",ft_strlen(line)) != NULL);
+}
+
+
+static void	ft_process_heredoc_and_filter(t_ast *heredoc_ast, char *outfile)
+{
+	char	*input;
+	int		out_fd;
+
+	out_fd = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (out_fd < 0)
+	{
+		perror("Error abriendo archivo de salida");
+		return;
+	}
+	while (1)
+	{
+		input = readline("> ");
+		if (!input || ft_strcmp(input, heredoc_ast->right->value) == 0)
+		{
+			free(input);
+			break;
+		}
+		if (!ft_contains_invalid_chars(input))
+		{
+			write(out_fd, input, ft_strlen(input));
+			write(out_fd, "\n", 1);
+		}
+		free(input);
+	}
+	close(out_fd);
+}
+
+
 void	ft_exec_redir_append(t_minishell *minishell, t_ast *ast)
 {
 	int		fd;
 	pid_t	pid;
 
+	if (ast->left && ast->left->type == TOKEN_REDIR_HEREDOC)
+	{
+		ft_process_heredoc_and_filter(ast->left, ast->right->value);
+		return;
+	}
 	fd = open(ast->right->value, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{
 		ft_printf("Error: Open file");
-		return ;
+		return;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -92,3 +133,4 @@ void	ft_exec_redir_append(t_minishell *minishell, t_ast *ast)
 	ft_free_ast(ast);
 	close(fd);
 }
+

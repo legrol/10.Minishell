@@ -214,7 +214,6 @@ int			ft_token_size(char *line, int *index);
 int			ft_tokenizer(t_minishell *minishell);
 void		ft_update_type_tokens(t_token *token);
 
-
 // ============================================================================
 // Utils functions
 // ============================================================================

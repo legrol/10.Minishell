@@ -124,6 +124,5 @@ int	ft_tokenizer(t_minishell *minishell)
 		minishell->line = NULL;
 		return (-1);
 	}
-	//ft_print_tokens(minishell->tokens);
 	return (0);
 }

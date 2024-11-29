@@ -98,6 +98,7 @@ void	ft_handle_heredoc_child(t_ast *ast, int *fd)
 {
 	char	*input;
 
+	signal(SIGINT, SIG_DFL);
 	close(fd[0]);
 	while (1)
 	{
@@ -121,7 +122,17 @@ void	ft_handle_heredoc_child(t_ast *ast, int *fd)
 void	ft_handle_heredoc_parent(t_minishell *minishell, t_ast *ast, \
 int *fd, int stdin_copy)
 {
+	int	status;
+
 	close(fd[1]);
+	waitpid(-1, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		g_signals.exit = EX_SIGINT;
+		close(fd[0]);
+		close(stdin_copy);
+		return ;
+	}
 	if (ft_try_dup2_in(minishell, fd[0]) == -1)
 	{
 		perror("Error duplicating fd in heredoc");
@@ -130,7 +141,6 @@ int *fd, int stdin_copy)
 		return ;
 	}
 	close(fd[0]);
-	waitpid(-1, NULL, 0);
 	ft_exec_ast(minishell, ast->left);
 	if (ft_try_dup2_in(minishell, stdin_copy) == -1)
 		perror("Error restoring STDIN");
@@ -150,6 +160,7 @@ void	ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast)
 		perror("Error: Can't create pipe for heredoc");
 		return ;
 	}
+	g_signals.in_heredoc = 1;
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
 		return (ft_cleanup_pipe(fd, -1, "Error saving STDIN"));
@@ -157,7 +168,10 @@ void	ft_exec_redir_heredoc(t_minishell *minishell, t_ast *ast)
 	if (pid == -1)
 		return (ft_cleanup_pipe(fd, stdin_copy, "Error: Fork failed \
 		in heredoc"));
+	g_signals.pid = pid;
 	if (pid == 0)
 		ft_handle_heredoc_child(ast, fd);
 	ft_handle_heredoc_parent(minishell, ast, fd, stdin_copy);
+	g_signals.pid = 0;
+	g_signals.in_heredoc = 0;
 }

@@ -77,6 +77,7 @@ typedef struct s_signal
 	pid_t			pid;
 	int				sigint;
 	int				sigquit;
+	int				in_heredoc;
 	int				exit;
 	int				start;
 	char			*dupdirprompt;

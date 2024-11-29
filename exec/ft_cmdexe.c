@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:22:00 by pabromer          #+#    #+#             */
-/*   Updated: 2024/11/26 16:56:59 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:00:56 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,6 @@
  * 
  */
 
-static void	free_path(char **path)
-{
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		free(path[i]);
-		i++;
-	}
-	free(path);
-}
-
 char	*ft_cmd_action(char **path, char *arg)
 {
 	int		i;
@@ -116,8 +103,8 @@ char	*ft_cmd_action(char **path, char *arg)
 	}
 	free(temp);
 	if (access(arg, X_OK) == 0)
-		return (free_path(path), ft_strdup(arg));
-	free_path(path);
+		return (free(path), ft_strdup(arg));
+	free(path);
 	return (NULL);
 }
 

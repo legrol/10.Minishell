@@ -6,7 +6,7 @@
 /*   By: pabromer <pabromer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:01:24 by rdel-olm          #+#    #+#             */
-/*   Updated: 2024/11/29 15:21:01 by pabromer         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:44:02 by pabromer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int	ft_ast_checker(char *key, t_ast *ast, t_minishell *minishell)
 		i = -1;
 	if (i == -1)
 	{
-		minishell->exit = 0;
+		minishell->exit = 1;
 		ft_printf("minishell: export: \'%s\': not a valid identifier\n", \
 		ast->value);
 	}
